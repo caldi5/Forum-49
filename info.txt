@@ -1,0 +1,5 @@
+addr: sql.srv247.se
+port: 3306
+user: root
+pass: Lunar.1471!
+	: phpmyadmin.srv247.se
