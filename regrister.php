@@ -1,7 +1,43 @@
 <!-- regrister.php 
 
-Anton's fil!
+----ToDo----
+
+* Enforce wich characters can be used in username
+* Enforce password policy
+* MD5 Encrypt passwords! Or something
+* Maybe more errorhandling.
+* Use ajax to check if that username allready exists.
+
+Final tuches:
+change min password lenth to 12 (data-rule-minlength="5")
+
+
 -->
+<?php
+	include("dbconn.php");
+	session_start();
+
+	//Newsupload
+	if(isset($_POST["registrationForm"])) 
+	{
+		//valedate form
+
+		//Sanatize imput. probably not needed since we add the imput as parameters
+		$username = $conn->real_escape_string($_POST["username"]);
+		$password = $conn->real_escape_string($_POST["password"]);
+		$email = $conn->real_escape_string($_POST["email"]);
+
+		if(!isset($error))
+		{
+			$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
+			$stmt->bind_param('sss',$username,$password,$email);
+			$stmt->execute();
+			if(isset($stmt->error))
+				$error = $stmt->error;
+		}
+	}
+?>
+
 
 <!DOCTYPE html>
 <html>
@@ -21,12 +57,12 @@ Anton's fil!
 				<?php
 					if(isset($error))
 					{
-						echo "<div class=\"alert alert-s\">";
+						echo "<div class=\"alert alert-danger\">";
 						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
 						echo "<strong>Error</strong> ".$error;
 						echo "</div>";
 					}
-					else if(isset($_POST["newsUpload"]))
+					else if(isset($_POST["registrationForm"]))
 					{
 						echo "<div class=\"alert alert-success\">";
 						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
@@ -37,21 +73,21 @@ Anton's fil!
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>
-						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" required autofocus>
+						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" data-rule-minlength="5" required autofocus>
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" required>
+						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="5" required>
 					</div>
 					<div class="form-group">				
 						<label>Repeat Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="confirmPassword" placeholder="Password again" data-rule-equalTo="#email" required>
+						<input type="password" maxlength="50" class="form-control" name="confirmPassword" placeholder="Password again" data-rule-equalTo="#password" required>
 					</div>
 					<div class="form-group">				
 						<label>Email Address:</label>
 						<input type="email" maxlength="50" class="form-control" name="email" placeholder="anna.andersson@example.com" required>
 					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="submit" name="newsUpload">Submit</button>
+					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
 				</form>
 				<script>
 				$.validator.setDefaults({
