@@ -2,8 +2,7 @@
 
 ----ToDo----
 
-* Enforce wich characters can be used in username
-* Enforce password policy
+* Serverside valedation
 * Maybe more errorhandling.
 * Use ajax to check if that username allready exists.
 * Redirect to the index page on successfull regristration.
@@ -23,6 +22,8 @@
 		//valedate form
 
 		//Sanatize imput. probably not needed since we add the imput as parameters
+		//Yes, real_escap_string is unessesary since we're adding imput as parameters
+		//but why not do it anyway. Woop Woop!
 		$username = $conn->real_escape_string($_POST["username"]);
 		$password = crypt($_POST["password"], $dbPasswordSalt);
 		$email = $conn->real_escape_string($_POST["email"]);
@@ -49,6 +50,7 @@
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -73,11 +75,11 @@
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>
-						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" data-rule-minlength="5" required autofocus>
+						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" data-rule-minlength="5" pattern="[a-zA-Z0-9]+" required autofocus>
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="4" required>
+						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" required> <?php //Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character ?>
 					</div>
 					<div class="form-group">				
 						<label>Repeat Password:</label>
@@ -107,8 +109,29 @@
 				        }
 				    }
 				});
-				$("#registrationForm").validate();
-				</script>
+				$("#registrationForm").validate(
+				{
+					rules: 
+					{
+			            password: "required",
+			            username: 
+			            {
+			                required: true,
+			                minlength: 5,
+			                pattern: "[a-zA-Z0-9]+"
+			            }
+			        },
+            		messages: 
+            		{
+            			password: "Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character",
+            			username: 
+            			{
+                			minlength: "Your username must contain at least 5 characters" ,
+                			pattern: "Only alfanumeric characters allowed"
+            			}
+    				}
+    			});
+				</script> 
 			</div>
 		</div>
 	</body>
