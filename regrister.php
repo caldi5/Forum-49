@@ -4,12 +4,12 @@
 
 * Enforce wich characters can be used in username
 * Enforce password policy
-* MD5 Encrypt passwords! Or something
 * Maybe more errorhandling.
 * Use ajax to check if that username allready exists.
+* Redirect to the index page on successfull regristration.
 
-Final tuches:
-change min password lenth to 12 (data-rule-minlength="5")
+--Final touches--
+* Change min password lenth to 12 (data-rule-minlength="4")
 
 
 -->
@@ -24,7 +24,7 @@ change min password lenth to 12 (data-rule-minlength="5")
 
 		//Sanatize imput. probably not needed since we add the imput as parameters
 		$username = $conn->real_escape_string($_POST["username"]);
-		$password = $conn->real_escape_string($_POST["password"]);
+		$password = crypt($_POST["password"], $dbPasswordSalt);
 		$email = $conn->real_escape_string($_POST["email"]);
 
 		if(!isset($error))
@@ -32,8 +32,8 @@ change min password lenth to 12 (data-rule-minlength="5")
 			$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
 			$stmt->bind_param('sss',$username,$password,$email);
 			$stmt->execute();
-			if(isset($stmt->error))
-				$error = $stmt->error;
+			if($stmt->error !== "")
+				$error = "SQL error: " . $stmt->error;
 		}
 	}
 ?>
@@ -77,7 +77,7 @@ change min password lenth to 12 (data-rule-minlength="5")
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="5" required>
+						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="4" required>
 					</div>
 					<div class="form-group">				
 						<label>Repeat Password:</label>
