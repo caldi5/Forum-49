@@ -1,0 +1,56 @@
+/*
+	Resets
+*/
+
+html, h1, h2, h3, h4, h5, h6
+{
+	margin: 0;
+	padding: 0;
+}
+
+
+
+/*
+	Custom CSS
+*/
+
+.category
+{
+	background-color: #eeeeee;
+	margin-bottom: 5px;
+	padding-left: 10px;
+}
+
+.category h2
+{
+	padding: 5px 5px 5px  5px;
+}
+
+.forum
+{
+	background-color: #cecece;
+	margin-bottom: 5px;
+	margin-left: -5px;
+}
+
+.forum-title
+{
+	padding: 10px 0 10px 0;
+}
+
+.category-title
+{
+	margin-bottom: 5px;
+	text-decoration: none;
+}
+
+.category a
+{
+	color: black;
+	text-decoration: none;
+}
+
+.forum:hover
+{
+	background-color: grey;
+}
