@@ -12,6 +12,7 @@
 	# Maybe more errorhandling.
 	# Use ajax to check if that username allready exists.
 	# Redirect to the index page on successfull regristration.
+	# Set session variables on sussessfull regristration.
 	# Maybe add seperate check for the password...
 
 */
@@ -69,8 +70,6 @@
 		}
 	}
 ?>
-
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -127,44 +126,44 @@
 				</form>
 				<script>
 				$.validator.setDefaults({
-				    highlight: function(element) {
-				        $(element).closest('.form-group').addClass('has-error');
-				    },
-				    unhighlight: function(element) {
-				        $(element).closest('.form-group').removeClass('has-error');
-				    },
-				    errorElement: 'span',
-				    errorClass: 'help-block',
-				    errorPlacement: function(error, element) {
-				        if(element.parent('.input-group').length) {
-				            error.insertAfter(element.parent());
-				        } else {
-				            error.insertAfter(element);
-				        }
-				    }
+					highlight: function(element) {
+						$(element).closest('.form-group').addClass('has-error');
+					},
+					unhighlight: function(element) {
+						$(element).closest('.form-group').removeClass('has-error');
+					},
+					errorElement: 'span',
+					errorClass: 'help-block',
+					errorPlacement: function(error, element) {
+						if(element.parent('.input-group').length) {
+							error.insertAfter(element.parent());
+						} else {
+							error.insertAfter(element);
+						}
+					}
 				});
 				$("#registrationForm").validate(
 				{
 					rules: 
 					{
-			            password: "required",
-			            username: 
-			            {
-			                required: true,
-			                minlength: 5,
-			                pattern: "[a-zA-Z0-9]+"
-			            }
-			        },
-            		messages: 
-            		{
-            			password: "Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character",
-            			username: 
-            			{
-                			minlength: "Your username must contain at least 5 characters" ,
-                			pattern: "Only alfanumeric characters allowed"
-            			}
-    				}
-    			});
+						password: "required",
+						username: 
+						{
+							required: true,
+							minlength: 5,
+							pattern: "[a-zA-Z0-9]+"
+						}
+					},
+					messages: 
+					{
+						password: "Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character",
+						username: 
+						{
+							minlength: "Your username must contain at least 5 characters" ,
+							pattern: "Only alfanumeric characters allowed"
+						}
+					}
+				});
 				</script> 
 			</div>
 		</div>
