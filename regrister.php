@@ -14,6 +14,7 @@
 	# Redirect to the index page on successfull regristration.
 	# Set session variables on sussessfull regristration.
 	# Maybe add seperate check for the password...
+	# allow more special characters for password. that regex sucks :(
 
 */
 
@@ -81,6 +82,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
+		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
+		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -125,23 +128,6 @@
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
 				</form>
 				<script>
-				$.validator.setDefaults({
-					highlight: function(element) {
-						$(element).closest('.form-group').addClass('has-error');
-					},
-					unhighlight: function(element) {
-						$(element).closest('.form-group').removeClass('has-error');
-					},
-					errorElement: 'span',
-					errorClass: 'help-block',
-					errorPlacement: function(error, element) {
-						if(element.parent('.input-group').length) {
-							error.insertAfter(element.parent());
-						} else {
-							error.insertAfter(element);
-						}
-					}
-				});
 				$("#registrationForm").validate(
 				{
 					rules: 
