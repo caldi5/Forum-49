@@ -3,7 +3,7 @@
 	//======================================================================
 	//regrister.php 
 	//======================================================================
-	Code by Anton Roslund
+	# Code by Anton Roslund
 	
 	//-----------------------------------------------------
 	//ToDo
@@ -15,6 +15,13 @@
 	# Set session variables on sussessfull regristration.
 	# Maybe add seperate check for the password...
 	# allow more special characters for password. that regex sucks :(
+
+	//-----------------------------------------------------
+	//Questions
+	//-----------------------------------------------------
+
+	# Should we remove datarules or patterns from the html? and just keep it in the javascript?
+	# Inputs, name? id? or both?
 
 */
 
@@ -29,6 +36,8 @@
 		//-----------------------------------------------------
 		//valedate form
 		//-----------------------------------------------------
+		
+		//Username
 		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["username"]) !== 1)
 		{
 			$error[] = "Only alfanumeric characters allowed in Username";
@@ -38,11 +47,25 @@
 			$error[] = "Your Username must contain at least 5 characters";		
 		}
 		
-		if(preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/", $_POST["password"]) !== 1)
+		//Password
+		if(preg_match("/.*[A-Za-z].*/", $_POST["password"]) !== 1)
 		{
-			$error[] = "Passwrods has to be minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character";
+			$error[] = "Your password must contain a letter";
+		}
+		if(preg_match("/.*[0-9].*/", $_POST["password"]) !== 1)
+		{
+			$error[] = "Your password must contain a number";
+		}
+		if(preg_match("/.*[^A-Za-z09].*/", $_POST["password"]) !== 1)
+		{
+			$error[] = "Your password must contain a special character";
+		}
+		if(strlen($_POST["password"]) <= 8)
+		{
+			$error[] = "Your password must contain at least 8 characters";		
 		}
 		
+		//Email
 		if(preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $_POST["email"]) !== 1)
 		{
 			$error[] = "Email does not look valid";
@@ -115,7 +138,7 @@
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" required>
+						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="8" required>
 					</div>
 					<div class="form-group">				
 						<label>Repeat Password:</label>
@@ -132,17 +155,27 @@
 				{
 					rules: 
 					{
-						password: "required",
+						password: 
+						{
+							required: true,
+							minlength: 8,
+							containsLetter: true,
+							containsNumber: true,
+							containsSpecial: true
+						},
 						username: 
 						{
 							required: true,
 							minlength: 5,
 							pattern: "[a-zA-Z0-9]+"
+						},
+						email:
+						{
+							required: true
 						}
 					},
 					messages: 
 					{
-						password: "Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character",
 						username: 
 						{
 							minlength: "Your username must contain at least 5 characters" ,

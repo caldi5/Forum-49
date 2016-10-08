@@ -1,3 +1,8 @@
+/*
+ * Used to Make jQuery Validation compateble with bootstrap
+ * Shamelessly stolen from http://stackoverflow.com/questions/18754020/bootstrap-3-with-jquery-validation-plugin
+ * //Anton Roslund
+ */
 $.validator.setDefaults({
 	highlight: function(element) {
 		$(element).closest('.form-group').addClass('has-error');
