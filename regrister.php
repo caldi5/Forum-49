@@ -56,7 +56,7 @@
 		{
 			$error[] = "Your password must contain a number";
 		}
-		if(preg_match("/.*[^A-Za-z09].*/", $_POST["password"]) !== 1)
+		if(preg_match("/.*[^A-Za-z0-9].*/", $_POST["password"]) !== 1)
 		{
 			$error[] = "Your password must contain a special character";
 		}

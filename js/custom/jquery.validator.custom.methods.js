@@ -12,5 +12,5 @@ jQuery.validator.addMethod("containsNumber", function(value, element) {
 }, "Your password must contain a number");
 
 jQuery.validator.addMethod("containsSpecial", function(value, element) {
-    return this.optional(element) || /.*[^A-Za-z09].*/.test(value);
+    return this.optional(element) || /.*[^A-Za-z0-9].*/.test(value);
 }, "Your password must contain a special character");
