@@ -1,32 +1,63 @@
-<!-- regrister.php 
-
-----ToDo----
-
-* Serverside valedation
-* Maybe more errorhandling.
-* Use ajax to check if that username allready exists.
-* Redirect to the index page on successfull regristration.
-
---Final touches--
-* Change min password lenth to 12 (data-rule-minlength="4")
-
-
--->
 <?php
+/*
+	//======================================================================
+	//regrister.php 
+	//======================================================================
+	Code by Anton Roslund
+	
+	//-----------------------------------------------------
+	//ToDo
+	//-----------------------------------------------------
+	
+	# Maybe more errorhandling.
+	# Use ajax to check if that username allready exists.
+	# Redirect to the index page on successfull regristration.
+	# Maybe add seperate check for the password...
+
+*/
+
 	include("dbconn.php");
 	session_start();
 
+	//======================================================================
 	//Newsupload
+	//======================================================================
 	if(isset($_POST["registrationForm"])) 
 	{
+		//-----------------------------------------------------
 		//valedate form
+		//-----------------------------------------------------
+		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["username"]) !== 1)
+		{
+			$error[] = "Only alfanumeric characters allowed in Username";
+		}
+		if(strlen($_POST["username"]) <= 5)
+		{
+			$error[] = "Your Username must contain at least 5 characters";		
+		}
+		
+		if(preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/", $_POST["password"]) !== 1)
+		{
+			$error[] = "Passwrods has to be minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character";
+		}
+		
+		if(preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $_POST["email"]) !== 1)
+		{
+			$error[] = "Email does not look valid";
+		}
 
-		//Sanatize imput. probably not needed since we add the imput as parameters
-		//Yes, real_escap_string is unessesary since we're adding imput as parameters
-		//but why not do it anyway. Woop Woop!
+
+		//-----------------------------------------------------
+		//Sanitize inputs
+		//-----------------------------------------------------
+		/*
+		* Yes, real_escap_string is unessesary since we're adding imput as parameters
+		* but why not do it anyway. Woop Woop!
+		*/
 		$username = $conn->real_escape_string($_POST["username"]);
 		$password = crypt($_POST["password"], $dbPasswordSalt);
 		$email = $conn->real_escape_string($_POST["email"]);
+
 
 		if(!isset($error))
 		{
@@ -59,10 +90,13 @@
 				<?php
 					if(isset($error))
 					{
-						echo "<div class=\"alert alert-danger\">";
-						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-						echo "<strong>Error</strong> ".$error;
-						echo "</div>";
+						foreach ($error as $err) 
+						{
+							echo "<div class=\"alert alert-danger\">";
+							echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
+							echo "<strong>Error</strong> ".$err;
+							echo "</div>";
+						}
 					}
 					else if(isset($_POST["registrationForm"]))
 					{
@@ -79,7 +113,7 @@
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
-						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" required> <?php //Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character ?>
+						<input type="password" maxlength="50" class="form-control" name="password" id="password" placeholder="Password" data-rule-minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" required>
 					</div>
 					<div class="form-group">				
 						<label>Repeat Password:</label>
