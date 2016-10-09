@@ -22,6 +22,7 @@
 
 	# Should we remove datarules or patterns from the html? and just keep it in the javascript?
 	# Inputs, name? id? or both?
+	# How about beeing able to login with both username and email? In that qase we need to uniqe emails in the database.
 
 */
 
@@ -73,6 +74,7 @@
 				$stmt->execute();
 				if($stmt->error !== "")
 					$error = "SQL error: " . $stmt->error;
+				$stmt->close();
 			}
 
 		}
