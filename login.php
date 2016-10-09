@@ -6,6 +6,13 @@
 	Just a test to see if the regristrerd accounts works.
 
 	# Code by Anton Roslund
+
+	//-----------------------------------------------------
+	//ToDo
+	//-----------------------------------------------------
+
+	# Bootstrap allerts can't be closed, figure out why.
+	# See if register.php has the same problem.
 */
 
 	include("dbconn.php");
@@ -13,19 +20,25 @@
 
 	if(isset($_POST["loginForm"])) 
 	{
-		$stmt = $conn->prepare('SELECT password FROM users WHERE username = ?');
-		$stmt->bind_param('s', $_POST["username"]);
+		$stmt = $conn->prepare('SELECT password, role, username FROM users WHERE username = ? OR email = ?');
+		$stmt->bind_param('ss', $_POST["username"], $_POST["username"]);
 		$stmt->execute();
 		
 		if($stmt->error !== "")
 			$error = "SQL error: " . $stmt->error;
 		
-		$stmt->bind_result($passwordHash);
+		$stmt->bind_result($passwordHash, $role, $username);
 		$stmt->fetch();
 		
 		if(password_verify($_POST["password"] , $passwordHash))
 		{
-			//Do some session stuff
+			/*
+			 * You might ask yourself, why bother taking the username from the database?
+			 * $_SESSION["username"] = $_POST["username"];
+			 * Well, that's because then the user can login with whatever case combenation they want. like uSERnAmE
+			 */
+			$_SESSION["username"] = $username;
+			$_SESSION["role"] = $role;
 		}
 		else
 		{
@@ -66,7 +79,7 @@
 					{
 						echo "<div class=\"alert alert-success\">";
 						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-						echo "<strong>Sucsess</strong> Login = true! <3";
+						echo "<strong>Wellcome</strong> " . $_SESSION["username"] . ". Your role is: " . $_SESSION["role"];
 						echo "</div>";
 					}	
 				?>
