@@ -85,8 +85,8 @@
 				?>
 				<form id="loginForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
-						<label>Username:</label>
-						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" required autofocus>
+						<label>Username or Email:</label>
+						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username/Email" required autofocus>
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
