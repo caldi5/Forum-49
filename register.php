@@ -42,7 +42,7 @@
 		{
 			$error[] = "Only alfanumeric characters allowed in Username";
 		}
-		if(strlen($_POST["username"]) <= 5)
+		if(strlen($_POST["username"]) < 5)
 		{
 			$error[] = "Your Username must contain at least 5 characters";		
 		}
@@ -60,7 +60,7 @@
 		{
 			$error[] = "Your password must contain a special character";
 		}
-		if(strlen($_POST["password"]) <= 8)
+		if(strlen($_POST["password"]) < 8)
 		{
 			$error[] = "Your password must contain at least 8 characters";		
 		}
