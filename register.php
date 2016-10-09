@@ -6,13 +6,24 @@
 	# Code by Anton Roslund
 	
 	//-----------------------------------------------------
+	//Features
+	//-----------------------------------------------------
+
+	# Beeing able to login with both username and email.
+	# Clientside field valedation with jQuery Validate.
+	# Serverside valedation with php and regex.
+	# Store errors in array so you'll see all of them at once.
+	# Set session variables on sussessfull regristration.
+	# Custom errormessages for letting the user know what chatacters their password needs
+
+	//-----------------------------------------------------
 	//ToDo
 	//-----------------------------------------------------
 	
 	# Maybe more errorhandling.
 	# Use ajax to check if that username allready exists.
 	# Redirect to the index page on successfull regristration.
-	# Set session variables on sussessfull regristration.
+
 	# Maybe add seperate check for the password...
 	# allow more special characters for password. that regex sucks :(
 
@@ -22,7 +33,6 @@
 
 	# Should we remove datarules or patterns from the html? and just keep it in the javascript?
 	# Inputs, name? id? or both?
-	# How about beeing able to login with both username and email? In that qase we need to uniqe emails in the database.
 
 */
 
@@ -73,7 +83,18 @@
 				$stmt->bind_param('sss', $_POST["username"], $passwordHash, $_POST["email"]);
 				$stmt->execute();
 				if($stmt->error !== "")
+				{
 					$error = "SQL error: " . $stmt->error;
+				}
+				//Sucessfull regristration.
+				else
+				{
+					//Set session variables.
+					$_SESSION["username"] = $_POST["username"];
+					$_SESSION["role"] = "user";
+
+					//Redirect to index page.
+				}
 				$stmt->close();
 			}
 
@@ -109,6 +130,7 @@
 							echo "</div>";
 						}
 					}
+					//Temporary to show that you've sucessfully regristrerd.
 					else if(isset($_POST["registrationForm"]))
 					{
 						echo "<div class=\"alert alert-success\">";
