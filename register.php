@@ -39,58 +39,42 @@
 		
 		//Username
 		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["username"]) !== 1)
-		{
 			$error[] = "Only alfanumeric characters allowed in Username";
-		}
 		if(strlen($_POST["username"]) < 5)
-		{
-			$error[] = "Your Username must contain at least 5 characters";		
-		}
+			$error[] = "Your Username must contain at least 5 characters";
 		
 		//Password
 		if(preg_match("/.*[A-Za-z].*/", $_POST["password"]) !== 1)
-		{
 			$error[] = "Your password must contain a letter";
-		}
 		if(preg_match("/.*[0-9].*/", $_POST["password"]) !== 1)
-		{
 			$error[] = "Your password must contain a number";
-		}
 		if(preg_match("/.*[^A-Za-z0-9].*/", $_POST["password"]) !== 1)
-		{
 			$error[] = "Your password must contain a special character";
-		}
 		if(strlen($_POST["password"]) < 8)
-		{
 			$error[] = "Your password must contain at least 8 characters";		
-		}
 		
 		//Email
 		if(preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $_POST["email"]) !== 1)
-		{
 			$error[] = "Email does not look valid";
-		}
 
 
 		//-----------------------------------------------------
-		//Sanitize inputs
+		//Insert the data in the database
 		//-----------------------------------------------------
-		/*
-		* Yes, real_escap_string is unessesary since we're adding imput as parameters
-		* but why not do it anyway. Woop Woop!
-		*/
-		$username = $conn->real_escape_string($_POST["username"]);
-		$password = crypt($_POST["password"], $dbPasswordSalt);
-		$email = $conn->real_escape_string($_POST["email"]);
-
-
 		if(!isset($error))
 		{
-			$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
-			$stmt->bind_param('sss',$username,$password,$email);
-			$stmt->execute();
-			if($stmt->error !== "")
-				$error = "SQL error: " . $stmt->error;
+			//Hash the password
+			$passwordHash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+			if($passwordHash !== false)
+			{
+				$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
+				$stmt->bind_param('sss', $_POST["username"], $passwordHash, $_POST["email"]);
+				$stmt->execute();
+				if($stmt->error !== "")
+					$error = "SQL error: " . $stmt->error;
+			}
+
 		}
 	}
 ?>
