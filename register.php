@@ -104,23 +104,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Register</title>
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<?php
+	include("includes/standard_head.php");
+?>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
 		<script src="js\custom\jquery.validator.custom.methods.js"></script>
+		<title>Register</title>
+
 	</head>
 	<body>
-		<!-- Header start -->
-		<?php
-			include("includes/navbar.php");
-		?>
-		<!-- Header end -->
+<?php
+	include("includes/navbar.php");
+?>
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
