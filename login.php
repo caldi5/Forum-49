@@ -61,6 +61,11 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	</head>
 	<body>
+		<!-- Header start -->
+		<?php
+			include("includes/navbar.php");
+		?>
+		<!-- Header end -->
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>
