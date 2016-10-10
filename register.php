@@ -84,7 +84,7 @@
 				$stmt->execute();
 				if($stmt->error !== "")
 				{
-					$error = "SQL error: " . $stmt->error;
+					$error[] = "SQL error: " . $stmt->error;
 				}
 				//Sucessfull regristration.
 				else
