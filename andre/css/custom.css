@@ -54,3 +54,58 @@ html, h1, h2, h3, h4, h5, h6
 {
 	background-color: grey;
 }
+
+.posts
+{
+	margin-top: 10px;
+}
+
+.posts a
+{
+	color: black;
+}
+
+.post
+{
+	background-color: #cecece;
+	margin-bottom: 5px;
+	padding-top: 5px;
+}
+
+.post:hover
+{
+	background-color: grey;
+}
+
+.post-poster
+{
+	font-style: italic;
+}
+
+.post-post, .post-reply
+{
+	background-color: #cecece;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.post-post
+{
+	border-bottom: 3px solid black;
+}
+
+.post-reply-form textarea
+{
+	height: 200px;
+	width: 500px;
+}
+
+.post-text
+{
+	word-wrap: break-word;
+}
+
+.post-post img, .post-reply img
+{
+	max-width: 150px;
+}
