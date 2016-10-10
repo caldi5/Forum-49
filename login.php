@@ -15,7 +15,7 @@
 	# See if register.php has the same problem.
 */
 
-	include("dbconn.php");
+	include("includes/dbconn.php");
 	session_start();
 
 	if(isset($_POST["loginForm"])) 
