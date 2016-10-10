@@ -1,0 +1,16 @@
+SQL
+------------------
+addr: sql.srv247.se
+port: 3306
+user: root
+pass: Lunar.1471!
+
+PhpMyAdmin
+----------
+addr: phpmyadmin.srv247.se
+
+Webhook
+--------------
+addr: webhook.srv247.se //tillåter requests från alla...
+						//Pullar master, får se om vi behöver staging och live sen...
+
