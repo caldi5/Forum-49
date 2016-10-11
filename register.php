@@ -104,9 +104,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php
-	include("includes/standard_head.php");
-?>
+<?php include("includes/standard_head.php"); ?>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
@@ -115,9 +113,7 @@
 
 	</head>
 	<body>
-<?php
-	include("includes/navbar.php");
-?>
+<?php include("includes/navbar.php");?>
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
