@@ -13,6 +13,7 @@
 <?php 			if(isset($_SESSION["username"]))
 				{
 ?>
+							<li><a href="messages.php">Messages</a></li>
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 								<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["username"]; ?> <span class="caret"></span></a>
