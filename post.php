@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" href="img/favicon.ico">
-		<title>Post</title>
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<link href="css/custom.css" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<?php
+	include("includes/standard_head.php");
+?>
+		<title>Forum</title>
 	</head>
 	<body>
-		<!-- Header start -->
-		<nav class="navbar navbar-default navbar-static-top">
-			<div class="container">
-				<div class="navbar-header">
-					<a href="index.html" class="navbar-brand">Forum</a>
-				</div>
-				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="signin.html">Sign In</a></li>
-						<li><a href="signup.html">Sign Up</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<!-- Header end -->
-
+<?php
+	include("includes/navbar.php");
+?>		
+<!-- Content start -->
 		<div class="container">
 			<h2 class="post-title">Post title</h2>
 			<div class="row post-post">
@@ -76,7 +60,7 @@
 			</div>
 			<div class="row post-reply-form">
 				<h3>Reply</h3>
-				<form action="post.html" method="post">
+				<form action="post.php" method="post">
 					<textarea name="comment" maxlength="1500" required></textarea>
 					<br>
 					<input type="submit">
