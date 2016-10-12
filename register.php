@@ -105,15 +105,11 @@
 <html>
 	<head>
 <?php include("includes/standard_head.php"); ?>
-		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
-		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
-		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
-		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 		<title>Register</title>
-
 	</head>
 	<body>
 <?php include("includes/navbar.php");?>
+		<!-- Content start -->
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
@@ -192,5 +188,11 @@
 				</script> 
 			</div>
 		</div>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
+		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
+		<script src="js\custom\jquery.validator.custom.methods.js"></script>
+		<!-- Content end -->
+<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>

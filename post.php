@@ -67,5 +67,7 @@
 				</form>
 			</div>
 		</div>
+		<!-- Content end -->
+<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>
