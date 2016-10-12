@@ -52,15 +52,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php
-	include("includes/standard_head.php");
-?>
+<?php include("includes/standard_head.php"); ?>
 		<title>Login</title>
 	</head>
 	<body>
-<?php
-	include("includes/navbar.php");
-?>
+<?php include("includes/navbar.php"); ?>
+		<!-- Content start -->
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php
-	include("includes/standard_head.php");
-?>
+<?php include("includes/standard_head.php"); ?>
 		<title>Forum</title>
 	</head>
 	<body>
-<?php
-	include("includes/navbar.php");
-?>		
-<!-- Content start -->
+<?php include("includes/navbar.php"); ?>		
+		<!-- Content start -->
 		<div class="container">
 			<h1>Forum Name</h1>
 			<div class="posts">

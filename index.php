@@ -4,15 +4,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php
-	include("includes/standard_head.php");
-?>
+<?php include("includes/standard_head.php"); ?>
 		<title>Forum</title>
 	</head>
 	<body>
-<?php
-	include("includes/navbar.php");
-?>
+<?php include("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
 			<div class="row category">
