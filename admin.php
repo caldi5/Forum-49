@@ -5,7 +5,7 @@
 <html>
 	<head>
 <?php include("includes/standard_head.php"); ?>
-		<title>Forum</title>
+		<title>Admin</title>
 	</head>
 	<body>
 <?php include("includes/navbar.php"); ?>
@@ -66,22 +66,27 @@
 								<div class="panel-heading">
 									9 Categories
 								</div>
-									<table class="table">
-										<tr>
-											<td>Anousments</td>
-											<td>Doe</td>
-											<td class="pull-right"><button type="button" class="btn btn-danger">Delete</button></td>
-										</tr>
-										<tr>
-											<td>John</td>
-											<td>Doe</td>
-											<td>john@example.com</td>
-										</tr>
-										<tr>
-											<td>John</td>
-											<td>Doe</td>
-											<td>john@example.com</td>
-										</tr>
+									<table id="sort" class="table">
+								    <thead>
+								        <tr><th>Category</th><th>#of Forums</th><th></th></tr>
+								    </thead>
+								    <tbody>
+											<tr>
+												<td>Anousments</td>
+												<td>6</td>
+												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
+											</tr>
+											<tr>
+												<td>News</td>
+												<td>3</td>
+												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
+											</tr>
+											<tr>
+												<td>Drugs</td>
+												<td>203</td>
+												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
+											</tr>
+										</tbody>
 									</table>
 							</div>
 						</div>
@@ -92,5 +97,19 @@
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
+		<script src="js/jquery-ui.js"></script>
+		<script>
+			// Return a helper with preserved width of cells
+			var fixHelper = function(e, ui) {
+					ui.children().each(function() {
+							$(this).width($(this).width());
+					});
+					return ui;
+			};
+
+			$("#sort tbody").sortable({
+					helper: fixHelper
+			}).disableSelection();
+		</script>
 	</body>
 </html>
