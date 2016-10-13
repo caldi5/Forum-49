@@ -98,7 +98,7 @@
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
 		<script src="js/jquery-ui.js"></script>
-		<script src="jquery.ui.touch-punch.min"></script>
+		<script src="js/jquery.ui.touch-punch.min"></script>
 		<script>
 			// Return a helper with preserved width of cells
 			var fixHelper = function(e, ui) {
