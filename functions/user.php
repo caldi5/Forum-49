@@ -28,32 +28,46 @@
 		return 1;
 	}
 
-	// Return 1 if true, 0 if false.
+	// Checks if the user is logged in.
+	function loggedIn()
+	{
+
+		return true;
+	}
+
+	// Checks if a user with the given user ID is an admin.
 	function isAdmin ($userID)
 	{
 
-		return 1;
+		return fale;
 	}
 
-	// Return 1 if true, 0 if false.
+	// Checks if a user with the given username is an admin.
 	function isAdmin ($username)
 	{
 
-		return 1;
+		return true;
 	}
 
-	// Return 1 if true, 0 if false.
+	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
 	function isModerator ($userID, $forumID)
 	{
 
-		return 1;
+		return true;
 	}
 
-	// Return 1 if true, 0 if false.
+	// Checks if the user with the given username is moderator for the forum with the given forum ID.
 	function isModerator ($username, $forumID)
 	{
 
-		return 1;
+		return true;
+	}
+
+	// Returns an array of all the forums that the user with the given user ID is moderator for.
+	function isModeratorFor ($userID)
+	{
+
+		return $array;
 	}
 
 ?>
