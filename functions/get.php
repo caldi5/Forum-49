@@ -9,13 +9,19 @@
 	// Returns the name of a forum given the forum ID
 	function getForumName ($forumID)
 	{
-		return 'Forum 1'
+		return 'Forum 1';
 	}
 
 	// Returns number of replies a post has gotten given the post ID
 	function numberOfReplies ($postID)
 	{
 		return 5;
+	}
+
+	// Returns number of posts in a forum given the forum ID
+	function numberOfPosts ($fourmID)
+	{
+		return 1;
 	}
 
 	// Returns the number of unred messages given the user ID

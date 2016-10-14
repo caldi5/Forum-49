@@ -2,6 +2,7 @@
 	session_start();
 
 	require_once "includes/dbconn.php";
+	require_once "functions/get.php";
 
 	if (isset($_GET['id']))
 	{
@@ -57,11 +58,15 @@
 					{
 						while ($row = $result->fetch_assoc())
 						{
-
 							echo '<a href="forum.php?id=' . $row['id'] . '">';
 							echo '<div class="col-lg-12 forum">';
+							echo '<div class="col-lg-10">';
 							echo '<h4 class="forum-title">' . $row['name'] . '</h4>';
 							echo '<p class="forum-desc">' . $row['description'] .'</p>';
+							echo '</div>';
+							echo '<div class="col-lg-2">';
+							echo '<p>Posts: ' . numberOfPosts( $row['id']) . '</p>';
+							echo '</div>';
 							echo '</div>';
 							echo '</a>';
 						}
