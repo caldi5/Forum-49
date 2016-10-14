@@ -156,14 +156,15 @@
 				</form>
 			</div>
 		</div>
+
+		<?php include("includes/standard_footer.php"); ?>
+
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
 		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 		<!-- Content end -->
 
-		<?php include("includes/standard_footer.php"); ?>
-		
 		<script>
 		$("#registrationForm").validate(
 		{
