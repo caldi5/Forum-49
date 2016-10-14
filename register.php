@@ -45,7 +45,7 @@
 	if(isset($_POST["registrationForm"])) 
 	{
 		//-----------------------------------------------------
-		//valedate form
+		//Validate form
 		//-----------------------------------------------------
 		
 		//Username
@@ -101,14 +101,16 @@
 		}
 	}
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
-<?php include("includes/standard_head.php"); ?>
+		<?php include("includes/standard_head.php"); ?>
 		<title>Register</title>
 	</head>
 	<body>
-<?php include("includes/navbar.php");?>
+		<?php include("includes/navbar.php");?>
+
 		<!-- Content start -->
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
@@ -159,7 +161,9 @@
 		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
 		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 		<!-- Content end -->
-<?php include("includes/standard_footer.php"); ?>
+
+		<?php include("includes/standard_footer.php"); ?>
+		
 		<script>
 		$("#registrationForm").validate(
 		{

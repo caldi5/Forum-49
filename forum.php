@@ -1,5 +1,43 @@
 <?php
 	session_start();
+	require_once "includes/dbconn.php";
+	require_once "functions/get.php";
+	require_once "functions/user.php";
+
+	if (isset($_GET['id']))
+	{
+		$stmt = $conn->prepare('SELECT id, name FROM forums WHERE id = ?');
+		$stmt->bind_param('i', $_GET['id']);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($id, $name);
+
+		if ($stmt->num_rows > 0)
+		{
+			$stmt->fetch();
+
+			$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at');
+			$stmt_2->bind_param('i', $_GET['id']);
+			$stmt_2->execute();
+
+			$result = $stmt_2->get_result();
+			$stmt_2->store_result();
+		}
+		else
+		{
+			header("Location: index.php");
+			die();
+		}
+
+		$stmt->free_result();
+		$stmt->close();
+	}
+	else
+	{
+		header("Location: index.php");
+		die();
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,93 +49,41 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h1>Forum Name</h1>
+			<h1><?php echo $name; ?></h1>
 			<div class="posts">
-				<div class="row">
-					<a href="post.php">
-					<div class="col-lg-12 post">
-						<div class="col-lg-10">
-							<h3 class="post-title">Post title</h3>
-							<p class="post-poster">Admin</p>
-						</div>
 
-						<div class="col-lg-1">
-							<p>Views: 153</p>
-						</div>
-						<div class="col-lg-1">
-							<p>Replies: 10</p>
-						</div>
-					</div>
-					</a>
-				</div>
-				<div class="row">
-					<a href="post.php">
-					<div class="col-lg-12 post">
-						<div class="col-lg-10">
-							<h3 class="post-title">Post title</h3>
-							<p class="post-poster">Admin</p>
-						</div>
+				<?php
+					if ($result->num_rows > 0)
+					{
+						while ($row = $result->fetch_assoc())
+						{
+							echo '<div class="row">';
+							echo '<a href="post.php?id=' . $row['id'] . '">';
+							echo '<div class="col-lg-12 post">';
+							echo '<div class="col-lg-10">';
+							echo '<h3 class="post-title">' . $row['title'] . '</h3>';
+							echo '<p class="post-poster">' . getUsername($row['creator']) . '</p>';
+							echo '</div>';
+							echo '<div class="col-lg-2">';
+							echo '<p>Replies:<br>'. numberOfReplies($row['id'] . '</p>');
+							echo '</div>';
+							
+							echo '</div>';
+							echo '</a>';
+							echo '</div>';
+						}
+					}
+					else
+					{
+						echo '<div class="alert alert-info">';
+						echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
+						echo '</div>';
+					}
 
-						<div class="col-lg-1">
-							<p>Views: 153</p>
-						</div>
-						<div class="col-lg-1">
-							<p>Replies: 10</p>
-						</div>
-					</div>
-					</a>
-				</div>
-				<div class="row">
-					<a href="post.php">
-					<div class="col-lg-12 post">
-						<div class="col-lg-10">
-							<h3 class="post-title">Post title</h3>
-							<p class="post-poster">Admin</p>
-						</div>
+					$stmt_2->free_result();
+					$stmt_2->close();
+				?>
 
-						<div class="col-lg-1">
-							<p>Views: 153</p>
-						</div>
-						<div class="col-lg-1">
-							<p>Replies: 10</p>
-						</div>
-					</div>
-					</a>
-				</div>
-				<div class="row">
-					<a href="post.php">
-					<div class="col-lg-12 post">
-						<div class="col-lg-10">
-							<h3 class="post-title">Post title</h3>
-							<p class="post-poster">Admin</p>
-						</div>
-
-						<div class="col-lg-1">
-							<p>Views: 153</p>
-						</div>
-						<div class="col-lg-1">
-							<p>Replies: 10</p>
-						</div>
-					</div>
-					</a>
-				</div>
-				<div class="row">
-					<a href="post.php">
-					<div class="col-lg-12 post">
-						<div class="col-lg-10">
-							<h3 class="post-title">Post title</h3>
-							<p class="post-poster">Admin</p>
-						</div>
-
-						<div class="col-lg-1">
-							<p>Views: 153</p>
-						</div>
-						<div class="col-lg-1">
-							<p>Replies: 10</p>
-						</div>
-					</div>
-					</a>
-				</div>
 			</div>
 			<div class="row">
 				<ul class="pagination">

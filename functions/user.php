@@ -8,7 +8,7 @@
 	}
 
 	// Checks if a user with the given username exists
-	function usernameExists
+	function usernameExists ($username)
 	{
 
 		return true;
@@ -39,7 +39,7 @@
 	}
 
 	// Checks if a user with the given username is an admin.
-	function isAdmin ($username)
+	function isAdminUsername ($username)
 	{
 		return true;
 	}
@@ -51,7 +51,7 @@
 	}
 
 	// Checks if the user with the given username is moderator for the forum with the given forum ID.
-	function isModerator ($username, $forumID)
+	function isModeratorUsername ($username, $forumID)
 	{
 		return true;
 	}
