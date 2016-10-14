@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	include("includes/dbconn.php");
+
+	require_once "includes/dbconn.php";
 
 	if (isset($_GET['id']))
 	{
@@ -25,6 +26,7 @@
 		else
 		{
 			header("Location: index.php");
+			die();
 		}
 
 		$stmt->free_result();
@@ -33,6 +35,7 @@
 	else
 	{
 		header("Location: index.php");
+		die();
 	}
 
 ?>
@@ -48,7 +51,6 @@
 		<div class="container">
 			<div class="row category">
 				<h2 class="category-title"><?php echo $name; ?></h2>
-
 
 				<?php
 					if ($result->num_rows > 0)
@@ -66,7 +68,9 @@
 					}
 					else
 					{
-						echo '<h3>Sorry! There\'s no forum in this category just yet!</h3>';
+						echo '<div class="alert alert-info">';
+						echo '<h3><strong>Sorry!</strong> There\'s no forum in this category just yet!</h3>';
+						echo '</div>';
 					}
 
 					$stmt_2->free_result();
