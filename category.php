@@ -15,7 +15,7 @@
 		{
 			$stmt->fetch();
 
-			$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ?');
+			$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering');
 			$stmt_2->bind_param('i', $_GET['id']);
 			$stmt_2->execute();
 
@@ -64,7 +64,7 @@
 							echo '<a href="forum.php?id=' . $row['id'] . '">';
 							echo '<div class="col-lg-12 forum">';
 							echo '<h4 class="forum-title">' . $row['name'] . '</h4>';
-							echo '<p class="forum-desc">' . $row['desc'] .'</p>';
+							echo '<p class="forum-desc">' . $row['description'] .'</p>';
 							echo '</div>';
 							echo '</a>';
 						}
