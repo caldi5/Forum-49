@@ -19,12 +19,8 @@
 			$stmt_2->bind_param('i', $_GET['id']);
 			$stmt_2->execute();
 
-
 			$result = $stmt_2->get_result();
 			$stmt_2->store_result();
-
-
-
 		}
 		else
 		{
@@ -80,9 +76,6 @@
 			</div>
 		</div>
 		<!-- Content end -->
-		<?php include("includes/standard_footer.php"); 
-
-
-		?>
+		<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>

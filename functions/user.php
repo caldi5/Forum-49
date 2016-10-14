@@ -1,5 +1,19 @@
 <?php
 	
+	// Checks if a user with the given ID exists
+	function userIDExists ($userID)
+	{
+
+		return true;
+	}
+
+	// Checks if a user with the given username exists
+	function usernameExists
+	{
+
+		return true;
+	}
+
 	// Returns the username.
 	function getUsername ($userID)
 	{
@@ -41,7 +55,5 @@
 
 		return 1;
 	}
-
-
 
 ?>
