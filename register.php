@@ -152,40 +152,6 @@
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
 				</form>
-				<script>
-				$("#registrationForm").validate(
-				{
-					rules: 
-					{
-						password: 
-						{
-							required: true,
-							minlength: 8,
-							containsLetter: true,
-							containsNumber: true,
-							containsSpecial: true
-						},
-						username: 
-						{
-							required: true,
-							minlength: 5,
-							pattern: "[a-zA-Z0-9]+"
-						},
-						email:
-						{
-							required: true
-						}
-					},
-					messages: 
-					{
-						username: 
-						{
-							minlength: "Your username must contain at least 5 characters" ,
-							pattern: "Only alfanumeric characters allowed"
-						}
-					}
-				});
-				</script> 
 			</div>
 		</div>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
@@ -194,5 +160,39 @@
 		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
+		<script>
+		$("#registrationForm").validate(
+		{
+			rules: 
+			{
+				password: 
+				{
+					required: true,
+					minlength: 8,
+					containsLetter: true,
+					containsNumber: true,
+					containsSpecial: true
+				},
+				username: 
+				{
+					required: true,
+					minlength: 5,
+					pattern: "[a-zA-Z0-9]+"
+				},
+				email:
+				{
+					required: true
+				}
+			},
+			messages: 
+			{
+				username: 
+				{
+					minlength: "Your username must contain at least 5 characters" ,
+					pattern: "Only alfanumeric characters allowed"
+				}
+			}
+		});
+		</script> 
 	</body>
 </html>
