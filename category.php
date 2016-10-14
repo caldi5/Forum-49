@@ -51,15 +51,6 @@
 
 
 				<?php
-					$a['1'] = 'one';
-					$a['2'] = 'two';
-					$a['3'] = 'three';
-
-					foreach ($a as $b)
-					{
-						echo $b;
-						echo '<br>';
-					}
 					if ($result->num_rows > 0)
 					{
 						while ($row = $result->fetch_assoc())
