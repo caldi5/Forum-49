@@ -28,7 +28,7 @@
 					<!-- Users Start -->
 					<div id="pannelAdminUsers" class="panel panel-default collapse in">
 						<div class="panel-heading">
-							<h3 class="panel-title">Users</h3>
+							Users
 						</div>
 						<div class="panel-body">
 							<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur hic veniam ipsum aperiam maiores, consequuntur blanditiis corporis. Dolorem non mollitia quia deleniti necessitatibus autem, dolore reprehenderit, atque dolor similique praesentium.</span>
@@ -37,58 +37,53 @@
 					</div>
 					<!-- Users End -->
 					<!-- Categories Start -->
-					<div id="pannelAdminCategories" class="panel panel-default collapse in">
+					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Categories</h3>
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<button  type="button" class="btn btn-success pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
-								</div>
-							</div>
+							Categories
+							<button  type="button" class="btn btn-xs btn-success pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
 						</div>
 						<div class="panel-body">
 							<div id="newCategoryWell" class="well well-sm collapse">
 								<form action="">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Category name">
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>
-										</span>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-success">Create Category</button>
-										</span>
+									<div class="row">
+										<div class="col-sm-7">
+											<div class="input-group">
+												<span class="input-group-addon">Name: </span>
+												<input type="text" class="form-control" placeholder="Category name">
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group">
+												<span class="input-group-addon">Order:</span>
+												<input type="text" class="form-control" size="1" placeholder="1">
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-success">Create Category</button>
+									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>							
+											</span>
+										</div>
 									</div>
 								</form>
-							 </div>
-							 <div class="panel panel-default">
-								<div class="panel-heading">
-									9 Categories
-								</div>
-									<table id="sort" class="table">
-								    <thead>
-								        <tr><th>Category</th><th>#of Forums</th><th></th></tr>
-								    </thead>
-								    <tbody>
-											<tr>
-												<td>Anousments</td>
-												<td>6</td>
-												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
-											</tr>
-											<tr>
-												<td>News</td>
-												<td>3</td>
-												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
-											</tr>
-											<tr>
-												<td>Drugs</td>
-												<td>203</td>
-												<td><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button></td>
-											</tr>
-										</tbody>
-									</table>
 							</div>
+							<form action="">
+								<div class="row">
+									<input type="hidden" name="id" value="1">
+									<div class="col-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon">Name: </span>
+											<input type="text" class="form-control" placeholder="Category name">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="input-group">
+											<span class="input-group-addon">Order:</span>
+											<input type="text" class="form-control" size="1" placeholder="1">
+										</div>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 					<!-- Categories End -->
