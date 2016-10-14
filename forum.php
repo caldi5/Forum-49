@@ -62,12 +62,22 @@
 							echo '<div class="col-lg-12 post">';
 							echo '<div class="col-lg-10">';
 							echo '<h3 class="post-title">' . $row['title'] . '</h3>';
-							echo '<p class="post-poster">' . getUsername($row['creator']) . '</p>';
+							if (isAdmin($row['creator']))
+							{
+								echo '<p class="post-poster"><span class="admin">'.getUsername($row['creator']) . ' [A]</span></p>';
+							}
+							elseif (isModerator($row['creator'], $id))
+							{
+								echo '<p class="post-poster"><span class="mod">'.getUsername($row['creator']).' [M]</span></p>';
+							}
+							else
+							{
+								echo '<p class="post-poster">'.getUsername($row['creator']).'</p>';
+							}
 							echo '</div>';
 							echo '<div class="col-lg-2">';
-							echo '<p>Replies:<br>'. numberOfReplies($row['id'] . '</p>');
+							echo '<p>Replies:<br>'.numberOfReplies($row['id'].'</p>');
 							echo '</div>';
-							
 							echo '</div>';
 							echo '</a>';
 							echo '</div>';
