@@ -108,11 +108,11 @@
 							echo '<div class="col-lg-12 post">';
 							echo '<div class="col-lg-10">';
 							echo '<h3 class="post-title">' . $row['title'] . '</h3>';
-							if (isAdmin($row['creator']))
+							if (isAdminID($row['creator']))
 							{
 								echo '<p class="post-poster"><span class="admin">'.getUsername($row['creator']) . ' [A]</span></p>';
 							}
-							elseif (isModerator($row['creator'], $id))
+							elseif (isModeratorID($row['creator'], $id))
 							{
 								echo '<p class="post-poster"><span class="mod">'.getUsername($row['creator']).' [M]</span></p>';
 							}
