@@ -97,7 +97,7 @@
 						echo '<a href="admin.php" class="btn btn-default" role="button">Administrate</a>';
 						echo '</div>';
 					}
-					elseif (idModerator($_GET['id']))
+					elseif (isModerator($_GET['id']))
 					{
 						echo '<div class="actions">';
 						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
