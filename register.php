@@ -15,24 +15,16 @@
 	# Store errors in array so you'll see all of them at once.
 	# Set session variables on sussessfull regristration.
 	# Custom errormessages for letting the user know what chatacters their password needs
+	# Maybe add seperate check for the password...
+	# Adds the username and email back to the form IF (god knows how) the regristration fails.
+	# Email Regex (RFC 5322 Official Standard)
 
 	//-----------------------------------------------------
 	//ToDo
 	//-----------------------------------------------------
 	
-	# Maybe more errorhandling.
-	# Use ajax to check if that username allready exists.
+	# Use ajax to check if that username already exists.
 	# Redirect to the index page on successfull regristration.
-
-	# Maybe add seperate check for the password...
-	# allow more special characters for password. that regex sucks :(
-
-	//-----------------------------------------------------
-	//Questions
-	//-----------------------------------------------------
-
-	# Should we remove datarules or patterns from the html? and just keep it in the javascript?
-	# Inputs, name? id? or both?
 
 */
 
@@ -62,10 +54,12 @@
 		if(preg_match("/.*[^A-Za-z0-9].*/", $_POST["password"]) !== 1)
 			$error[] = "Your password must contain a special character";
 		if(strlen($_POST["password"]) < 8)
-			$error[] = "Your password must contain at least 8 characters";		
+			$error[] = "Your password must contain at least 8 characters";
+		if($_POST["password"] !== $_POST["confirmPassword"])
+			$error[] = "Passwords does not match";
 		
 		//Email
-		if(preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $_POST["email"]) !== 1)
+		if(preg_match('/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i', $_POST["email"]) !== 1)
 			$error[] = "Email does not look valid";
 
 
@@ -101,15 +95,14 @@
 		}
 	}
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php include("includes/standard_head.php"); ?>
+<?php include("includes/standard_head.php"); ?>
 		<title>Register</title>
 	</head>
 	<body>
-		<?php include("includes/navbar.php");?>
+<?php include("includes/navbar.php");?>
 
 		<!-- Content start -->
 		<div class="container">
@@ -138,7 +131,7 @@
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>
-						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" data-rule-minlength="5" pattern="[a-zA-Z0-9]+" required autofocus>
+						<input type="text" maxlength="50" class="form-control" name="username" placeholder="Username" data-rule-minlength="5" pattern="[a-zA-Z0-9]+" <?php if(isset($error) && isset($_POST["username"])){ echo "value=\"" . $_POST["username"] . "\" ";}?>required autofocus>
 					</div>
 					<div class="form-group">
 						<label>Password:</label>
@@ -150,21 +143,18 @@
 					</div>
 					<div class="form-group">				
 						<label>Email Address:</label>
-						<input type="email" maxlength="50" class="form-control" name="email" placeholder="anna.andersson@example.com" required>
+						<input type="email" maxlength="50" class="form-control" name="email" placeholder="anna.andersson@example.com" <?php if(isset($error) && isset($_POST["email"])){ echo "value=\"" . $_POST["email"] . "\" ";}?>required>
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
 				</form>
 			</div>
 		</div>
-
-		<?php include("includes/standard_footer.php"); ?>
-
+<?php include("includes/standard_footer.php"); ?>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 		<script src="js\custom\jquery.validator.custom.bootstrapcompability.js"></script>
 		<script src="js\custom\jquery.validator.custom.methods.js"></script>
 		<!-- Content end -->
-
 		<script>
 		$("#registrationForm").validate(
 		{
@@ -198,6 +188,6 @@
 				}
 			}
 		});
-		</script> 
+		</script>
 	</body>
 </html>
