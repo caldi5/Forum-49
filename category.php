@@ -1,6 +1,4 @@
-<?php
-	ini_set('display_errors', 1);
-	
+<?php	
 	session_start();
 
 	require_once "includes/dbconn.php";
