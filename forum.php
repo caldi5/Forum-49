@@ -3,6 +3,7 @@
 	TODO:
 		- Use the function getForumName.
 	*/
+		ini_set('display_errors', true); 
 
 	session_start();
 	require_once "includes/dbconn.php";
@@ -126,15 +127,15 @@
 							// Nice admin and moderator colors for the "creator" text. Blue is for moderator and red is for admin.
 							if (isAdminID($row['creator']))
 							{
-								echo '<p class="post-poster"><span class="admin">'.getUsername($row['creator']) . ' [A]</span></p>';
+								echo '<p class="post-poster"><span class="admin">'.getUsernameID($row['creator']) . ' [A]</span></p>';
 							}
 							elseif (isModeratorID($row['creator'], $id))
 							{
-								echo '<p class="post-poster"><span class="mod">'.getUsername($row['creator']).' [M]</span></p>';
+								echo '<p class="post-poster"><span class="mod">'.getUsernameID($row['creator']).' [M]</span></p>';
 							}
 							else
 							{
-								echo '<p class="post-poster">'.getUsername($row['creator']).'</p>';
+								echo '<p class="post-poster">'.getUsernameID($row['creator']).'</p>';
 							}
 
 							echo '</div>';

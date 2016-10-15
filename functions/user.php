@@ -1,5 +1,6 @@
 <?php
 	require_once("/includes/dbconn.php");
+	ini_set('display_errors', true); 
 	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
@@ -18,15 +19,22 @@
 	// Returns the username.
 	function getUsername ()
 	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
-		$stmt->bind_param('i', $_SESSION["id"]);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($username);
-		$stmt->fetch();
-		$stmt->close();
-		return $username;
+		if (isset($_SESSION["id"]))
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
+			$stmt->bind_param('i', $_SESSION["id"]);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($username);
+			$stmt->fetch();
+			$stmt->close();
+			return $username;
+		}
+		else
+		{
+			return 'error';
+		}
 	}
 
 	// Returns the username.
