@@ -28,7 +28,7 @@
 				while ($row = $result->fetch_assoc())
 				{
 					echo '<div class="row category">';
-					echo '<h2 class="category-title"><a href="category.php?id=1">'.$row['name'].'</a></h2>';
+					echo '<h2 class="category-title"><a href="category.php?id='.$row['id'].'">'.$row['name'].'</a></h2>';
 
 					$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
 					$stmt_2->bind_param('i', $row['id']);
