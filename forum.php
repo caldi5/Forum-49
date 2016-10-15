@@ -3,7 +3,6 @@
 	TODO:
 		- Use the function getForumName.
 	*/
-		ini_set('display_errors', true); 
 
 	session_start();
 	require_once "includes/dbconn.php";

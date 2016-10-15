@@ -1,6 +1,5 @@
 <?php
-	require_once("/includes/dbconn.php");
-	ini_set('display_errors', true); 
+	require_once("../includes/dbconn.php");
 	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
@@ -33,7 +32,7 @@
 		}
 		else
 		{
-			return 'error';
+			return false;
 		}
 	}
 
@@ -66,19 +65,25 @@
 	// Checks if a user is an admin, returns true if he is, false if he's not logged in or not an admin.
 	function isAdmin ()
 	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
-		$stmt->bind_param('i', $_SESSION["id"]);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($role);
-		$stmt->fetch();
-		if($role === "admin")
+		if (isset($_SESSION["id"]))
 		{
-			return true;
+			global $conn;
+			$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
+			$stmt->bind_param('i', $_SESSION["id"]);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($role);
+			$stmt->fetch();
+			if($role === "admin")
+				return true;
+			else
+				return false;
+			$stmt->close();
 		}
-		return false;
-		$stmt->close();
+		else
+		{
+			return false;
+		}
 	}
 
 	// Checks if a user with the given user ID is an admin.
@@ -92,10 +97,9 @@
 		$stmt->bind_result($role);
 		$stmt->fetch();
 		if($role === "admin")
-		{
 			return true;
-		}
-		return false;
+		else
+			return false;
 		$stmt->close();
 	}
 
@@ -110,10 +114,9 @@
 		$stmt->bind_result($role);
 		$stmt->fetch();
 		if($role === "admin")
-		{
 			return true;
-		}
-		return false;
+		else
+			return false;
 		$stmt->close();
 	}
 
