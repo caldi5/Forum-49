@@ -4,19 +4,22 @@
 	require_once "includes/dbconn.php";
 	require_once "functions/get.php";
 
+	// Makes sure that the GET variable id is set.
 	if (isset($_GET['id']))
 	{
+		// stmt is responsible for getting the name of the category, this should be done using the function getCategoryName in the future.
 		$stmt = $conn->prepare('SELECT name FROM categories WHERE id = ?');
 		$stmt->bind_param('i', $_GET['id']);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($name);
 
-
+		// Makes sure that the category exists.
 		if ($stmt->num_rows > 0)
 		{
 			$stmt->fetch();
 
+			// stmt_2 gets all of the forums that belong to the current category.
 			$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering');
 			$stmt_2->bind_param('i', $_GET['id']);
 			$stmt_2->execute();
@@ -26,6 +29,7 @@
 		}
 		else
 		{
+			// If the category does not exist the user will be sent back to the index page.
 			header("Location: index.php");
 			die();
 		}
@@ -35,6 +39,7 @@
 	}
 	else
 	{
+		// If id was not set, the user will be sent back to index.
 		header("Location: index.php");
 		die();
 	}
@@ -54,8 +59,10 @@
 				<h2 class="category-title"><?php echo $name; ?></h2>
 
 				<?php
+					// Checks if there's at least one forum in the category.
 					if ($result->num_rows > 0)
 					{
+						// Prints all of the forums.
 						while ($row = $result->fetch_assoc())
 						{
 							echo '<a href="forum.php?id=' . $row['id'] . '">' . "\r\n";
@@ -73,6 +80,7 @@
 					}
 					else
 					{
+						// If there's not one or more forums we print a sorry message.
 						echo '<div class="alert alert-info">' . "\r\n";
 						echo '<h3><strong>Sorry!</strong> There\'s no forum in this category just yet!</h3>' . "\r\n";
 						echo '</div>' . "\r\n";
