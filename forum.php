@@ -139,7 +139,7 @@
 
 							echo '</div>';
 							echo '<div class="col-lg-2">';
-							echo '<p>Replies:<br>'.numberOfReplies($row['id'].'</p>');
+							echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
 							echo '</div>';
 							echo '</div>';
 							echo '</a>';
