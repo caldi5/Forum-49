@@ -1,4 +1,9 @@
 <?php
+	/*
+	TODO:
+		- Use the function getForumName.
+	*/
+
 	session_start();
 	require_once "includes/dbconn.php";
 	require_once "functions/get.php";
@@ -78,29 +83,31 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h1><?php echo $name; ?></h1>
+			<h1><?php
+			// This should use the function getForumName when that function is done!
+			 echo $name; ?></h1>
 			<div class="posts">
 				<?php
 					// Buttons for for posting, administrating and moderating.
 					if (isAdmin())
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
-						echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
+						echo '<a href="admin.php" class="btn btn-default" role="button">Administrate</a>';
 						echo '</div>';
 					}
 					elseif (idModerator($_GET['id']))
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 						echo '</div>';
 					}
 					elseif (isLoggedIn())
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
 						echo '</div>';
 					}
 						
@@ -142,18 +149,19 @@
 					else
 					{
 						// Here we check if there's post in the forum, or if the user has tried goind to a page that doesn't have any results.
-						if (!isset($page))
+						if ($count == 0)
 						{
 							// We check if it's an empty forum.
 							echo '<div class="alert alert-info">';
-							echo '<h3><strong>Sorry!</strong> This page does not exist!</h3>';
+							echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
 							echo '</div>';
+
 						}
 						elseif ($page > ceil($count / $posts_per_page))
 						{
 							// Here we check if the user has tried going to a page without any posts.
 							echo '<div class="alert alert-info">';
-							echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
+							echo '<h3><strong>Sorry!</strong> This page does not exist!</h3>';
 							echo '</div>';
 						}
 					}
