@@ -30,12 +30,17 @@
 
 	session_start();
 	require_once ("includes/dbconn.php");
+	require ('includes/recaptcha/src/autoload.php');
+	$recaptcha = new \ReCaptcha\ReCaptcha('6LcuUwkUAAAAAFZS92ePbIhLGBo265zcTQ5e-WIW');
 
 	//======================================================================
 	//Regristration
 	//======================================================================
 	if(isset($_POST["registrationForm"])) 
 	{
+		
+		$response = $recaptcha->verify($_POST['g-recaptcha-response'],  $_SERVER['REMOTE_ADDR']);
+
 		//-----------------------------------------------------
 		//Validate form
 		//-----------------------------------------------------
@@ -57,6 +62,8 @@
 			$error[] = "Your password must contain at least 8 characters";
 		if($_POST["password"] !== $_POST["confirmPassword"])
 			$error[] = "Passwords does not match";
+		if (!$response->isSuccess())
+			$error[] = "Captcha failed";
 		
 		//Email
 		if(preg_match('/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i', $_POST["email"]) !== 1)
@@ -98,8 +105,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php include("includes/standard_head.php"); ?>
+		<?php include("includes/standard_head.php"); ?>
 		<title>Register</title>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</head>
 	<body>
 <?php include("includes/navbar.php");?>
@@ -145,6 +153,8 @@
 						<label>Email Address:</label>
 						<input type="email" maxlength="50" class="form-control" name="email" placeholder="anna.andersson@example.com" <?php if(isset($error) && isset($_POST["email"])){ echo "value=\"" . $_POST["email"] . "\" ";}?>required>
 					</div>
+					<div class="g-recaptcha" data-sitekey="6LcuUwkUAAAAAP4mcb-qcOJOs_gdrjKRdXzlilHX"></div>
+					<br>
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
 				</form>
 			</div>
