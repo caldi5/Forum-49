@@ -92,22 +92,22 @@
 					if (isAdmin())
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
-						echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
+						echo '<a href="admin.php" class="btn btn-default" role="button">Administrate</a>';
 						echo '</div>';
 					}
 					elseif (idModerator($_GET['id']))
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 						echo '</div>';
 					}
 					elseif (isLoggedIn())
 					{
 						echo '<div class="actions">';
-						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+						echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
 						echo '</div>';
 					}
 						
