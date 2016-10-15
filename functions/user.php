@@ -1,4 +1,5 @@
 <?php
+	require_once("/includes/dbconn.php");
 	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
@@ -15,9 +16,31 @@
 	}
 
 	// Returns the username.
-	function getUsername ($userID)
+	function getUsername ()
 	{
-		return 'admin';
+		global $conn;
+		$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
+		$stmt->bind_param('i', $_SESSION["id"]);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($username);
+		$stmt->fetch();
+		$stmt->close();
+		return $username;
+	}
+
+	// Returns the username.
+	function getUsernameID ($userID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
+		$stmt->bind_param('i', $userID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($username);
+		$stmt->fetch();
+		$stmt->close();
+		return $username;
 	}
 
 	// Returns the user ID.
@@ -35,19 +58,55 @@
 	// Checks if a user is an admin, returns true if he is, false if he's not logged in or not an admin.
 	function isAdmin ()
 	{
-		return true;
+		global $conn;
+		$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
+		$stmt->bind_param('i', $_SESSION["id"]);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($role);
+		$stmt->fetch();
+		if($role === "admin")
+		{
+			return true;
+		}
+		return false;
+		$stmt->close();
 	}
 
 	// Checks if a user with the given user ID is an admin.
 	function isAdminID ($userID)
 	{
-		return true;
+		global $conn;
+		$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
+		$stmt->bind_param('i', $userID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($role);
+		$stmt->fetch();
+		if($role === "admin")
+		{
+			return true;
+		}
+		return false;
+		$stmt->close();
 	}
 
 	// Checks if a user with the given username is an admin.
 	function isAdminUsername ($username)
 	{
-		return true;
+		global $conn;
+		$stmt = $conn->prepare('SELECT role FROM users WHERE username = ?');
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($role);
+		$stmt->fetch();
+		if($role === "admin")
+		{
+			return true;
+		}
+		return false;
+		$stmt->close();
 	}
 
 	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
