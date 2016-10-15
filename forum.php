@@ -35,6 +35,14 @@
 
 			$result = $stmt_2->get_result();
 			$stmt_2->store_result();
+
+
+			$getCount = $conn->prepare('SELECT DISTINCT COUNT(id) AS count FROM posts WHERE forum = ?');
+			$getCount->bind_param('i', $_GET['id']);
+			$getCount->execute();
+			$getCount->store_result();
+			$getCount->bind_result($count);
+			$getCount -> fetch();
 		}
 		else
 		{
@@ -68,31 +76,31 @@
 			<div class="posts">
 
 				<?php
+					// Buttons for for posting, administrating and moderating.
+					if (isAdmin())
+					{
+						echo '<div class="actions">';
+						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+						echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
+						echo '</div>';
+					}
+					elseif (idModerator($_GET['id']))
+					{
+						echo '<div class="actions">';
+						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+						echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+						echo '</div>';
+					}
+					elseif (isLoggedIn())
+					{
+						echo '<div class="actions">';
+						echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+						echo '</div>';
+					}
+						
 					if ($result->num_rows > 0)
 					{
-						// Buttons for for posting, administrating and moderating.
-						if (isAdmin())
-						{
-							echo '<div class="actions">';
-							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
-							echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
-							echo '</div>';
-						}
-						elseif (idModerator($_GET['id']))
-						{
-							echo '<div class="actions">';
-							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
-							echo '</div>';
-						}
-						elseif (isLoggedIn())
-						{
-							echo '<div class="actions">';
-							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
-							echo '</div>';
-						}
-
 						while ($row = $result->fetch_assoc())
 						{
 							echo '<div class="row">';
@@ -123,26 +131,30 @@
 					}
 					else
 					{
-						echo '<div class="alert alert-info">';
-						echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
-						echo '</div>';
+						// Here we check if there's post in the forum, or if the user has tried goind to a page that doesn't have any results.
+
+						if (!isset($page))
+						{
+							// We check if it's an empty forum.
+							echo '<div class="alert alert-info">';
+							echo '<h3><strong>Sorry!</strong> This page does not exist!</h3>';
+							echo '</div>';
+						}
+						elseif ($page > ceil($count / 10))
+						{
+							// Here we check if the user has tried going to a page without any posts.
+							echo '<div class="alert alert-info">';
+							echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
+							echo '</div>';
+						}
 					}
-					echo $row['counter'];
+
 					$stmt_2->free_result();
 					$stmt_2->close();
 				?>
 
 			</div>
 			<?php
-
-
-
-				$getCount = $conn->prepare('SELECT DISTINCT COUNT(id) AS count FROM posts WHERE forum = ?');
-				$getCount->bind_param('i', $_GET['id']);
-				$getCount->execute();
-				$getCount->store_result();
-				$getCount->bind_result($count);
-				$getCount -> fetch();
 
 				if ($count > 10)
 				{
