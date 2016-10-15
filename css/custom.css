@@ -149,3 +149,14 @@ span.admin
 {
 	color: red;
 }
+
+.actions
+{
+	margin-bottom: 10px;
+}
+
+.actions a
+{
+	color: white;
+	margin-right: 5px;
+}

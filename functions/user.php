@@ -32,8 +32,14 @@
 		return true;
 	}
 
+	// Checks if a user is an admin, returns true if he is, false if he's not logged in or not an admin.
+	function isAdmin ()
+	{
+		return true;
+	}
+
 	// Checks if a user with the given user ID is an admin.
-	function isAdmin ($userID)
+	function isAdminID ($userID)
 	{
 		return false;
 	}
@@ -44,8 +50,14 @@
 		return true;
 	}
 
+	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
+	function isModerator ($forumID)
+	{
+		return true;
+	}
+
 	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
-	function isModerator ($userID, $forumID)
+	function isModeratorID ($userID, $forumID)
 	{
 		return true;
 	}

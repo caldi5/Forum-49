@@ -70,6 +70,29 @@
 				<?php
 					if ($result->num_rows > 0)
 					{
+						// Buttons for for posting, administrating and moderating.
+						if (isAdmin())
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+							echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
+							echo '</div>';
+						}
+						elseif (idModerator($_GET['id']))
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+							echo '</div>';
+						}
+						elseif (isLoggedIn())
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '</div>';
+						}
+
 						while ($row = $result->fetch_assoc())
 						{
 							echo '<div class="row">';
@@ -114,30 +137,32 @@
 
 
 
-				$getCount = $conn->prepare('SELECT COUNT(*) AS count FROM posts WHERE forum = ?');
+				$getCount = $conn->prepare('SELECT DISTINCT COUNT(id) AS count FROM posts WHERE forum = ?');
 				$getCount->bind_param('i', $_GET['id']);
-				$count = $getCount->execute();
+				$getCount->execute();
 				$getCount->store_result();
+				$getCount->bind_result($count);
+				$getCount -> fetch();
 
 				if ($count > 10)
 				{
 					echo '<div class="row">';
 					echo '<ul class="pagination">';
 
-					$pages = ceil($result->num_rows / 10);
+					$pages = ceil($count / 10);
 
 					for ($i = 1; $i <= $pages; $i++)
 					{
 						if ($i == $page)
-							echo '<li class="active"><a href="forum.php?page='.$i.'">'.$i.'</a></li>';
+							echo '<li class="active"><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 						else
-							echo '<li><a href="forum.php?page='.$i.'">'.$i.'</a></li>';
+							echo '<li><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 					}
 
 					echo '</ul>';
 					echo '</div>';
 				}
-				//$getCount->free_result();
+				$getCount->free_result();
 				$getCount->close();
 
 			?>
