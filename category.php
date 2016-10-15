@@ -1,4 +1,9 @@
 <?php	
+	/*
+	TODO:
+		- Use the function getCategoryName.
+
+	*/
 	session_start();
 
 	require_once "includes/dbconn.php";
