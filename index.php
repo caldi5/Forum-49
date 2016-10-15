@@ -30,7 +30,7 @@
 					echo '<div class="row category">';
 					echo '<h2 class="category-title"><a href="category.php?id=1">'.$row['name'].'</a></h2>';
 
-					$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE id = ? ORDER BY ordering LIMIT 3');
+					$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
 					$stmt_2->bind_param('i', $row['id']);
 					$stmt_2->execute();
 					$result_2 = $stmt_2->get_result();
