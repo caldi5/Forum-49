@@ -29,4 +29,10 @@
 	{
 		return 1;
 	}
+
+	// Returns the id of the category that a forum belongs to
+	function forumBelongsTo ($forumID)
+	{
+		return 1;
+	}
 ?>

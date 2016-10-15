@@ -43,11 +43,18 @@ html, h1, h2, h3, h4, h5, h6
 {
 	margin-bottom: 5px;
 	text-decoration: none;
+	color: #333;
+}
+
+.category-title:hover
+{
+	text-decoration: none;
+	color: #333;
 }
 
 .category a
 {
-	color: black;
+	color: #333;
 	text-decoration: none;
 }
 
@@ -63,7 +70,7 @@ html, h1, h2, h3, h4, h5, h6
 
 .posts a
 {
-	color: black;
+	color: #333;
 }
 
 .post
@@ -157,6 +164,6 @@ span.admin
 
 .actions a
 {
-	color: black;
+	color: #333;
 	margin-right: 5px;
 }

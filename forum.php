@@ -77,8 +77,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<?php include("includes/standard_head.php"); ?>
-		<title>Forum</title>
+		<?php include("includes/standard_head.php"); ?>
+		<title><?php echo $name; ?></title>
 	</head>
 	<body>
 <?php include("includes/navbar.php"); ?>		
@@ -86,7 +86,10 @@
 		<div class="container">
 			<h1><?php
 			// This should use the function getForumName when that function is done!
-			 echo $name; ?></h1>
+			$categoryID = forumBelongsTo($id);
+			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> - '.$name; ?>
+			 	
+			 </h1>
 			<div class="posts">
 				<?php
 					// Buttons for for posting, administrating and moderating.
