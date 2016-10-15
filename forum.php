@@ -6,6 +6,19 @@
 
 	if (isset($_GET['id']))
 	{
+		$posts_per_page = 10;
+
+		if (isset($_GET['page']))
+		{
+			$page = $_GET['page'];
+		}
+		else
+		{
+			$page = 1;
+		}
+
+		$posts = ($posts_per_page*$page)-10;
+
 		$stmt = $conn->prepare('SELECT id, name FROM forums WHERE id = ?');
 		$stmt->bind_param('i', $_GET['id']);
 		$stmt->execute();
@@ -14,10 +27,10 @@
 
 		if ($stmt->num_rows > 0)
 		{
-			$stmt->fetch();
+			$stmt->fetch();				
 
-			$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at');
-			$stmt_2->bind_param('i', $_GET['id']);
+			$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at LIMIT 10 OFFSET ?');
+			$stmt_2->bind_param('ii', $_GET['id'], $posts);
 			$stmt_2->execute();
 
 			$result = $stmt_2->get_result();
@@ -25,7 +38,8 @@
 		}
 		else
 		{
-			header("Location: index.php");
+			echo 'hej';
+			//header("Location: index.php");
 			die();
 		}
 
@@ -34,7 +48,8 @@
 	}
 	else
 	{
-		header("Location: index.php");
+		echo 'hola';
+		//header("Location: index.php");
 		die();
 	}
 
@@ -55,6 +70,29 @@
 				<?php
 					if ($result->num_rows > 0)
 					{
+						// Buttons for for posting, administrating and moderating.
+						if (isAdmin())
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+							echo '<a href="admin.php" class="btn btn-primary" role="button">Administrate</a>';
+							echo '</div>';
+						}
+						elseif (idModerator($_GET['id']))
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '<a href="moderate.php" class="btn btn-primary" role="button">Moderate</a>';
+							echo '</div>';
+						}
+						elseif (isLoggedIn())
+						{
+							echo '<div class="actions">';
+							echo '<a href="post.php?new" class="btn btn-primary" role="button">New Post</a>';
+							echo '</div>';
+						}
+
 						while ($row = $result->fetch_assoc())
 						{
 							echo '<div class="row">';
@@ -89,21 +127,45 @@
 						echo '<h3><strong>Sorry!</strong> There\'s no posts in this forum just yet!</h3>';
 						echo '</div>';
 					}
-
+					echo $row['counter'];
 					$stmt_2->free_result();
 					$stmt_2->close();
 				?>
 
 			</div>
-			<div class="row">
-				<ul class="pagination">
-				  <li class="active"><a href="#">1</a></li>
-				  <li><a href="#">2</a></li>
-				  <li><a href="#">3</a></li>
-				  <li><a href="#">4</a></li>
-				  <li><a href="#">5</a></li>
-				</ul>
-			</div>
+			<?php
+
+
+
+				$getCount = $conn->prepare('SELECT DISTINCT COUNT(id) AS count FROM posts WHERE forum = ?');
+				$getCount->bind_param('i', $_GET['id']);
+				$getCount->execute();
+				$getCount->store_result();
+				$getCount->bind_result($count);
+				$getCount -> fetch();
+
+				if ($count > 10)
+				{
+					echo '<div class="row">';
+					echo '<ul class="pagination">';
+
+					$pages = ceil($count / 10);
+
+					for ($i = 1; $i <= $pages; $i++)
+					{
+						if ($i == $page)
+							echo '<li class="active"><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+						else
+							echo '<li><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+					}
+
+					echo '</ul>';
+					echo '</div>';
+				}
+				$getCount->free_result();
+				$getCount->close();
+
+			?>
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
