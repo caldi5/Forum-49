@@ -29,10 +29,7 @@
 	// Checks if the user is logged in.
 	function isLoggedIn()
 	{
-		if (isset($_SESSION["id"]))
-			return true;
-		else
-			return false;
+		return isset($_SESSION["id"]);
 	}
 
 	// Checks if a user is an admin, returns true if he is, false if he's not logged in or not an admin.
