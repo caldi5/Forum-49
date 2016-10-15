@@ -46,8 +46,7 @@
 		}
 		else
 		{
-			echo 'hej';
-			//header("Location: index.php");
+			header("Location: index.php");
 			die();
 		}
 
@@ -56,8 +55,7 @@
 	}
 	else
 	{
-		echo 'hola';
-		//header("Location: index.php");
+		header("Location: index.php");
 		die();
 	}
 
