@@ -20,21 +20,22 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["username"]; ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href=\"#\">Profile</a></li>
-								<li><a href=\"#\">Settings</a></li>
+								<li><a href="#">Profile</a></li>
+								<li><a href="#">Settings</a></li>
 <?php 
 if(isadmin() === true) 
 	echo "\t\t\t\t\t\t\t\t<li><a href=\"admin.php\">Admin</a></li>\r\n"; 
 ?>
-								<li><a href=\"logout.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Logout</a></li>
+								<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
 						  </li>
 <?php	
 	}
 	else
-	{ ?>
-						<?php echo "<li><a href=\"login.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Sign In</a></li>\r\n"; ?>
-						<?php  echo "<li><a href=\"register.php\"><span class=\"glyphicon glyphicon-user\"></span> Sign Up</a></li>\r\n"; ?>
+	{ 
+?>
+						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+						<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 <?php
 	}
 ?>
