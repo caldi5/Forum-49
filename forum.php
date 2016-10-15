@@ -1,4 +1,9 @@
 <?php
+	/*
+	TODO:
+		- Use the function getForumName.
+	*/
+
 	session_start();
 	require_once "includes/dbconn.php";
 	require_once "functions/get.php";
@@ -78,7 +83,9 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h1><?php echo $name; ?></h1>
+			<h1><?php
+			// This should use the function getForumName when that function is done!
+			 echo $name; ?></h1>
 			<div class="posts">
 				<?php
 					// Buttons for for posting, administrating and moderating.
