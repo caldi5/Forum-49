@@ -41,7 +41,7 @@
 	// Checks if a user with the given user ID is an admin.
 	function isAdminID ($userID)
 	{
-		return false;
+		return true;
 	}
 
 	// Checks if a user with the given username is an admin.
