@@ -12,7 +12,7 @@
 		<!-- Content start -->
 		<div class="container">
 			<div class="row category">
-				<h2 class="category-title"><a href="category.php">Category 1</a></h2>
+				<h2 class="category-title"><a href="category.php?id=1">Category 1</a></h2>
 				<a href="forum.php">
 				<div class="col-lg-12 forum">
 					<h4 class="forum-title">Forum 1</h4>
@@ -33,7 +33,7 @@
 				</a>
 			</div>
 			<div class="row category">
-				<h2 class="category-title"><a href="category.php">Category 2</a></h2>
+				<h2 class="category-title"><a href="category.php?id=2">Category 2</a></h2>
 				<a href="forum.php">
 				<div class="col-lg-12 forum">
 					<h4 class="forum-title">Forum 1</h4>
@@ -54,7 +54,7 @@
 				</a>
 			</div>
 			<div class="row category">
-				<h2 class="category-title"><a href="category.php">Category 3</a></h2>
+				<h2 class="category-title"><a href="category.php?id=3">Category 3</a></h2>
 				<a href="forum.php">
 				<div class="col-lg-12 forum">
 					<h4 class="forum-title">Forum 1</h4>
