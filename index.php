@@ -9,6 +9,7 @@
 		ORDER BY ordering');
 	$stmt->execute();
 	$result = $stmt->get_result();
+	$stmt->store_result();
 	$stmt->close();
 	
 ?>
@@ -36,6 +37,7 @@
 					$stmt->bind_param('i', $row['id']);
 					$stmt->execute();
 					$result_2 = $stmt->get_result();
+					$stmt->store_result();
 					$stmt->close();
 
 					// Just an extra safety check, this should never be false. Explained below.
