@@ -74,11 +74,11 @@
 			$stmt->store_result();
 			$stmt->bind_result($role);
 			$stmt->fetch();
+			$stmt->close();
 			if($role === "admin")
 				return true;
 			else
 				return false;
-			$stmt->close();
 		}
 		else
 		{
@@ -96,11 +96,11 @@
 		$stmt->store_result();
 		$stmt->bind_result($role);
 		$stmt->fetch();
+		$stmt->close();
 		if($role === "admin")
 			return true;
 		else
 			return false;
-		$stmt->close();
 	}
 
 	// Checks if a user with the given username is an admin.
@@ -113,29 +113,70 @@
 		$stmt->store_result();
 		$stmt->bind_result($role);
 		$stmt->fetch();
+		$stmt->close();
 		if($role === "admin")
 			return true;
 		else
 			return false;
-		$stmt->close();
 	}
 
 	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
 	function isModerator ($forumID)
 	{
-		return true;
+		if (!isset($_SESSION["id"]))
+			return false;
+
+		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+		$stmt->bind_param('ii', $_SESSION["id"], $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+		$stmt->fetch();
+		$stmt->close();
+
+		if ($count == 0)
+			return false;
+		else
+			return true;
+		
 	}
 
 	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
 	function isModeratorID ($userID, $forumID)
 	{
-		return true;
+		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+		$stmt->bind_param('ii', $userID, $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+		$stmt->fetch();
+		$stmt->close();
+
+		if ($count == 0)
+			return false;
+		else
+			return true;
 	}
 
 	// Checks if the user with the given username is moderator for the forum with the given forum ID.
 	function isModeratorUsername ($username, $forumID)
 	{
-		return true;
+		$userID = getUserID($username);
+		if ($userID == false)
+			return false;
+
+		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+		$stmt->bind_param('ii', $userID, $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+		$stmt->fetch();
+		$stmt->close();
+
+		if ($count == 0)
+			return false;
+		else
+			return true;
 	}
 
 	// Returns an array of all the forums that the user with the given user ID is moderator for.

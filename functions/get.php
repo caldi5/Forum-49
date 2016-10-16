@@ -21,7 +21,7 @@
 	// Returns number of posts in a forum given the forum ID
 	function numberOfPosts ($fourmID)
 	{
-		return 1;
+		return 6;
 	}
 
 	// Returns the number of unred messages given the user ID
