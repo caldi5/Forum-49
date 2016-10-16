@@ -25,7 +25,7 @@
 <?php 
 if(isadmin() === true)
 {
-	echo "\t\t\t\t\t\t\t\t<li><a href=\"/admin.php\">Admin</a></li>\r\n"; 
+	echo "\t\t\t\t\t\t\t\t<li><a href=\"/admin/\">Admin</a></li>\r\n"; 
 }
 ?>
 								<li><a href="/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

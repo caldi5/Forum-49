@@ -21,16 +21,16 @@
 	 * If we are on page 2 and are showing 10 results per page, we don't want to get the first 10.
 	 * Then we want to start from 11.
 	 */
-	$posts = ($users_per_page*$page)-$users_per_page;
+	$users = ($users_per_page*$page)-$users_per_page;
 
 	//-----------------------------------------------------
 	//Get Users
 	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, username, role FROM users ORDER BY id LIMIT ? OFFSET ?');
-	$stmt->bind_param('ii', $posts_per_page, $posts);
+	$stmt = $conn->prepare('SELECT id, username, role, banned FROM users ORDER BY id LIMIT ? OFFSET ?');
+	$stmt->bind_param('ii', $users_per_page, $users);
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($id, $username, $role);
+	$stmt->bind_result($id, $username, $role, $banned);
 
 ?>
 <!DOCTYPE html>
@@ -44,33 +44,14 @@
 		<!-- Content start -->
 		<div class="container-fluid"">
 			<div class="row">
-				<!-- Admin Menu Start--> 
-				<div class="col-sm-2">
-					<div class="list-group">
-						<a href="#" class="list-group-item active" data-toggle="collapse" data-target="#adminMenuColapse">Admin Menu <span class="caret"></span></a>
-						<div id="adminMenuColapse" class="collapse in">
-							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminUsers">Users</a>
-							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminCategories">Categories</a>
-							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminForums">Forums</a>
-						</div>
-					</div>
-				</div>
-				<!-- Admin Menu End-->
+<?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
-<?php
-	if(isset($error))
-	{
-		foreach ($error as $err) 
-		{
-			echo "<div class=\"alert alert-danger\">\r\n";
-			echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
-			echo "<strong>Error</strong> ". $err. "\r\n";
-			echo "</div>" . "\r\n";
-		}
-	}
+<?php 
+if(isset($error))
+	displayErrors($error); 
 ?>
 <!-- Users Start -->
-					<div id="pannelAdminUsers" class="panel panel-default collapse">
+					<div id="pannelAdminUsers" class="panel panel-default">
 						<div class="panel-heading">
 							Users
 						</div>
@@ -81,9 +62,8 @@
 						        <tr>
 						        	<th>ID</th>
 						        	<th>Username</th>
-						        	<th></th>
-						        	<th></th>
-						        	<th></th>
+						        	<th>Role</th>
+						        	<th>Banned</th>
 						        	</tr>
 						    </thead>
 						    <tbody>
@@ -93,9 +73,14 @@
 ?>
 									<tr>
 										<td><?php echo $id; ?></td>
-										<td><?php echo $name; ?></td>
-										<td><?php echo $ordering; ?></td>
-										<td>123123</td>
+										<td><?php echo $username; ?></td>
+										<td><?php echo $role; ?></td>
+										<td><?php
+										if($banned === 0)
+											echo "No"; 
+										else
+											echo "yes";
+										?></td>
 										<td><span class="input-group-btn"><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button><button type="button" class="btn btn-xs btn-success pull-right">Edit</button></span></td>
 									</tr>
 <?php
