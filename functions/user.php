@@ -1,5 +1,5 @@
 <?php
-	require_once ($_SERVER['DOCUMENT_ROOT'] . "/includes/dbconn.php");
+	require_once ("includes/dbconn.php");
 	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
