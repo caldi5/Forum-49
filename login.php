@@ -33,13 +33,8 @@
 		if(password_verify($_POST["password"] , $passwordHash))
 		{
 			$_SESSION["id"] = $id;
-			/*
-			 * You might ask yourself, why bother taking the username from the database?
-			 * $_SESSION["username"] = $_POST["username"];
-			 * Well, that's because then the user can login with whatever case combenation they want. like uSERnAmE
-			 */
-			$_SESSION["username"] = $username;
-			$_SESSION["role"] = $role;
+			header("Location: index.php");
+			die();
 		}
 		else
 		{
