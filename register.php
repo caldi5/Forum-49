@@ -29,7 +29,8 @@
 */
 
 	session_start();
-	require_once ("includes/dbconn.php");
+	require_once("includes/dbconn.php");
+	require_once("functions/user.php");
 
 	// These two lines are important for captcha to work!
 	require ('includes/recaptcha/src/autoload.php');
@@ -40,7 +41,7 @@
 	//======================================================================
 	if(isset($_POST["registrationForm"])) 
 	{
-		// Captcha
+		//Captcha
 		$response = $recaptcha->verify($_POST['g-recaptcha-response'],  $_SERVER['REMOTE_ADDR']);
 
 		//-----------------------------------------------------
@@ -64,13 +65,14 @@
 			$error[] = "Your password must contain at least 8 characters";
 		if($_POST["password"] !== $_POST["confirmPassword"])
 			$error[] = "Passwords does not match";
-		if (!$response->isSuccess())
-			$error[] = "Captcha failed";
 
 		//Email
 		if(preg_match('/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i', $_POST["email"]) !== 1)
 			$error[] = "Email does not look valid";
 
+		//Captcha
+		if (!$response->isSuccess())
+			$error[] = "Captcha failed";
 
 		//-----------------------------------------------------
 		//Insert the data in the database
@@ -93,10 +95,11 @@
 				else
 				{
 					//Set session variables.
-					$_SESSION["username"] = $_POST["username"];
-					$_SESSION["role"] = "user";
+					$_SESSION["id"] = getUserID($_POST["username"]);
 
 					//Redirect to index page.
+					header("Location: index.php");
+					die();
 				}
 				$stmt->close();
 			}
