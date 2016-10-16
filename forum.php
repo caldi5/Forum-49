@@ -52,6 +52,7 @@
 	$stmt->fetch();
 	$stmt->free_result();
 	$stmt->close();
+
 	//-----------------------------------------------------
 	// stmt_2 is responsible for getting all of the posts in this forum.
 	//-----------------------------------------------------
@@ -70,6 +71,7 @@
 	$getCount->execute();
 	$getCount->bind_result($count);
 	$getCount->fetch();
+	$getCount->free_result();
 	$getCount->close();
 
 ?>
@@ -83,11 +85,15 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h1><?php
+			<h1>
+			<?php
 			// This should use the function getForumName when that function is done!
 			$categoryID = forumBelongsTo($id);
-			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> - '.$name; ?>
+			
+			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> - '.$name; 
+			 ?>
 			 </h1>
+
 			<div class="posts">
 <?php
 	// Buttons for for posting, administrating and moderating.
