@@ -2,6 +2,7 @@
 	session_start();
 	require_once "includes/dbconn.php";
 
+	// Here we get all of the categories that has at least one forum in them.
 	$stmt = $conn->prepare('SELECT id, name 
 		FROM categories 
 		WHERE (SELECT COUNT(id) FROM forums WHERE category = categories.id) > 0
@@ -24,19 +25,23 @@
 		<?php
 			if ($result->num_rows > 0)
 			{
+				// Loops thru all of the selected forums.
 				while ($row = $result->fetch_assoc())
 				{
 					echo '<div class="row category">';
 					echo '<h2 class="category-title"><a href="category.php?id='.$row['id'].'">'.$row['name'].'</a></h2>';
 
+					// Here we get the forums that belongs to the current category.
 					$stmt = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
 					$stmt->bind_param('i', $row['id']);
 					$stmt->execute();
 					$result_2 = $stmt->get_result();
 					$stmt->close();
 
+					// Just an extra safety check, this should never be false. Explained below.
 					if($result_2->num_rows > 0)
 					{
+						// Lopps thru the forums for this category.
 						while ($forum = $result_2->fetch_assoc())
 						{
 							echo '<a href="forum.php?id='.$forum['id'].'">';
@@ -49,6 +54,7 @@
 					}
 					else
 					{
+						// This should not be able to happen since we only select thoose categories with at least one forum.
 						echo 'There is no forums in this category yet.';
 					}
 					echo '</div>';
