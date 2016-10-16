@@ -53,8 +53,20 @@
 	// Returns the user ID.
 	function getUserID ($username)
 	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT id from users where username = ?');
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($id);
 
-		return 1;
+		if($stmt->num_rows == 0)
+			return false;
+
+		$stmt->fetch();
+		$stmt->close();
+
+		return $id;
 	}
 
 	// Checks if the user is logged in.
