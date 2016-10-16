@@ -187,7 +187,7 @@
 		echo '<div class="row">';
 		echo '<ul class="pagination">';
 		echo '<li>';
-		echo '<a href="#" aria-label="Previous">';
+		echo '<a href="forum.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
 		echo '<span aria-hidden="true">&laquo;</span>';
 		echo '</a></li>';
 
@@ -204,7 +204,7 @@
 		}
 
 		echo '<li>';
-		echo '<a href="#" aria-label="Next">';
+		echo '<a href="forum.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
 		echo '<span aria-hidden="true">&raquo;</span>';
 		echo '</a></li>';
 		echo '</ul>';
