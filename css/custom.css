@@ -123,30 +123,6 @@ html, h1, h2, h3, h4, h5, h6
 	margin-bottom: 10px;
 }
 
-ul.nav-pills
-{
-	position: relative;
-}
-
-div.col-sm-9 div
-{
-	height: 20%;
-	font-size: 17px;
-}
-
-#section1 
-{
-	color: #030301; background-color: #D7D2C7; height: 90%;
-}
-
-@media screen and (max-width: 810px) 
-{
-	#section1, #section2, #section3, #section41, #section42  
-	{
-		margin-left: 150px;
-	}
-}
-
 span.mod
 {
 	color: blue;
