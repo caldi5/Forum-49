@@ -8,7 +8,7 @@
 		ORDER BY ordering');
 	$stmt->execute();
 	$result = $stmt->get_result();
-	$stmt->store_result();
+	$stmt->close();
 	
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,6 @@
 		<?php include("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
-
 		<?php
 			if ($result->num_rows > 0)
 			{
@@ -30,11 +29,11 @@
 					echo '<div class="row category">';
 					echo '<h2 class="category-title"><a href="category.php?id='.$row['id'].'">'.$row['name'].'</a></h2>';
 
-					$stmt_2 = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
-					$stmt_2->bind_param('i', $row['id']);
-					$stmt_2->execute();
-					$result_2 = $stmt_2->get_result();
-					$stmt_2->store_result();
+					$stmt = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
+					$stmt->bind_param('i', $row['id']);
+					$stmt->execute();
+					$result_2 = $stmt->get_result();
+					$stmt->close();
 
 					if($result_2->num_rows > 0)
 					{
@@ -50,15 +49,12 @@
 					}
 					else
 					{
-						echo 'This should not be possible.';
-						die();
+						echo 'There is no forums in this category yet.';
 					}
 					echo '</div>';
-					$stmt_2->free_result();
-					$stmt_2->close();
 				}
-				$stmt->free_result();
-				$stmt->close();
+				$result_2->free_result();
+				$result->free_result();
 			}
 			else
 			{
