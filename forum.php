@@ -43,12 +43,14 @@
 	$stmt->execute();
 	$stmt->store_result();
 	$stmt->bind_result($id, $name);
+
 	// If it doesn't exist we send the back to index.
 	if ($stmt->num_rows === 0)
 	{	
 		header("Location: index.php");
 		die();
 	}
+
 	$stmt->fetch();
 	$stmt->free_result();
 	$stmt->close();
@@ -66,7 +68,7 @@
 	//-----------------------------------------------------
 	// getCount gets the total amount of posts in this forum and puts it in the count varible.
 	//-----------------------------------------------------
-	$getCount = $conn->prepare('SELECT DISTINCT COUNT(id) AS count FROM posts WHERE forum = ?');
+	$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM posts WHERE forum = ?');
 	$getCount->bind_param('i', $_GET['id']);
 	$getCount->execute();
 	$getCount->bind_result($count);
@@ -89,7 +91,7 @@
 			<?php
 			// This should use the function getForumName when that function is done!
 			$categoryID = forumBelongsTo($id);
-			
+
 			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> - '.$name; 
 			 ?>
 			 </h1>
