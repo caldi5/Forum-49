@@ -18,13 +18,15 @@
 						<li><a href="messages.php">Messages</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["username"]; ?> <span class="caret"></span></a>
+							<span class="glyphicon glyphicon-user"></span> <?php echo getUsername(); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Profile</a></li>
 								<li><a href="#">Settings</a></li>
 <?php 
-if(isadmin() === true) 
+if(isadmin() === true)
+{
 	echo "\t\t\t\t\t\t\t\t<li><a href=\"admin.php\">Admin</a></li>\r\n"; 
+}
 ?>
 								<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
