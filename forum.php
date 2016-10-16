@@ -186,16 +186,8 @@
 		echo '<nav aria-label="Page navigation">';
 		echo '<div class="row">';
 		echo '<ul class="pagination">';
-		if ($page == 1)
-		{
-			echo '<li class="page-item disabled">';
-			echo '<a class="page-link" href="#" aria-label="Previous">';
-		}
-		else 
-		{
-			echo '<li class="page-item">';
-			echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
-		}
+		echo '<li>';
+		echo '<a href="forum.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
 		echo '<span aria-hidden="true">&laquo;</span>';
 		echo '</a></li>';
 
@@ -206,20 +198,13 @@
 		{
 			// Makes the current page active.
 			if ($i == $page)
-				echo '<li class="page-item active"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+				echo '<li class="active"><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 			else
-				echo '<li class="page-item"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+				echo '<li><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 		}
-		if ($page == $pages)
-		{
-			echo '<li class="page-item disabled">';
-			echo '<a class="page-link" href="#" aria-label="Next">';
-		}
-		else 
-		{
-			echo '<li class="page-item">';
-			echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
-		}		
+
+		echo '<li>';
+		echo '<a href="forum.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
 		echo '<span aria-hidden="true">&raquo;</span>';
 		echo '</a></li>';
 		echo '</ul>';
@@ -229,6 +214,6 @@
 ?>
 		</div>
 		<!-- Content end -->
-		<?php include("includes/standard_footer.php"); ?>
+<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>
