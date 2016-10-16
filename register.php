@@ -30,6 +30,8 @@
 
 	session_start();
 	require_once ("includes/dbconn.php");
+
+	// These two lines are important for captcha to work!
 	require ('includes/recaptcha/src/autoload.php');
 	$recaptcha = new \ReCaptcha\ReCaptcha('6LcuUwkUAAAAAFZS92ePbIhLGBo265zcTQ5e-WIW');
 
@@ -38,7 +40,7 @@
 	//======================================================================
 	if(isset($_POST["registrationForm"])) 
 	{
-		
+		// Captcha
 		$response = $recaptcha->verify($_POST['g-recaptcha-response'],  $_SERVER['REMOTE_ADDR']);
 
 		//-----------------------------------------------------
@@ -64,7 +66,7 @@
 			$error[] = "Passwords does not match";
 		if (!$response->isSuccess())
 			$error[] = "Captcha failed";
-		
+
 		//Email
 		if(preg_match('/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i', $_POST["email"]) !== 1)
 			$error[] = "Email does not look valid";
