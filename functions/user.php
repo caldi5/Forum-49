@@ -27,6 +27,7 @@
 			$stmt->store_result();
 			$stmt->bind_result($username);
 			$stmt->fetch();
+			$stmt->free_result();
 			$stmt->close();
 			return $username;
 		}
@@ -50,6 +51,7 @@
 			return false;
 
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 		return $username;
 	}
@@ -68,6 +70,7 @@
 			return false;
 
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 
 		return $id;
@@ -91,6 +94,7 @@
 			$stmt->store_result();
 			$stmt->bind_result($role);
 			$stmt->fetch();
+			$stmt->free_result();
 			$stmt->close();
 			if($role === "admin")
 				return true;
@@ -113,6 +117,7 @@
 		$stmt->store_result();
 		$stmt->bind_result($role);
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 		if($role === "admin")
 			return true;
@@ -130,6 +135,7 @@
 		$stmt->store_result();
 		$stmt->bind_result($role);
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 		if($role === "admin")
 			return true;
@@ -150,6 +156,7 @@
 		$stmt->store_result();
 		$stmt->bind_result($count);
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 
 		if ($count == 0)
@@ -169,6 +176,7 @@
 		$stmt->store_result();
 		$stmt->bind_result($count);
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 
 		if ($count == 0)
@@ -191,6 +199,7 @@
 		$stmt->store_result();
 		$stmt->bind_result($count);
 		$stmt->fetch();
+		$stmt->free_result();
 		$stmt->close();
 
 		if ($count == 0)

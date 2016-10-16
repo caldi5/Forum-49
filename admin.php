@@ -23,6 +23,13 @@
 			$stmt->close();
 		}
 	}
+	//-----------------------------------------------------
+	//Get existing categories
+	//-----------------------------------------------------
+	$stmt = $conn->prepare('SELECT id, username, role FROM users');
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($id, $name, $ordering);
 
 	//-----------------------------------------------------
 	//Get existing categories
@@ -77,8 +84,35 @@
 							Users
 						</div>
 						<div class="panel-body">
-							<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur hic veniam ipsum aperiam maiores, consequuntur blanditiis corporis. Dolorem non mollitia quia deleniti necessitatibus autem, dolore reprehenderit, atque dolor similique praesentium.</span>
-							<span>Placeat similique voluptate quam ut iste itaque quidem omnis assumenda labore esse distinctio sunt ipsum numquam quas, fugiat porro veritatis consequatur molestias laudantium! Soluta pariatur, non possimus velit voluptates magni.</span>
+							<!-- List existing users start-->
+							<table class="table">
+						    <thead>
+						        <tr>
+						        	<th>ID</th>
+						        	<th>Username</th>
+						        	<th></th>
+						        	<th></th>
+						        	<th></th>
+						        	</tr>
+						    </thead>
+						    <tbody>
+<?php
+	while($stmt->fetch())
+	{
+?>
+									<tr>
+										<td><?php echo $id; ?></td>
+										<td><?php echo $name; ?></td>
+										<td><?php echo $ordering; ?></td>
+										<td>123123</td>
+										<td><span class="input-group-btn"><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button><button type="button" class="btn btn-xs btn-success pull-right">Edit</button></span></td>
+									</tr>
+<?php
+	}
+?>
+								</tbody>
+							</table>
+							<!-- List existing categories end-->
 						</div>
 					</div>
 					<!-- Users End -->
@@ -114,7 +148,7 @@
 								</form>
 							</div>
 							<!-- List existing categories start-->
-							<table id="sort" class="table">
+							<table class="table">
 						    <thead>
 						        <tr>
 						        	<th>ID</th>
@@ -138,6 +172,8 @@
 									</tr>
 <?php
 	}
+	$stmt->free_result();
+	$stmt->close();
 ?>
 								</tbody>
 							</table>
