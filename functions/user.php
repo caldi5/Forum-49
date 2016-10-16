@@ -53,6 +53,7 @@
 	// Returns the user ID.
 	function getUserID ($username)
 	{
+
 		return 1;
 	}
 
@@ -123,6 +124,7 @@
 	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
 	function isModerator ($forumID)
 	{
+		global $conn;
 		if (!isset($_SESSION["id"]))
 			return false;
 
@@ -144,6 +146,7 @@
 	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
 	function isModeratorID ($userID, $forumID)
 	{
+		global $conn;
 		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
 		$stmt->bind_param('ii', $userID, $forumID);
 		$stmt->execute();
@@ -161,6 +164,7 @@
 	// Checks if the user with the given username is moderator for the forum with the given forum ID.
 	function isModeratorUsername ($username, $forumID)
 	{
+		global $conn;
 		$userID = getUserID($username);
 		if ($userID == false)
 			return false;
