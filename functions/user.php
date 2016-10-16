@@ -45,6 +45,10 @@
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($username);
+
+		if($stmt->num_rows == 0)
+			return false;
+
 		$stmt->fetch();
 		$stmt->close();
 		return $username;
