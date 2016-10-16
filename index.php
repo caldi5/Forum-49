@@ -57,7 +57,8 @@
 					else
 					{
 						// This should not be able to happen since we only select thoose categories with at least one forum.
-						echo 'There is no forums in this category yet.';
+						echo 'This should not be possible.';
+						die();
 					}
 					echo '</div>';
 				}
