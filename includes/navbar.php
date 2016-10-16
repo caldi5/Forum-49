@@ -1,4 +1,4 @@
-<?php require_once("functions/user.php"); ?>
+<?php require_once __DIR__.'../../functions/user.php'; ?>
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
