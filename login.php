@@ -57,25 +57,10 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>
-				<?php
-					if(isset($error))
-					{
-						foreach ($error as $err) 
-						{
-							echo "<div class=\"alert alert-danger\">";
-							echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-							echo "<strong>Error</strong> ".$err;
-							echo "</div>";
-						}
-					}
-					else if(isset($_POST["loginForm"]))
-					{
-						echo "<div class=\"alert alert-success\">";
-						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-						echo "<strong>Wellcome</strong> " . $_SESSION["username"] . ". Your role is: " . $_SESSION["role"];
-						echo "</div>";
-					}	
-				?>
+<?php 
+if(isset($error))
+	displayErrors($error); 
+?>
 				<form id="loginForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username or Email:</label>

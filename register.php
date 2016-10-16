@@ -31,6 +31,7 @@
 	session_start();
 	require_once("includes/dbconn.php");
 	require_once("functions/user.php");
+	require_once("functions/errors.php");
 
 	// These two lines are important for captcha to work!
 	require ('includes/recaptcha/src/autoload.php');
@@ -121,26 +122,10 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
-				<?php
-					if(isset($error))
-					{
-						foreach ($error as $err) 
-						{
-							echo "<div class=\"alert alert-danger\">";
-							echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-							echo "<strong>Error</strong> ".$err;
-							echo "</div>";
-						}
-					}
-					//Temporary to show that you've sucessfully regristrerd.
-					else if(isset($_POST["registrationForm"]))
-					{
-						echo "<div class=\"alert alert-success\">";
-						echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>";
-						echo "<strong>Sucsess</strong> ";
-						echo "</div>";
-					}	
-				?>
+<?php 
+if(isset($error))
+	displayErrors($error); 
+?>
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>
