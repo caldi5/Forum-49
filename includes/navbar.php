@@ -1,4 +1,4 @@
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . "/functions/user.php"); ?>
+<?php require_once("functions/user.php"); ?>
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -7,7 +7,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span> 
 					</button>
-					<a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/index.php" class="navbar-brand">Forum</a>
+					<a href="index.php" class="navbar-brand">Forum</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -25,9 +25,10 @@
 <?php 
 if(isadmin() === true)
 {
+	echo "\t\t\t\t\t\t\t\t<li><a href=\"admin.php\">Admin</a></li>\r\n"; 
 }
 ?>
-								<li><a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+								<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
 						  </li>
 <?php	
@@ -35,8 +36,8 @@ if(isadmin() === true)
 	else
 	{ 
 ?>
-						<li><a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
-						<li><a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+						<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 <?php
 	}
 ?>
