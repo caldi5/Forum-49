@@ -155,6 +155,7 @@
 						<label>Email Address:</label>
 						<input type="email" maxlength="50" class="form-control" name="email" placeholder="anna.andersson@example.com" <?php if(isset($error) && isset($_POST["email"])){ echo "value=\"" . $_POST["email"] . "\" ";}?>required>
 					</div>
+					<input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
 					<div class="g-recaptcha" data-sitekey="6LcuUwkUAAAAAP4mcb-qcOJOs_gdrjKRdXzlilHX"></div>
 					<br>
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="registrationForm">Submit</button>
@@ -170,6 +171,7 @@
 		<script>
 		$("#registrationForm").validate(
 		{
+			ignore: ".ignore",
 			rules: 
 			{
 				password: 
@@ -179,6 +181,16 @@
 					containsLetter: true,
 					containsNumber: true,
 					containsSpecial: true
+				},
+				hiddenRecaptcha: 
+				{
+					required: function () 
+					{
+						if (grecaptcha.getResponse() == '')
+							return true;
+						else 
+							return false;
+					}
 				},
 				username: 
 				{
@@ -197,6 +209,10 @@
 				{
 					minlength: "Your username must contain at least 5 characters" ,
 					pattern: "Only alfanumeric characters allowed"
+				},
+				hiddenRecaptcha:
+				{
+					required: "Please enter the captcha"
 				}
 			}
 		});
