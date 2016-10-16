@@ -25,6 +25,7 @@
 <?php 
 if(isadmin() === true)
 {
+	echo "\t\t\t\t\t\t\t\t<li><a href=\"http://" . $_SERVER['SERVER_NAME'] . "/admin.php\">Admin</a></li>\r\n"; 
 }
 ?>
 								<li><a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
