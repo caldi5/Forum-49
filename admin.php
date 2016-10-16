@@ -1,7 +1,7 @@
 <?php	
 	session_start();
 
-	require_once("includes/dbconn.php");
+	require_once "includes/dbconn.php";
 
 	//-----------------------------------------------------
 	//New Category
@@ -24,12 +24,12 @@
 		}
 	}
 	//-----------------------------------------------------
-	//Get Users
+	//Get existing categories
 	//-----------------------------------------------------
-	$stmt2 = $conn->prepare('SELECT id, username, role FROM users');
-	$stmt2->execute();
-	$stmt2->store_result();
-	$stmt2->bind_result($id, $name, $ordering);
+	$stmt = $conn->prepare('SELECT id, username, role FROM users');
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($id, $name, $ordering);
 
 	//-----------------------------------------------------
 	//Get existing categories
@@ -58,7 +58,7 @@
 					<div class="list-group">
 						<a href="#" class="list-group-item active" data-toggle="collapse" data-target="#adminMenuColapse">Admin Menu <span class="caret"></span></a>
 						<div id="adminMenuColapse" class="collapse in">
-							<a href="http://<?php echo $_SERVER['SERVER_NAME'];?>/admin/users.php" class="list-group-item"> Users</a>
+							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminUsers">Users</a>
 							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminCategories">Categories</a>
 							<a href="#" class="list-group-item" data-toggle="collapse" data-target="#pannelAdminForums">Forums</a>
 						</div>
@@ -78,6 +78,44 @@
 		}
 	}
 ?>
+					<!-- Users Start -->
+					<div id="pannelAdminUsers" class="panel panel-default collapse">
+						<div class="panel-heading">
+							Users
+						</div>
+						<div class="panel-body">
+							<!-- List existing users start-->
+							<table class="table">
+						    <thead>
+						        <tr>
+						        	<th>ID</th>
+						        	<th>Username</th>
+						        	<th></th>
+						        	<th></th>
+						        	<th></th>
+						        	</tr>
+						    </thead>
+						    <tbody>
+<?php
+	while($stmt->fetch())
+	{
+?>
+									<tr>
+										<td><?php echo $id; ?></td>
+										<td><?php echo $name; ?></td>
+										<td><?php echo $ordering; ?></td>
+										<td>123123</td>
+										<td><span class="input-group-btn"><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button><button type="button" class="btn btn-xs btn-success pull-right">Edit</button></span></td>
+									</tr>
+<?php
+	}
+?>
+								</tbody>
+							</table>
+							<!-- List existing categories end-->
+						</div>
+					</div>
+					<!-- Users End -->
 					<!-- Categories Start -->
 					<div id="pannelAdminCategories" class="panel panel-default collapse">
 						<div class="panel-heading">
