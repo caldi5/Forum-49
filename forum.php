@@ -183,8 +183,13 @@
 	// Checks to see if the number of posts exceeds the number of posts we allow per page. In that case we will need pagination.
 	if ($count > $posts_per_page)
 	{
+		echo '<nav aria-label="Page navigation">';
 		echo '<div class="row">';
 		echo '<ul class="pagination">';
+		echo '<li>';
+		echo '<a href="#" aria-label="Previous">';
+		echo '<span aria-hidden="true">&laquo;</span>';
+		echo '</a></li>';
 
 		// Number of pages we need, rounded up.
 		$pages = ceil($count / $posts_per_page);
@@ -198,8 +203,13 @@
 				echo '<li><a href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 		}
 
+		echo '<li>';
+		echo '<a href="#" aria-label="Next">';
+		echo '<span aria-hidden="true">&raquo;</span>';
+		echo '</a></li>';
 		echo '</ul>';
 		echo '</div>';
+		echo '</nav>';
 	}
 ?>
 		</div>
