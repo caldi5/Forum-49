@@ -151,7 +151,7 @@ span.admin
     height: 9.5cm;
 }
 .messageform {
-    position: fixed;
+    position: relative;
     bottom:1%;
     left:31%
 }
