@@ -15,7 +15,7 @@
 			<div class="row">
 				<nav class="col-sm-3">
 					<ul class="list-group">
-						<li class="list-group-item">Friend 1</a></li>
+						<li class="list-group-item">Friend 1</li>
 						<li class="list-group-item"><a href="#section2">Friend 2</a></li>
 						<li class="list-group-item"><a href="#section3">Friend 3</a></li>
 						<li class="list-group-item"><a href="#section41">Friend 4</a></li>
@@ -31,7 +31,8 @@
 				</div>
 			</div>
 		</div>
+    <?php echo __DIR__; ?>
 		<!-- Content end -->
-<?php include("includes/standard_footer.php"); ?>
+<?php require_once("includes/standard_footer.php"); ?>
 	</body>
 </html>
