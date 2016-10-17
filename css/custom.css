@@ -143,7 +143,15 @@ span.admin
 	color: #333;
 	margin-right: 5px;
 }
-/* Messages css */
+
+.profile-userpic img
+{
+    width: 80%;
+    height: 80%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}/* Messages css */
 .content {
     overflow-y: scroll;
     border-radius:3px;
