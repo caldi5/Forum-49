@@ -189,4 +189,13 @@ span.admin
     width: 13.5em;
     display:none;
 }
+#searchboxdiv {
+    position:absolute;
+    background-color: grey;
+    left: 14.3%;
+    width:13.8%;
+    height: 2%;
+    z-index:10;
+    visibility: hidden;
+}
 /* Messages css end */
