@@ -173,9 +173,6 @@ span.admin
     top:0.1cm;
 }
 .messageformtextbox {
-    position: fixed;
-    bottom: 8%;
-    left:30%;
     padding-top: 0em;
 }
 #message {
@@ -184,9 +181,6 @@ span.admin
     height: 6em; 
 }
 .sendbtn {
-    position: fixed;
-    bottom: 4%;
-    left:31.5%;
 }
 #p7 {
     display: none;

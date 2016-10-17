@@ -31,17 +31,21 @@
                     <p class="list-group-item-text">Last Message?</p>    
                     </a>
                 </div>
-                <div class="col-sm-9 content">
+                <div class="col-sm-9">
+                <div class="content">
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
                 </div>
-            <div class="col-sm-7 messageform">
+            <div class="messageform">
                 <form>
-                    <div class="form-group messageformtextbox col-sm-6">
+                    <div class="form-group messageformtextbox col-sm-12">
                     Message: <input type="text" class="form-control" id="message">
                     </div>
+                    <div class="col-sm-2">
                     <button type="button" class="btn btn-default sendbtn">Send</button>
+                    </div>
                 </form>
+            </div>
             </div>
 		</div>
 		<!-- Content end -->
