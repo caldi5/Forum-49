@@ -166,18 +166,33 @@ span.admin
 .content {
     overflow-y: scroll;
     border-radius:3px;
-    background-color:#D9DEDB;
-    height: 9.5cm;
+    background-color:#e7e7e7;
+    height: 10cm;
 }
 .friends {
-    height:10cm;
+    top:0.1cm;
+    height:9.5cm;
 }
 .messageformtextbox {
+    position: fixed;
+    bottom: 8%;
     padding-top: 0em;
 }
 #message {
     padding-bottom: 4.5em;
     padding-left: 0.5em;
     height: 6em;   
+}
+.sendbtn {
+    position: fixed;
+    bottom: 4%;
+    left:31.5%;
+}
+#p7 {
+    display: none;
+}
+.reciever{
+    width: 10%;
+    display:none;
 }
 /* Messages css end */
