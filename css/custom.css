@@ -171,17 +171,17 @@ span.admin
 }
 .friends {
     top:0.1cm;
-    height:9.5cm;
 }
 .messageformtextbox {
     position: fixed;
     bottom: 8%;
+    left:30%;
     padding-top: 0em;
 }
 #message {
     padding-bottom: 4.5em;
     padding-left: 0.5em;
-    height: 6em;   
+    height: 6em; 
 }
 .sendbtn {
     position: fixed;
@@ -192,7 +192,7 @@ span.admin
     display: none;
 }
 .reciever{
-    width: 10%;
+    width: 13.5em;
     display:none;
 }
 /* Messages css end */

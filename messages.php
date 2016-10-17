@@ -11,6 +11,10 @@
 	</head>
 	<body>
 <?php require_once "includes/navbar.php"; ?>
+        
+<?php
+        
+?>
 		<!-- Content start -->
 		<div class="container">
                 <form>
