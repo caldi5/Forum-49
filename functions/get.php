@@ -1,15 +1,44 @@
 <?php
+	require_once __DIR__.'/../includes/dbconn.php';
 
 	// Returns the name of a category given the category ID
 	function getCategoryName ($categoryID)
 	{
-		return 'Category 1';
+		global $conn;
+		$stmt = $conn->prepare('SELECT name FROM categories WHERE id = ?');
+		$stmt->bind_param('i', $categoryID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($name);
+
+		if ($stmt->num_rows == 0)
+			return false;
+
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $name;
 	}
 
 	// Returns the name of a forum given the forum ID
 	function getForumName ($forumID)
 	{
-		return 'Forum 1';
+		global $conn;
+		$stmt = $conn->prepare('SELECT name FROM froums WHERE id = ?');
+		$stmt->bind_param('i', $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($name);
+
+		if ($stmt->num_rows == 0)
+			return false;
+
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $name;
 	}
 
 	// Returns number of replies a post has gotten given the post ID
