@@ -25,7 +25,7 @@
 	function getForumName ($forumID)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT name FROM froums WHERE id = ?');
+		$stmt = $conn->prepare('SELECT name FROM forums WHERE id = ?');
 		$stmt->bind_param('i', $forumID);
 		$stmt->execute();
 		$stmt->store_result();

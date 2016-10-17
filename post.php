@@ -1,6 +1,25 @@
 <?php
 	session_start();
+	require_once 'functions/get.php';
+	require_once 'functions/user.php';
+
+	if (isset($_GET['new']) && isset($_GET['forum']))
+	{
+		if ($forumName = getForumName($_GET['forum']))
+		{
+
+		}
+		else
+		{
+			header('Location: index.php');
+		}
+	}
+	else
+	{
+		die();
+	}
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
