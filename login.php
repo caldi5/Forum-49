@@ -1,19 +1,4 @@
 <?php
-/*
-	//======================================================================
-	//login.php 
-	//======================================================================
-	Just a test to see if the regristrerd accounts works.
-
-	# Code by Anton Roslund
-
-	//-----------------------------------------------------
-	//ToDo
-	//-----------------------------------------------------
-
-	# Bootstrap allerts can't be closed, figure out why.
-	# See if register.php has the same problem.
-*/
 
 	session_start();
 	require_once "includes/dbconn.php";
