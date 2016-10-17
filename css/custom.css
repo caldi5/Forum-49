@@ -150,10 +150,8 @@ span.admin
     background-color:#D9DEDB;
     height: 9.5cm;
 }
-.messageform {
-    position: relative;
-    bottom:1%;
-    left:31%
+.friends {
+    height:10cm;
 }
 .messageformtextbox {
     padding-top: 0em;

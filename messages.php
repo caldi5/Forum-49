@@ -17,7 +17,7 @@
                     <h4 class="list-group-item-heading">Friend 1 Name</h4>
                     <p class="list-group-item-text">Friend 2 Description</p>    
                     </a>
-                    <a href="#" class="list-group-item">
+                    <a href="#" class="list-group-item ">
                     <h4 class="list-group-item-heading">Friend 2 Name</h4>
                     <p class="list-group-item-text">Friend 2 Description</p>    
                     </a>
