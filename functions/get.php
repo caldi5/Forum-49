@@ -87,7 +87,7 @@
 	function numberOfReplies ($postID)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT id FROM comments WHERE postID = ?');
+		$stmt = $conn->prepare('SELECT COUNT(id) as count FROM comments WHERE postID = ?');
 		$stmt->bind_param('i', $postID);
 		$stmt->execute();
 		$stmt->store_result();
