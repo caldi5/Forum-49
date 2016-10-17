@@ -44,14 +44,14 @@
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-					<button type="button" class="btn btn-success btn-sm">Add Friend</button>
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
+					<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+					<a type="button" class="btn btn-danger btn-sm" href="/messages.php">Message</a>
 				</div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
 					<ul class="nav">
-						<li class="active">
+						<li>
 							<a href="#">
 							<i class="glyphicon glyphicon-home"></i>
 							Overview </a>
@@ -62,7 +62,7 @@
 							 Friends </a>
 						</li>
 						<li>
-							<a href="#" target="_blank">
+							<a href="#">
 							<i class="glyphicon glyphicon-cog"></i>
 							Account Settings </a>
 						</li>
