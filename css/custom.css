@@ -143,3 +143,24 @@ span.admin
 	color: #333;
 	margin-right: 5px;
 }
+/* Messages css */
+.content {
+    overflow-y: scroll;
+    border-radius:3px;
+    background-color:#D9DEDB;
+    height: 9.5cm;
+}
+.messageform {
+    position: fixed;
+    bottom:1%;
+    left:31%
+}
+.messageformtextbox {
+    padding-top: 0em;
+}
+#message {
+    padding-bottom: 4.5em;
+    padding-left: 0.5em;
+    height: 6em;   
+}
+/* Messages css end */

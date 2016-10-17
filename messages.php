@@ -12,26 +12,32 @@
 <?php require_once("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
-			<div class="row">
-				<nav class="col-sm-3">
-					<ul class="list-group">
-						<li class="list-group-item">Friend 1</li>
-						<li class="list-group-item"><a href="#section2">Friend 2</a></li>
-						<li class="list-group-item"><a href="#section3">Friend 3</a></li>
-						<li class="list-group-item"><a href="#section41">Friend 4</a></li>
-						<li class="list-group-item"><a href="#section42">Friend 5</a></li>
-					</ul>
-				</nav>
-				<div class="col-sm-9">
-					<div id="section1">
-						<h3>Sender!</h3>
-						<p>Message</p>
-					</div>
-					</div>
-				</div>
-			</div>
+                <div class="list-group col-sm-3 friends">
+                    <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">Friend 1 Name</h4>
+                    <p class="list-group-item-text">Friend 2 Description</p>    
+                    </a>
+                    <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">Friend 2 Name</h4>
+                    <p class="list-group-item-text">Friend 2 Description</p>    
+                    </a>
+                </div>
+                <div class="col-sm-9 content">
+				    <h3>From: Friend 1</h3>
+				    <p>Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance.Message, This is a message! Hello i have a cat as a profile picture and i need to write this to you it is of out most importance. </p>
+                </div>
+            <div class="col-sm-7 messageform">
+                <form>
+                    <div class="form-group messageformtextbox">
+                    To: <input type="text" class="form-control" id="reciever">
+                    </div>
+                    <div class="form-group messageformtextbox">
+                    Message: <input type="text" class="form-control" id="message">
+                    </div>
+                    <button type="submit" class="btn btn-default">Send</button>
+                </form>
+            </div>
 		</div>
-    <?php echo __DIR__; ?>
 		<!-- Content end -->
 <?php require_once("includes/standard_footer.php"); ?>
 	</body>
