@@ -2,32 +2,29 @@
 	session_start();
 
 	require_once '../includes/dbconn.php';
+	require_once "../functions/user.php";
+	require_once "../functions/admin.php";
 
-	// Number of posts we want to display per page.
-	$users_per_page = 10;
-
-	// If the GET variable page isn't set, we just send them to the first page.
-	if (isset($_GET['page']))
+	//Kill if users is not admin
+	if(!isAdmin())
 	{
-		$page = $_GET['page'];
-	}
-	else
-	{
-		$page = 1;
+		header("Location: /index.php");
+		die();
 	}
 
-	/*
-	 * The variable posts are basically the offset. 
-	 * If we are on page 2 and are showing 10 results per page, we don't want to get the first 10.
-	 * Then we want to start from 11.
-	 */
-	$users = ($users_per_page*$page)-$users_per_page;
+	//-----------------------------------------------------
+	//Delete user
+	//-----------------------------------------------------
+	if (isset($_GET['action']) && isset($_GET['id']))
+	{
+		if($_GET['action'] === "delete")
+			deleteUser($_GET['id']);
+	}
 
 	//-----------------------------------------------------
 	//Get Users
 	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, username, role, banned FROM users ORDER BY id LIMIT ? OFFSET ?');
-	$stmt->bind_param('ii', $users_per_page, $users);
+	$stmt = $conn->prepare('SELECT id, username, role, banned FROM users');
 	$stmt->execute();
 	$stmt->store_result();
 	$stmt->bind_result($id, $username, $role, $banned);
@@ -81,7 +78,7 @@ if(isset($error))
 										else
 											echo "yes";
 										?></td>
-										<td><span class="input-group-btn"><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button><button type="button" class="btn btn-xs btn-success pull-right">Edit</button></span></td>
+										<td><span class="input-group-btn"><a href="?action=delete&id=<?php echo $id; ?>" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
 <?php
 	}

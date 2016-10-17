@@ -1,6 +1,14 @@
 <?php	
 	session_start();
 	require_once "../functions/errors.php";
+	require_once "../functions/user.php";
+
+	//Kill if users is not admin
+	if(!isAdmin())
+	{
+		header("Location: /index.php");
+		die();
+	}
 
 ?>
 <!DOCTYPE html>

@@ -3,26 +3,32 @@
 
 	require_once "../includes/dbconn.php";
 	require_once "../functions/errors.php";
+	require_once "../functions/get.php";
+	require_once "../functions/user.php";
+	require_once "../functions/admin.php";
+	
+	//Kill if users is not admin
+	if(!isAdmin())
+	{
+		header("Location: /index.php");
+		die();
+	}
+
+	//-----------------------------------------------------
+	//Delete Category
+	//-----------------------------------------------------
+	if (isset($_GET['action']) && isset($_GET['id']))
+	{
+		if($_GET['action'] === "delete")
+			deleteCategory($_GET['id']);
+	}
 
 	//-----------------------------------------------------
 	//New Category
 	//-----------------------------------------------------
 	if(isset($_POST["newCategory"])) 
 	{
-		//-----------------------------------------------------
-		//Insert the data in the database
-		//-----------------------------------------------------
-		if(!isset($error))
-		{
-			$stmt = $conn->prepare('INSERT INTO categories(name, ordering) VALUES (?,?)');
-			$stmt->bind_param('si', $_POST["categoryName"], $_POST["ordering"]);
-			$stmt->execute();
-			if($stmt->error !== "")
-			{
-				$error[] = "SQL error: " . $stmt->error;
-			}
-			$stmt->close();
-		}
+		newCategory($_POST["categoryName"], $_POST["ordering"]);
 	}
 
 	//-----------------------------------------------------
@@ -104,8 +110,8 @@ if(isset($error))
 										<td><?php echo $id; ?></td>
 										<td><?php echo $name; ?></td>
 										<td><?php echo $ordering; ?></td>
-										<td>123123</td>
-										<td><span class="input-group-btn"><button type="button" class="btn btn-xs btn-danger pull-right">Delete</button><button type="button" class="btn btn-xs btn-success pull-right">Edit</button></span></td>
+										<td><?php echo getNumberOfForums($id); ?></td>
+										<td><span class="input-group-btn"><a href="?action=delete&id=<?php echo $id; ?>" class="btn btn-xs btn-danger <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?> pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
 <?php
 	}
