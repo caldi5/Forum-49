@@ -84,12 +84,32 @@
 	// Returns the number of unred messages given the user ID
 	function numberOfUnreadMessages ($userID)
 	{
-		return 1;
+		global $conn;
+		$stmt = $conn->prepare('SELECT COUNT(*) FROM messages WHERE to_user = ? AND isread = 0');
+		$stmt->bind_param('i', $userID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $count;
 	}
 
 	// Returns the id of the category that a forum belongs to
 	function forumBelongsTo ($forumID)
 	{
-		return 1;
+		global $conn;
+		$stmt = $conn->prepare('SELECT category FROM forums WHERE id = ?');
+		$stmt->bind_param('i', $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($id);
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $id;
 	}
 ?>
