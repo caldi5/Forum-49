@@ -21,6 +21,28 @@
 		return $name;
 	}
 
+	//returns an array with all categories names
+	function getAllCategoryNames ()
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT name FROM categories');
+		$stmt->bind_param('i', $categoryID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($name);
+
+		if ($stmt->num_rows == 0)
+			return false;
+		while ($stmt->fetch()) 
+		{
+			$categoryNames[] = $name;
+		}
+		$stmt->free_result();
+		$stmt->close();
+
+		return $categoryNames;
+	}
+
 	// Returns the name of a forum given the forum ID
 	function getForumName ($forumID)
 	{
