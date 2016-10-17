@@ -48,9 +48,23 @@
 	}
 
 	// Returns number of posts in a forum given the forum ID
-	function numberOfPosts ($fourmID)
+	function numberOfPosts ($forumID)
 	{
-		return 6;
+		global $conn;
+		$stmt = $conn->prepare('SELECT COUNT(*) FROM posts WHERE forum = ?');
+		$stmt->bind_param('i', $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+
+		if ($stmt->num_rows == 0)
+			return false;
+
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $count;
 	}
 
 	// Returns the number of unred messages given the user ID
