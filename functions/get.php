@@ -62,6 +62,26 @@
 	}
 
 	// Returns number of posts in a forum given the forum ID
+	function getNumberOfForums ($categoryID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT COUNT(*) FROM forums WHERE category = ?');
+		$stmt->bind_param('i', $categoryID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+
+		if ($stmt->num_rows == 0)
+			return false;
+
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $count;
+	}
+
+	// Returns number of posts in a forum given the forum ID
 	function numberOfPosts ($forumID)
 	{
 		global $conn;
