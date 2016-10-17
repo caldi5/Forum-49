@@ -25,7 +25,7 @@
 	function getCategoryID ($categoryName)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT name FROM categories WHERE name = ?');
+		$stmt = $conn->prepare('SELECT id FROM categories WHERE name = ?');
 		$stmt->bind_param('s', $categoryName);
 		$stmt->execute();
 		$stmt->store_result();
