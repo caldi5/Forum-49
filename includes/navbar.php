@@ -7,7 +7,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span> 
 					</button>
-					<a href="index.php" class="navbar-brand">Forum</a>
+					<a href="/index.php" class="navbar-brand">Forum</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -36,8 +36,8 @@ if(isadmin() === true)
 	else
 	{ 
 ?>
-						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
-						<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a href="/login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+						<li><a href="/register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 <?php
 	}
 ?>
