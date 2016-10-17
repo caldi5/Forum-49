@@ -44,7 +44,21 @@
 	// Returns number of replies a post has gotten given the post ID
 	function numberOfReplies ($postID)
 	{
-		return 5;
+		global $conn;
+		$stmt = $conn->prepare('SELECT id FROM comments WHERE postID = ?');
+		$stmt->bind_param('i', $postID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($count);
+
+		// If this was not here, the function would return false and not 0 when there's no comments on a post.
+		if ($stmt->num_rows == 0)
+			return 0;
+
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+		return $count;
 	}
 
 	// Returns number of posts in a forum given the forum ID
