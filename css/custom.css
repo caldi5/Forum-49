@@ -144,6 +144,7 @@ span.admin
 	margin-right: 5px;
 }
 
+/* Width, height and cut corners for userpic */
 .profile-userpic img
 {
     width: 80%;
@@ -152,6 +153,16 @@ span.admin
     -moz-border-radius: 50%;
     border-radius: 50%;
 }/* Messages css */
+.profile-content{
+    border-style: solid;
+    border-width: 20px;
+    border-color: #e7e7e7;
+     -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    height: 8cm;
+    background-color:#e7e7e7;
+}
 .content {
     overflow-y: scroll;
     border-radius:3px;

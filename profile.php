@@ -17,6 +17,7 @@
 <div class="container">
     <div class="row">
 		 <div class="col-md-3">
+                <!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					<img src="img/testprofilepic.jpg" class="img-responsive" alt="">
 				</div>
@@ -24,10 +25,20 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						William Achrenius
+						<b><?php echo getUsername(); ?></b>
 					</div>
 					<div class="profile-usertitle-userType">
-						Administrator
+				    <?php  
+                        $username = getUsername();
+                        if(isAdminUsername($username) === true)
+                        {
+                            echo "Administrator";
+                        }
+                        else
+                        {
+                            echo "User";
+                        }
+                    ?>
 					</div>
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
@@ -48,12 +59,12 @@
 						<li>
 							<a href="#">
 							<i class="glyphicon glyphicon-user"></i>
-							Account Settings </a>
+							 Friends </a>
 						</li>
 						<li>
 							<a href="#" target="_blank">
-							<i class="glyphicon glyphicon-ok"></i>
-							Tasks </a>
+							<i class="glyphicon glyphicon-cog"></i>
+							Account Settings </a>
 						</li>
 						<li>
 							<a href="#">
@@ -64,14 +75,17 @@
 				</div>
 				<!-- END MENU -->
 			</div>
-	
+	   
+        <!-- OVERVIEW CONTENT -->
 		<div class="col-md-9">
+            <div class="profile-content-header">
+			  <h1><?php echo getUsername(); ?></h1>
+            </div>
             <div class="profile-content">
-			   Some user related content goes here...
-                
-               
+			   Some user related/created content goes here... 
             </div>
 		</div>
+        <!-- OVERVIEW CONTENT END -->
 	</div>
 </div>
 		<!-- Content end -->
