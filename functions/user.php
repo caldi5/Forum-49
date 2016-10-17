@@ -11,8 +11,15 @@
 	// Checks if a user with the given username exists
 	function usernameExists ($username)
 	{
-
-		return true;
+		global $conn;
+		$stmt = $conn->prepare('SELECT id from users WHERE username = ?');
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$stmt->store_result();
+		if ($stmt->num_rows == 0)
+			return false;
+		else
+			return true;
 	}
 
 	// Returns the username.

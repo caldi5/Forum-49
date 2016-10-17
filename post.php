@@ -7,16 +7,14 @@
 	{
 		if ($forumName = getForumName($_GET['forum']))
 		{
-
+			$newPost = true;
+			$forum = true;
 		}
 		else
 		{
-			header('Location: index.php');
+			$newPost = true;
+			$forum = false;
 		}
-	}
-	else
-	{
-		die();
 	}
 ?>
 
