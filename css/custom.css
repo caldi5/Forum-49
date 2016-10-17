@@ -155,13 +155,14 @@ span.admin
 }/* Messages css */
 .profile-content{
     border-style: solid;
-    border-width: 20px;
+    border-width: 30px;
     border-color: #e7e7e7;
      -webkit-border-radius: 10%;
     -moz-border-radius: 10%;
     border-radius: 10%;
-    height: 8cm;
+    height: 10cm;
     background-color:#e7e7e7;
+    overflow-y: scroll;
 }
 .content {
     overflow-y: scroll;

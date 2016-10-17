@@ -52,7 +52,7 @@
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li>
-							<a href="#">
+							<a href="/profile.php">
 							<i class="glyphicon glyphicon-home"></i>
 							Overview </a>
 						</li>
@@ -62,7 +62,7 @@
 							 Friends </a>
 						</li>
 						<li>
-							<a href="/profilesettings.php">
+							<a href="#">
 							<i class="glyphicon glyphicon-cog"></i>
 							Account Settings </a>
 						</li>
@@ -82,7 +82,9 @@
 			  <h1><?php echo getUsername(); ?></h1>
             </div>
             <div class="profile-content">
-			   Some user related/created content goes here...
+                Here should the profile settings be </br>
+            change overview content </br> </br>
+            change password
             </div>
 		</div>
         <!-- OVERVIEW CONTENT END -->
@@ -92,3 +94,9 @@
 <?php require_once("includes/standard_footer.php"); ?>
 	</body>
 </html>
+
+<script type="text/javascript">
+
+document.getELementById("profile-content-div").style.overflowY = "hidden";
+
+</script>
