@@ -55,15 +55,15 @@ if(isset($error))
 						<div class="panel-body">
 							<!-- List existing users start-->
 							<table class="table">
-						    <thead>
-						        <tr>
-						        	<th>ID</th>
-						        	<th>Username</th>
-						        	<th>Role</th>
-						        	<th>Banned</th>
-						        	</tr>
-						    </thead>
-						    <tbody>
+								<thead>
+										<tr>
+											<th>ID</th>
+											<th>Username</th>
+											<th>Role</th>
+											<th>Banned</th>
+											</tr>
+								</thead>
+								<tbody>
 <?php
 	while($stmt->fetch())
 	{
@@ -78,7 +78,7 @@ if(isset($error))
 										else
 											echo "yes";
 										?></td>
-										<td><span class="input-group-btn"><a href="?action=delete&id=<?php echo $id; ?>" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
 <?php
 	}
@@ -91,9 +91,32 @@ if(isset($error))
 						</div>
 					</div>
 					<!-- Users End -->
+					<!-- Modal confirmation start -->
+					<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+								<div class="modal-content">
+										<div class="modal-header">
+												<h3>Warning!<h3>
+										</div>
+										<div class="modal-body">
+												You're about to delete a user this can not be undone.
+										</div>
+										<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+												<a class="btn btn-danger btn-ok">Delete</a>
+										</div>
+								</div>
+						</div>
+					</div>
+					<!-- Modal confirmation End -->
 				</div>
 		</div>
 		<!-- Content end -->
 <?php include("../includes/standard_footer.php"); ?>
+	<script>
+		$('#confirm-delete').on('show.bs.modal', function(e) {
+			$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+		});
+	</script>
 	</body>
 </html>
