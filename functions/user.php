@@ -228,4 +228,10 @@
 		return $array;
 	}
 
+    // Check if two users are friends
+    function isFriends ($userID, $userID2)
+    {
+        
+    }
+
 ?>
