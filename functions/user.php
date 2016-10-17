@@ -4,8 +4,15 @@
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
 	{
-
-		return true;
+		global $conn;
+		$stmt = $conn->prepare('SELECT id from users WHERE id = ?');
+		$stmt->bind_param('i', $userID);
+		$stmt->execute();
+		$stmt->store_result();
+		if ($stmt->num_rows == 0)
+			return false;
+		else
+			return true;
 	}
 
 	// Checks if a user with the given username exists
