@@ -1,13 +1,17 @@
 <?php
 
-	function displayErrors($error)
+	function displayErrors()
 	{
-		foreach ($error as $err) 
+		global $error;
+		if(isset($error))
 		{
-			echo "<div class=\"alert alert-danger\">\r\n";
-			echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
-			echo "<strong>Error</strong> ". $err. "\r\n";
-			echo "</div>" . "\r\n";
+			foreach ($error as $err) 
+			{
+				echo "<div class=\"alert alert-danger\">\r\n";
+				echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
+				echo "<strong>Error</strong> ". $err. "\r\n";
+				echo "</div>" . "\r\n";
+			}
 		}
 	}
 ?>

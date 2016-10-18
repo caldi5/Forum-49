@@ -122,10 +122,7 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
-<?php 
-if(isset($error))
-	displayErrors($error); 
-?>
+<?php displayErrors(); ?>
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>

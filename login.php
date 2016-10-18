@@ -43,10 +43,7 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>
-<?php 
-if(isset($error))
-	displayErrors($error); 
-?>
+<?php	displayErrors(); ?>
 				<form id="loginForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username or Email:</label>
