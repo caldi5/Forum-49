@@ -181,11 +181,13 @@
 				{
 					required: true,
 					minlength: 5,
-					pattern: "[a-zA-Z0-9]+"
+					pattern: "[a-zA-Z0-9]+",
+					remote: "/ajax/exists.php"
 				},
 				email:
 				{
-					required: true
+					required: true,
+					remote: "/ajax/exists.php"
 				}
 			},
 			messages: 
@@ -193,11 +195,16 @@
 				username: 
 				{
 					minlength: "Your username must contain at least 5 characters" ,
-					pattern: "Only alfanumeric characters allowed"
+					pattern: "Only alfanumeric characters allowed",
+					remote: "Sorry that username is already taken"
 				},
 				hiddenRecaptcha:
 				{
 					required: "Please enter the captcha"
+				},
+				email:
+				{
+					remote: "This email exist in our database, maybe you have already registerd?"
 				}
 			}
 		});
