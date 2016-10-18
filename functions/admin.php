@@ -25,13 +25,6 @@
 		return true;
 	}
 
-	function deleteForum($forumID)
-	{
-		//for each post in form
-			//Delete coments postID
-			//delte post
-		//Delete forum
-	}
 	function newCategory($categoryName, $ordering)
 	{
 		global $conn;
@@ -49,6 +42,20 @@
 		return true;
 	}
 	
+	function deleteUser($userID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('DELETE FROM users WHERE id = ?');
+		$stmt->bind_param('i', $userID);
+		$stmt->execute();
+		if($stmt->error !== "")
+		{
+			return false;
+		}
+		$stmt->close();
+		return true;
+	}
+
 	function deleteCategory($categoryID)
 	{
 		//only allow deletion of categories with no forums in them.
@@ -69,16 +76,69 @@
 		return true;
 	}
 
-	function changeCategory($forumID, $categoryID)
-	{
-
-	}
-
-	function deleteUser($userID)
+	function deleteForum($forumID)
 	{
 		global $conn;
-		$stmt = $conn->prepare('DELETE FROM users WHERE id = ?');
-		$stmt->bind_param('i', $userID);
+
+		//Delete all posts in forum
+		$stmt = $conn->prepare('SELECT id FROM posts WHERE forum = ?');
+		$stmt->bind_param('i', $forumID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($postID);
+		while($stmt->fetch())
+		{
+			deletePost($postID);
+		}
+
+		$stmt->free_result();
+		$stmt->close();
+
+		//Delete forum
+			$stmt = $conn->prepare('DELETE FROM forums WHERE id = ?');
+		$stmt->bind_param('i', $forumID);
+		$stmt->execute();
+		if($stmt->error !== "")
+		{
+			return false;
+		}
+		$stmt->close();
+	}
+
+	//allow moderators to use this function?
+	function deletePost($postID)
+	{
+		global $conn;
+
+		//Delete all comments beloning to $postID
+		$stmt = $conn->prepare('DELETE FROM comments WHERE postID = ?');
+		$stmt->bind_param('i', $postID);
+		$stmt->execute();
+		if($stmt->error !== "")
+		{
+			return false;
+		}
+		$stmt->close();
+
+		//Delete the post
+		$stmt = $conn->prepare('DELETE FROM posts WHERE id = ?');
+		$stmt->bind_param('i', $postID);
+		$stmt->execute();
+		if($stmt->error !== "")
+		{
+			return false;
+		}
+		$stmt->close();
+
+		return true;
+	}
+
+	//hmm, allow users to delete their own comments?
+	function deleteComment($commentID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('DELETE FROM comments WHERE id = ?');
+		$stmt->bind_param('i', $commentID);
 		$stmt->execute();
 		if($stmt->error !== "")
 		{
@@ -86,6 +146,11 @@
 		}
 		$stmt->close();
 		return true;
+	}
+
+	function changeCategory($forumID, $categoryID)
+	{
+
 	}
 
 ?>
