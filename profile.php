@@ -2,9 +2,20 @@
 	session_start();
 	require_once("includes/dbconn.php"); 
     require_once("functions/get.php");
+    require_once("functions/user.php");
 
-    
 
+    if(!isset($_GET["user"]) && !isLoggedIn()){
+        header("Location: index.php");
+        die();
+    }
+
+    // 
+    if(isset($_GET["user"])){
+        if($_GET["user"] === getUsername()){
+            
+        }
+    }
 
 
 
@@ -66,16 +77,6 @@
 							<a href="#">
 							<i class="glyphicon glyphicon-user"></i>
 							 Friends </a>
-						</li>
-						<li>
-							<a href="/profilesettings.php">
-							<i class="glyphicon glyphicon-cog"></i>
-							Account Settings </a>
-						</li>
-						<li>
-							<a href="#">
-							<i class="glyphicon glyphicon-flag"></i>
-							Help </a>
 						</li>
 					</ul>
 				</div>
