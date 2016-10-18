@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	require_once "includes/dbconn.php"; 
+    require_once "functions/user.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
 		<div class="container">
                 <form>
                     <button type="button" class="btn btn-success newconversation">New</button>
-                    <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever" onfocus="showSearchBox()">
+                    <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever searchtext" onfocus="showSearchBox()">
                 </form>
                 <div id="searchboxdiv">
                 </div>
@@ -35,6 +36,7 @@
                 </div>
                 <div class="col-sm-9">
                 <div class="content">
+                    <?php echo $_SESSION['id']; ?>
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
                 </div>
@@ -54,13 +56,13 @@
         <script>
             $(function() 
             {
-                $(".reciever").on("keydown", function(e) {
-                    var searchtext = $(".reciever").val();
+                $(".searchtext").on("keydown", function(e) {
+                    var searchtext = $(".searchtext").val();
                     
                     
                     $.ajax({
                         method: "post",
-                        url: "getusers.php",
+                        url: "friendsearch.php",
                         async: true,
                         data: {search: searchtext}
                         
@@ -88,8 +90,13 @@
             $('.newconversation').on('click', function() {
                 $('.reciever').show();
             });
-            
-             function showSearchBox()
+             
+            function selectFriend(val)
+            {
+                $('.searchtext').val(val);
+                hideSearchBox();
+            }
+            function showSearchBox()
             {
                 document.getElementById("searchboxdiv").style.visibility = 'visible';
             }

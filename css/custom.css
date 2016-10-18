@@ -190,12 +190,15 @@ span.admin
     width: 13.5em;
     display:none;
 }
+.searchoption {
+    text-decoration: none;
+    color:inherit;
+}
 #searchboxdiv {
     position:absolute;
     background-color: grey;
     left: 14.3%;
     width:13.8%;
-    height: 2%;
     z-index:10;
     visibility: hidden;
 }
