@@ -1,11 +1,13 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
+	require_once __DIR__.'/../functions/user.php';
 
-	function validatePasswordID($userID, $password)
+	function validatePassword($usernameOrEmail, $password)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT password FROM users WHERE id = ?');
-		$stmt->bind_param('s', $userID);
+
+		$stmt = $conn->prepare('SELECT password FROM users WHERE username = ? OR email = ?');
+		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
 		
 		if($stmt->error !== "")
@@ -29,9 +31,10 @@
 		global $error;
 		global $success;
 
-		if(validatePasswordID($userID, $oldPassword))
+		//Validate old password
+		if(validatePassword(getUsernameID($userID), $oldPassword))
 		{
-			//Hash password
+			//Hash new password
 			$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
 			$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
@@ -52,23 +55,11 @@
 
 	function login($usernameOrEmail, $password)
 	{
-		global $conn;
 		global $error;
 		
-		$stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ? OR email = ?');
-		$stmt->bind_param('ss', $usernameOrEmail, $password);
-		$stmt->execute();
-		
-		if($stmt->error !== "")
-			$error = "SQL error: " . $stmt->error;
-		
-		$stmt->bind_result($id, $passwordHash);
-		$stmt->fetch();
-		$stmt->close();
-		
-		if(password_verify($password, $passwordHash))
+		if(validatePassword($usernameOrEmail, $password))
 		{
-			$_SESSION["id"] = $id;
+			$_SESSION["id"] = getUserID($usernameOrEmail);
 			header("Location: index.php");
 			die();
 		}

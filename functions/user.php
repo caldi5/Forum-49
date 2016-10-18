@@ -71,11 +71,11 @@
 	}
 
 	// Returns the user ID.
-	function getUserID ($username)
+	function getUserID ($usernameOrEmail)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT id from users where username = ?');
-		$stmt->bind_param('s', $username);
+		$stmt = $conn->prepare('SELECT id from users where username = ? OR email = ?');
+		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($id);
