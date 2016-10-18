@@ -6,14 +6,14 @@
 
 	if(isset($_POST["loginForm"])) 
 	{
-		$stmt = $conn->prepare('SELECT id, password, role, username FROM users WHERE username = ? OR email = ?');
+		$stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ? OR email = ?');
 		$stmt->bind_param('ss', $_POST["username"], $_POST["username"]);
 		$stmt->execute();
 		
 		if($stmt->error !== "")
 			$error = "SQL error: " . $stmt->error;
 		
-		$stmt->bind_result($id, $passwordHash, $role, $username);
+		$stmt->bind_result($id, $passwordHash);
 		$stmt->fetch();
 		
 		if(password_verify($_POST["password"] , $passwordHash))
