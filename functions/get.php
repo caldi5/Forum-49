@@ -45,8 +45,7 @@
 	function getAllCategoryNames ()
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT name FROM categories');
-		$stmt->bind_param('i', $categoryID);
+		$stmt = $conn->prepare('SELECT name FROM categories');    
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($name);
@@ -103,7 +102,7 @@
 		return $count;
 	}
 
-	// Returns number of posts in a forum given the forum ID
+	// Returns number of subforums to a specific category given the categoryID
 	function getNumberOfForums ($categoryID)
 	{
 		global $conn;
