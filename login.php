@@ -1,34 +1,12 @@
 <?php
 
 	session_start();
-	require_once "includes/dbconn.php";
 	require_once("functions/errors.php");
+	require_once("functions/security.php");
 
 	if(isset($_POST["loginForm"])) 
 	{
-		$stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ? OR email = ?');
-		$stmt->bind_param('ss', $_POST["username"], $_POST["username"]);
-		$stmt->execute();
-		
-		if($stmt->error !== "")
-			$error = "SQL error: " . $stmt->error;
-		
-		$stmt->bind_result($id, $passwordHash);
-		$stmt->fetch();
-		
-		if(password_verify($_POST["password"] , $passwordHash))
-		{
-			$_SESSION["id"] = $id;
-			header("Location: index.php");
-			die();
-		}
-		else
-		{
-			$error[] = "Login Failed";
-		}
-
-   		$stmt->free_result();
-		$stmt->close();
+		login($_POST["username"], $_POST["password"])
 	}
 ?>
 <!DOCTYPE html>
