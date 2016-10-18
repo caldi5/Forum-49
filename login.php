@@ -6,7 +6,7 @@
 
 	if(isset($_POST["loginForm"])) 
 	{
-		login($_POST["username"], $_POST["password"])
+		login($_POST["username"], $_POST["password"]);
 	}
 ?>
 <!DOCTYPE html>

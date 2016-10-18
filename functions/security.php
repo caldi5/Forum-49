@@ -1,7 +1,9 @@
 <?php
+	require_once __DIR__.'/../includes/dbconn.php';
 
 	function validatePasswordID($userID, $password)
 	{
+		global $conn;
 		$stmt = $conn->prepare('SELECT password FROM users WHERE id = ?');
 		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
@@ -21,12 +23,14 @@
 		return false;
 	}
 
-	function changePassword($userID $oldPassword, $newPassword)
+	function changePassword($userID, $oldPassword, $newPassword)
 	{
-		if(validatePasswordID($userID $oldPassword))
+		if(validatePasswordID($userID, $oldPassword))
 		{
 			//Hash password
 			$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+			global $conn;
 			$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
 			$stmt->bind_param('ss', $passwordHash, $userID);
 			$stmt->execute();
@@ -34,12 +38,13 @@
 			if($stmt->error !== "")
 				$error[] = "SQL error: " . $stmt->error;
 
-			$stmt->close
+			$stmt->close;
 		}
 	}
 
 	function login($usernameOrEmail, $password)
 	{
+		global $conn;
 		$stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ? OR email = ?');
 		$stmt->bind_param('ss', $usernameOrEmail, $password);
 		$stmt->execute();
