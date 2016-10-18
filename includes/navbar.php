@@ -21,7 +21,7 @@
 							<span class="glyphicon glyphicon-user"></span> <?php echo getUsername(); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="/profile.php">Profile</a></li>
-								<li><a href="#">Settings</a></li>
+								<li><a href="/usersetting.php">Settings</a></li>
 <?php 
 if(isadmin() === true)
 {

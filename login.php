@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-	require_once("functions/errors.php");
+	require_once("functions/alerts.php");
 	require_once("functions/security.php");
 
 	if(isset($_POST["loginForm"])) 
@@ -21,7 +21,7 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>
-<?php	displayErrors(); ?>
+<?php	displayAlerts(); ?>
 				<form id="loginForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username or Email:</label>

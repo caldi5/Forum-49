@@ -2,7 +2,7 @@
 	session_start();
 
 	require_once "../includes/dbconn.php";
-	require_once "../functions/errors.php";
+	require_once "../functions/alerts.php";
 	require_once "../functions/get.php";
 	require_once "../functions/user.php";
 	require_once "../functions/admin.php";
@@ -55,7 +55,7 @@
 				<div class="col-sm-10">
 <?php 
 if(isset($error))
-	displayErrors($error); 
+	displayAlerts($error); 
 ?>
 					<!-- Forums Start -->
 					<div class="panel panel-default">

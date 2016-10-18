@@ -31,7 +31,7 @@
 	session_start();
 	require_once("includes/dbconn.php");
 	require_once("functions/user.php");
-	require_once("functions/errors.php");
+	require_once("functions/alerts.php");
 
 	// These two lines are important for captcha to work!
 	require ('includes/recaptcha/src/autoload.php');
@@ -122,7 +122,7 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
-<?php displayErrors(); ?>
+<?php displayAlerts(); ?>
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>

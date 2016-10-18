@@ -45,7 +45,7 @@
 				<div class="col-sm-10">
 <?php 
 if(isset($error))
-	displayErrors($error); 
+	displayAlerts($error); 
 ?>
 <!-- Users Start -->
 					<div id="pannelAdminUsers" class="panel panel-default">

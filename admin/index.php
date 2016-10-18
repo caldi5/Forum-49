@@ -1,6 +1,6 @@
 <?php	
 	session_start();
-	require_once "../functions/errors.php";
+	require_once "../functions/alerts.php";
 	require_once "../functions/user.php";
 
 	//Kill if users is not admin
@@ -26,7 +26,7 @@
 				<div class="col-sm-10">
 <?php 
 if(isset($error))
-	displayErrors($error); 
+	displayAlerts($error); 
 ?>
 			</div>
 		</div>
