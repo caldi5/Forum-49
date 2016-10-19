@@ -229,9 +229,17 @@
 	}
 
     // Check if two users are friends
-    function isFriends ($userID, $userID2)
+    function areFriends ($userID, $userID2)
     {
-        
+        global $conn;
+		$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
+		$stmt->bind_param('ii', $userID, $userID2);
+		$stmt->execute();
+		$stmt->store_result();
+		if ($stmt->num_rows == 0)
+			return false;
+		else
+			return true;
     }
 
 ?>

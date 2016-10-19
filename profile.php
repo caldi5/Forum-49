@@ -77,10 +77,23 @@
                 <?php if( isLoggedIn() && $user !== getUserName() ){ 
              
                 ?>
-             
+            
 				    <!-- SIDEBAR BUTTONS -->
 				    <div class="profile-userbuttons">
-					   <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+                        <?php if( !areFriends($_SESSION["id"], getUserID($user)) ){ 
+                        ?>
+                        
+					       <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+                        
+                        <?php }
+                            else { 
+                        ?>
+                        
+                            <a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
+                        
+                        <?php }
+                        ?>
+                        
 					   <a type="button" class="btn btn-danger btn-sm" href="/messages.php">Message</a>
 				    </div>
 				    <!-- END SIDEBAR BUTTONS -->    
@@ -129,6 +142,7 @@
             </div>
             <div class="profile-content">
 			   Some user related/created content goes here... 
+                
             </div>
 		</div>
         <!-- OVERVIEW CONTENT END -->
