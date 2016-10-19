@@ -68,7 +68,7 @@
 				else
 				{
 					sendValidationEmail($_POST["username"], $_POST["email"]);
-					$success[] = "You successfully registerd, now you just have to verify your email"
+					$success[] = "You successfully registerd, now you just have to verify your email";
 				}
 				$stmt->close();
 			}
