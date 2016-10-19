@@ -97,7 +97,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		global $error;
 
 		//Get id if exists
-		$stmt = $conn->prepare('SELECT id FROM users WHERE username = ? OR email = ?');
+		$stmt = $conn->prepare('SELECT id, email FROM users WHERE username = ? OR email = ?');
 		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
 		
@@ -107,7 +107,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 			return false;
 		}
 		
-		$stmt->bind_result($id);
+		$stmt->bind_result($id, $email);
 		$stmt->fetch();
 		$stmt->close();
 
@@ -118,8 +118,8 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$hash = md5(mt_rand());
 	
 		//Insert 
-		$stmt = $conn->prepare('INSERT INTO passwordReset(id, hash) VALUES(?, ?) ON DUPLICATE KEY UPDATE') ;
-		$stmt->bind_param('is', $id, $hash);
+		$stmt = $conn->prepare('INSERT INTO passwordReset(id, hash) VALUES(?, ?) ON DUPLICATE KEY UPDATE hash=?');
+		$stmt->bind_param('iss', $id, $hash, $hash);
 		$stmt->execute();
 		
 		if($stmt->error !== "")
@@ -130,10 +130,9 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 
 		$stmt->close();
 
-
 		//send email
 		$subject = 'DVA231 Forum - Email Reset'; 
-		$message = 'Dear '. $username .'!
+		$message = 'Dear '. getUsernameID($id) .'!
 Someone have requested to reset the password for you account
 		 
 Please click this link within 30 minutes to reset your password:
