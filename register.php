@@ -1,32 +1,4 @@
 <?php
-/*
-	//======================================================================
-	//register.php 
-	//======================================================================
-	# Code by Anton Roslund
-	
-	//-----------------------------------------------------
-	//Features
-	//-----------------------------------------------------
-
-	# Beeing able to login with both username and email.
-	# Clientside field valedation with jQuery Validate.
-	# Serverside valedation with php and regex.
-	# Store errors in array so you'll see all of them at once.
-	# Set session variables on sussessfull regristration.
-	# Custom errormessages for letting the user know what chatacters their password needs
-	# Maybe add seperate check for the password...
-	# Adds the username and email back to the form IF (god knows how) the regristration fails.
-	# Email Regex (RFC 5322 Official Standard)
-
-	//-----------------------------------------------------
-	//ToDo
-	//-----------------------------------------------------
-	
-	# Use ajax to check if that username already exists.
-	# Redirect to the index page on successfull regristration.
-
-*/
 
 	session_start();
 	require_once("includes/dbconn.php");
@@ -68,7 +40,7 @@
 			$error[] = "Passwords does not match";
 
 		//Email
-		if(preg_match('/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i', $_POST["email"]) !== 1)
+		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
 			$error[] = "Email does not look valid";
 
 		//Captcha
