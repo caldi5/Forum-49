@@ -72,18 +72,18 @@
 	function sendValidationEmail($username, $email)
 	{
 
-		$hash = md5($username . $email . 'SuperSiecretEmailVerificationStuff');
+		$hash = md5($email . 'SuperSiecretEmailVerificationStuff');
 
 		$subject = 'DVA231 Forum - Email Verify'; // Give the email a subject 
 		$message = '
 		
-		Welcome '. $username .'!
-		Your account has been created
+Welcome '. $username .'!
+Your account has been created
 		 
-		Please click this link to verify your email:
-		http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
+Please click this link to verify your email:
+http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		 
-		';
+';
 		                     
 		$headers = 'From: noreply@srv247.se' . "\r\n" .
     'Reply-To: noreply@srv247.se' . "\r\n" .
