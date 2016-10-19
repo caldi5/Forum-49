@@ -12,10 +12,12 @@
 
 	if(isset($_POST['password']) && isset($_SESSION['allowPasswordChange']))
 	{
+		//To stop people from changing their password twice
 		if($_SESSION['allowPasswordChange'] !== false)
 		{
 			setPassword($_SESSION['allowPasswordChange'], $_POST['password']);
 			$success[] = "You have sucessfully set you new password";
+			$_SESSION['allowPasswordChange'] = false;
 		}
 	}
 
@@ -27,7 +29,14 @@
 			$stmt->store_result();
 
 			if ($stmt->num_rows == 1)
+			{
 				$_SESSION['allowPasswordChange'] = $_GET['id'];
+
+				//Delete the hash
+				$stmt = $conn->prepare('DELETE FROM passwordReset WHERE id = ?');
+				$stmt->bind_param('i', $_GET['id']);
+				$stmt->execute();
+			}
 			else
 				$error[] = "Reset link is not valid";
 			$stmt->close();
@@ -60,8 +69,11 @@
 <?php
 }
 ?>
-<?php if(!isset($success) && !isset($error) && isset($_SESSION['allowPasswordChange']))
-{
+<?php 
+	if(!isset($success) && !isset($error) && isset($_SESSION['allowPasswordChange']))
+	{
+		if($_SESSION['allowPasswordChange'] !== false)
+		{
 ?>
 			<form id="passwordResetForm" method="post">
 				<div class="form-group">
@@ -75,7 +87,8 @@
 				<button class="btn btn-lg btn-primary btn-block" type="submit" name="PasswordReset">Reset Password</button>
 			</form>
 <?php
-}
+		}
+	}
 ?>
 			</div>
 		</div>
