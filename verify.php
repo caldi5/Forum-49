@@ -1,13 +1,13 @@
 <?php
 	session_start();
 	require_once("functions/alerts.php");
-	require_once("functions/dbconn.php");
+	require_once("includes/dbconn.php");
 
 	if(isset($_GET['email']) && isset($_GET['hash']))
 	{
 		if($_GET['hash'] === md5($_GET['email'] . 'SuperSiecretEmailVerificationStuff'))
 		{
-			$stmt = $conn->prepare('UPDATE users SET validEmil = 1 WHERE email = ?');
+			$stmt = $conn->prepare('UPDATE users SET validEmail = 1 WHERE email = ?');
 			$stmt->bind_param('s', $_GET['email']);
 			$stmt->execute();
 
