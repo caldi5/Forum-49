@@ -47,7 +47,7 @@
 		<div class="container">
 			<div class="col-md-8 col-md-offset-2">
 <?php displayAlerts(); ?>
-<?php if(!isset($success) && !isset($error))
+<?php if(!isset($success) && !isset($error) && !isset($_SESSION['allowPasswordChange']))
 {
 ?>
 			<form method="post">
@@ -60,7 +60,7 @@
 <?php
 }
 ?>
-<?php if(isset($_SESSION['allowPasswordChange']))
+<?php if(!isset($success) && !isset($error) && isset($_SESSION['allowPasswordChange']))
 {
 ?>
 			<form id="passwordResetForm" method="post">

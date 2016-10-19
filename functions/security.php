@@ -17,8 +17,6 @@
 
 		if($stmt->error !== "")
 			$error[] = "SQL error: " . $stmt->error;
-		else
-			$success[] = "You've sucessfully changed your password";
 		$stmt->close();
 	}
 
@@ -56,6 +54,7 @@
 		if(validatePassword(getUsernameID($userID), $oldPassword))
 		{
 			setPassword($userID, $newPassword);
+			$success[] = "You've sucessfully changed your password";
 		}
 		else
 		{
