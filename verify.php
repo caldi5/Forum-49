@@ -1,7 +1,5 @@
 <?php
 	session_start();
-	require_once("includes/dbconn.php");
-	require_once("functions/user.php");
 	require_once("functions/alerts.php");
 
 	if(isset($_GET['email']) && isset($_GET['hash']))
@@ -11,7 +9,7 @@
 	}
 	else
 	{
-		$error[] = "Something is wrong"
+		$error[] = "Something is wrong";
 	}
 
 ?>
