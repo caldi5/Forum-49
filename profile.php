@@ -25,6 +25,9 @@
         }
     }
 
+    // Need something like this so we don't fail later checks because of capital/normal letters.
+    $user = getUsernameID(getUserID($_GET["user"]));
+
 ?>
 
 <!DOCTYPE html>
@@ -50,14 +53,13 @@
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
 						
-                        <b><?php echo $_GET["user"]; ?></b>
+                        <b><?php echo $user; ?></b>
                         
 					</div>
 					<div class="profile-usertitle-userType">
                         
 				    <?php  
-                        $username = getUsername();
-                        if(isAdminUsername($username) === true)
+                        if(isAdminUsername($user) === true)
                         {
                             echo "Administrator";
                         }
@@ -71,10 +73,8 @@
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
              
-                
-                
                 <!-- If logged in and not going to private page: load this  (IN FUTURE check if already a friend?) -->
-                <?php if( isLoggedIn() && $_GET["user"] !== getUserName() ){ 
+                <?php if( isLoggedIn() && $user !== getUserName() ){ 
              
                 ?>
              
@@ -101,7 +101,7 @@
                         
 
                         <!-- If logged in and going to the private page: load this-->
-                        <?php if( isLoggedIn() && $_GET["user"] === getUserName() ){ 
+                        <?php if( isLoggedIn() && $user === getUserName() ){ 
              
                         ?>
 						  <li>
@@ -114,8 +114,7 @@
              
                         ?>
                         <!-- If logged in and going to the private page: END-->
-                        
-                        
+                         
 					</ul>
 				</div>
 				<!-- END MENU -->
@@ -129,8 +128,7 @@
                 
             </div>
             <div class="profile-content">
-			   Some user related/created content goes here...
-                
+			   Some user related/created content goes here... 
             </div>
 		</div>
         <!-- OVERVIEW CONTENT END -->
