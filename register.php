@@ -67,12 +67,8 @@
 				//Sucessfull regristration.
 				else
 				{
-					//Set session variables.
-					$_SESSION["id"] = getUserID($_POST["username"]);
-
-					//Redirect to index page.
-					header("Location: index.php");
-					die();
+					sendValidationEmail($_POST["username"], $_POST["email"]);
+					$success[] = "You successfully registerd, now you just have to verify your email"
 				}
 				$stmt->close();
 			}

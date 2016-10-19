@@ -75,9 +75,7 @@
 		$hash = md5($email . 'SuperSiecretEmailVerificationStuff');
 
 		$subject = 'DVA231 Forum - Email Verify'; // Give the email a subject 
-		$message = '
-		
-Welcome '. $username .'!
+		$message = 'Welcome '. $username .'!
 Your account has been created
 		 
 Please click this link to verify your email:

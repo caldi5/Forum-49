@@ -1,11 +1,24 @@
 <?php
 	session_start();
 	require_once("functions/alerts.php");
+	require_once("functions/dbconn.php");
 
 	if(isset($_GET['email']) && isset($_GET['hash']))
 	{
-		if($_GET['hash'] === md5($email . 'SuperSiecretEmailVerificationStuff'))
-			$success[] = "valid email";
+		if($_GET['hash'] === md5($_GET['email'] . 'SuperSiecretEmailVerificationStuff'))
+		{
+			$stmt = $conn->prepare('UPDATE users SET validEmil = 1 WHERE email = ?');
+			$stmt->bind_param('s', $_GET['email']);
+			$stmt->execute();
+
+			if($stmt->error !== "")
+				$error[] = "SQL error: " . $stmt->error;
+			else
+				$success[] = "Your verified your email!";
+			$stmt->close();
+		}
+		else
+			$error[] = "Something is wrong";
 	}
 	else
 	{
