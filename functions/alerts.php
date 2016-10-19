@@ -11,7 +11,7 @@
 			{
 				echo "<div class=\"alert alert-danger\">\r\n";
 				echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
-				echo "<strong>Error</strong> ". $err. "\r\n";
+				echo "<strong>Error:</strong> ". $err. "\r\n";
 				echo "</div>" . "\r\n";
 			}
 		}
@@ -21,7 +21,7 @@
 			{
 				echo "<div class=\"alert alert-success\">\r\n";
 				echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
-				echo "<strong>Success</strong> ". $succ. "\r\n";
+				echo "<strong>Success:</strong> ". $succ. "\r\n";
 				echo "</div>" . "\r\n";
 			}
 		}

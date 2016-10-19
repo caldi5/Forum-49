@@ -2,6 +2,26 @@
 	require_once __DIR__.'/../includes/dbconn.php';
 	require_once __DIR__.'/../functions/user.php';
 
+	function setPassword($userID, $newPassword)
+	{
+		global $conn;
+		global $error;
+		global $success;
+
+		//Hash new password
+		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+		$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
+		$stmt->bind_param('si', $passwordHash, $userID);
+		$stmt->execute();
+
+		if($stmt->error !== "")
+			$error[] = "SQL error: " . $stmt->error;
+		else
+			$success[] = "You've sucessfully changed your password";
+		$stmt->close();
+	}
+
 	function validatePassword($usernameOrEmail, $password)
 	{
 		global $conn;
@@ -35,18 +55,7 @@
 		//Validate old password
 		if(validatePassword(getUsernameID($userID), $oldPassword))
 		{
-			//Hash new password
-			$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-
-			$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
-			$stmt->bind_param('si', $passwordHash, $userID);
-			$stmt->execute();
-
-			if($stmt->error !== "")
-				$error[] = "SQL error: " . $stmt->error;
-			else
-				$success[] = "You've sucessfully changed your password";
-			$stmt->close();
+			setPassword($userID, $newPassword);
 		}
 		else
 		{
@@ -118,7 +127,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$hash = md5(mt_rand());
 	
 		//Insert 
-		$stmt = $conn->prepare('INSERT INTO passwordReset(id, hash) VALUES(?, ?) ON DUPLICATE KEY UPDATE hash=?');
+		$stmt = $conn->prepare('INSERT INTO passwordReset(id, hash) VALUES(?, ?) ON DUPLICATE KEY UPDATE hash=?, timestamp=CURRENT_TIMESTAMP');
 		$stmt->bind_param('iss', $id, $hash, $hash);
 		$stmt->execute();
 		
