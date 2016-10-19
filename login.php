@@ -33,6 +33,7 @@
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit" name="loginForm">Submit</button>
 				</form>
+				<a href="/passwordreset.php">Forgot your password?</a>
 			</div>
 		</div>
 		<!-- Content end -->
