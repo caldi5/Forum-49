@@ -3,27 +3,34 @@
 	require_once("includes/dbconn.php"); 
     require_once("functions/get.php");
     require_once("functions/user.php");
+    
 
-
-    if(!isset($_GET["user"]) && !isLoggedIn()){
+    if( !isLoggedIn() && !usernameExists($_GET["user"]) ){
+       
+        // GO TO index.php
         header("Location: index.php");
         die();
     }
-
-    // 
-    if(isset($_GET["user"])){
-        if($_GET["user"] === getUsername()){
+    
+    if( !isset($_GET["user"]) && isLoggedIn() ) {
+        
+        header("Location: profile.php?user=" . getUsername());
+    }
+    
+    if( isset($_GET["user"]) ){
+        
+        if( !usernameExists($_GET["user"]) && isLoggedIn() ){
             
+            header("Location: profile.php?user=" . getUsername());
         }
     }
 
-
-
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
-<?php require_once("includes/standard_head.php"); ?>
+        <?php require_once("includes/standard_head.php"); ?>
 		<title>Profile</title>
 	</head>
 
@@ -42,9 +49,12 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						<b><?php echo getUsername(); ?></b>
+						
+                        <b><?php echo $_GET["user"]; ?></b>
+                        
 					</div>
 					<div class="profile-usertitle-userType">
+                        
 				    <?php  
                         $username = getUsername();
                         if(isAdminUsername($username) === true)
@@ -56,15 +66,30 @@
                             echo "User";
                         }
                     ?>
+                        
 					</div>
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-				<div class="profile-userbuttons">
-					<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
-					<a type="button" class="btn btn-danger btn-sm" href="/messages.php">Message</a>
-				</div>
-				<!-- END SIDEBAR BUTTONS -->
+             
+                
+                
+                <!-- If logged in and not going to private page: load this  (IN FUTURE check if already a friend?) -->
+                <?php if( isLoggedIn() && $_GET["user"] !== getUserName() ){ 
+             
+                ?>
+             
+				    <!-- SIDEBAR BUTTONS -->
+				    <div class="profile-userbuttons">
+					   <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+					   <a type="button" class="btn btn-danger btn-sm" href="/messages.php">Message</a>
+				    </div>
+				    <!-- END SIDEBAR BUTTONS -->    
+             
+                <?php }
+                
+                ?>
+                <!-- If logged in and not going to private page: END -->
+             
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
 					<ul class="nav">
@@ -73,11 +98,24 @@
 							<i class="glyphicon glyphicon-home"></i>
 							Overview </a>
 						</li>
-						<li>
-							<a href="#">
-							<i class="glyphicon glyphicon-user"></i>
+                        
+
+                        <!-- If logged in and going to the private page: load this-->
+                        <?php if( isLoggedIn() && $_GET["user"] === getUserName() ){ 
+             
+                        ?>
+						  <li>
+							 <a href="#">
+							 <i class="glyphicon glyphicon-user"></i>
 							 Friends </a>
-						</li>
+						  </li>
+                            
+                        <?php } 
+             
+                        ?>
+                        <!-- If logged in and going to the private page: END-->
+                        
+                        
 					</ul>
 				</div>
 				<!-- END MENU -->
@@ -86,7 +124,9 @@
         <!-- OVERVIEW CONTENT -->
 		<div id="profile-content-div" class="col-md-9">
             <div class="profile-content-header">
-			  <h1><?php echo getUsername(); ?></h1>
+                
+			  <h2 id="overview-header-text" align="center">Overview</h2>
+                
             </div>
             <div class="profile-content">
 			   Some user related/created content goes here...
