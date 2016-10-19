@@ -24,10 +24,10 @@
 	//-----------------------------------------------------
 	//Get Users
 	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, username, role, banned FROM users');
+	$stmt = $conn->prepare('SELECT id, username, role, banned, validEmail FROM users');
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($id, $username, $role, $banned);
+	$stmt->bind_result($id, $username, $role, $banned, $validEmail);
 
 ?>
 <!DOCTYPE html>
@@ -61,6 +61,8 @@ if(isset($error))
 											<th>Username</th>
 											<th>Role</th>
 											<th>Banned</th>
+											<th>Valid Email</th>
+											<th></th>
 											</tr>
 								</thead>
 								<tbody>
@@ -76,7 +78,13 @@ if(isset($error))
 										if($banned === 0)
 											echo "No"; 
 										else
-											echo "yes";
+											echo "Yes";
+										?></td>
+										<td><?php
+										if($validEmail === 0)
+											echo "No"; 
+										else
+											echo "Yes";
 										?></td>
 										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
