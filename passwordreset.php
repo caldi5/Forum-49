@@ -12,8 +12,11 @@
 
 	if(isset($_POST['password']) && isset($_SESSION['allowPasswordChange']))
 	{
-		setPassword($$_SESSION['allowPasswordChange'], $_POST['password']);
-		$success[] = "You have sucessfully set you new password";
+		if($_SESSION['allowPasswordChange'] !== false)
+		{
+			setPassword($_SESSION['allowPasswordChange'], $_POST['password']);
+			$success[] = "You have sucessfully set you new password";
+		}
 	}
 
 	if(isset($_GET['id']) && isset($_GET['hash']))
