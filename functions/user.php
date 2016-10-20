@@ -29,6 +29,7 @@
 				//if username does not exist in database, detroy session and redirect to index.
 				if ($stmt->num_rows == 0)
 				{
+					unset($_SESSION['id']);
 					session_destroy();
 					header("Location: /index.php");
 					die();
@@ -52,6 +53,7 @@
 				else
 				{
 					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
+					unset($_SESSION['id']);
 					session_destroy();
 				}
 			}
