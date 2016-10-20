@@ -1,5 +1,149 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
+	require_once __DIR__.'/../functions/alerts.php';
+
+	class user 
+	{ 
+		public $id;
+		public $username;
+		public $role;
+		public $email;
+		public $validEmail;
+		public $banned;
+		public $loggedIn;
+
+		function __construct()
+		{
+			global $conn;
+			global $error;
+			$this->loggedIn = false;
+
+			if(isset($_SESSION['id']))
+			{
+
+				$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
+				$stmt->bind_param('i', $_SESSION['id']);
+				$stmt->execute();
+				$stmt->store_result();
+
+				//if username does not exist in database, detroy session and redirect to index.
+				if ($stmt->num_rows == 0)
+				{
+					session_destroy();
+					header("Location: /index.php");
+					die();
+				}
+				
+				
+				$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
+				$stmt->fetch();
+				$stmt->free_result();
+				$stmt->close();
+				if($validEmail === 1)
+				{
+					$this->id = $id;
+					$this->username = $username;
+					$this->role = $role;
+					$this->email = $email;
+					$this->validEmail = $validEmail;
+					$this->banned = $banned;
+					$this->loggedIn = ture;
+				}
+				else
+				{
+					$error[] = "You have not verified your email <a href='#'>this should be a link to resend email</a>";
+				}
+			}
+		}
+	
+
+		private function setPassword($newPassword)
+		{
+			global $conn;
+			//Hash new password
+			$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+			$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
+			$stmt->bind_param('si', $passwordHash, $this->id);
+			$stmt->execute();
+			$stmt->close();
+		}
+
+		public function changePassword($userID, $oldPassword, $newPassword)
+		{
+			global $conn;
+			global $error;
+			global $success;
+
+			//Validate old password
+			$stmt = $conn->prepare('SELECT password FROM users WHERE id=?');
+			$stmt->bind_param('i', $userID);
+			$stmt->execute();			
+			$stmt->bind_result($passwordHash);
+			$stmt->fetch();
+			$stmt->close();
+			
+			if(password_verify($password , $passwordHash))
+			{
+				$this->setPassword($userID, $newPassword);
+				$success[] = "You've sucessfully changed your password";
+			}
+			else
+			{
+				$error[] = "Wrong current password";
+			}
+		}
+
+		public function login($usernameOrEmail, $password)
+		{
+			global $conn;
+			global $error;
+
+			$stmt = $conn->prepare('SELECT id, username, password, role, email, validEmail, banned FROM users WHERE username = ? OR email = ?');
+			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
+			$stmt->execute();
+			
+			if($stmt->error !== "")
+				$error[] = "SQL error: " . $stmt->error;
+			
+			$stmt->bind_result($id, $username, $passwordHash, $role, $email, $validEmail, $banned);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+			
+			if(password_verify($password , $passwordHash))
+			{
+				$_SESSION["id"] = $id;
+				$this->id = $id;
+				$this->username = $username;
+				$this->role = $role;
+				$this->email = $email;
+				$this->validEmail = $validEmail;
+				$this->banned = $banned;
+				$this->loggedIn = ture;
+				return true;
+			}
+			else
+			{
+				$error[] = "Login Failed";
+				return false;
+			}
+		}
+		public function areFriendsWith($userID2)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
+			$stmt->bind_param('ii', $this->id, $userID2);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				return false;
+			else
+				return true;
+		}
+
+	} 
+
 	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
