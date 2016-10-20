@@ -1,7 +1,6 @@
 <?php
 
-	require_once ("includes/init.php");
-	require_once("functions/security.php");
+	require_once("includes/init.php");
 
 	if(isset($_POST["loginForm"])) 
 	{

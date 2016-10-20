@@ -1,7 +1,6 @@
 <?php
-	session_start();
-	require_once "includes/dbconn.php";
-	require_once 'functions/get.php';
+
+	require_once("includes/init.php");
 
 	// Here we get all of the categories that has at least one forum in them.
 	$stmt = $conn->prepare('SELECT id, name 
@@ -24,6 +23,7 @@
 		<?php include("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
+<?php	displayAlerts(); ?>
 		<?php
 			if ($result->num_rows > 0)
 			{

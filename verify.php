@@ -1,13 +1,12 @@
 <?php
-	session_start();
-	require_once("functions/alerts.php");
-	require_once("includes/dbconn.php");
+
+	require_once("includes/init.php");
 
 	if(isset($_GET['username']) && isset($_GET['email']))
 	{
 		sendValidationEmail($_GET['username'], $_GET['email']);
 	}
-	
+
 	if(isset($_GET['email']) && isset($_GET['hash']))
 	{
 		if($_GET['hash'] === md5($_GET['email'] . 'SuperSiecretEmailVerificationStuff'))
