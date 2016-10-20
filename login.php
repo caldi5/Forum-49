@@ -1,12 +1,15 @@
 <?php
 
-	session_start();
-	require_once("functions/alerts.php");
+	require_once "/includes/init.php";
 	require_once("functions/security.php");
 
 	if(isset($_POST["loginForm"])) 
 	{
-		login($_POST["username"], $_POST["password"]);
+		if($user->login($_POST["username"], $_POST["password"]) === true)
+		{
+			header("Location: /index.php");
+			die();
+		} 
 	}
 ?>
 <!DOCTYPE html>
