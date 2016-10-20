@@ -12,18 +12,18 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
 <?php 			
-	if($user->loggedIn)
+	if($currentUser->loggedIn)
 	{
 ?>
 						<li><a href="/messages.php">Messages</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							<span class="glyphicon glyphicon-user"></span> <?php echo $user->username; ?> <span class="caret"></span></a>
+							<span class="glyphicon glyphicon-user"></span> <?php echo $currentUser->username; ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="/profile.php">Profile</a></li>
 								<li><a href="/usersetting.php">Settings</a></li>
 <?php 
-if($user->role === "admin")
+if($currentUser->role === "admin")
 {
 	echo "\t\t\t\t\t\t\t\t<li><a href=\"/admin/\">Admin</a></li>\r\n"; 
 }

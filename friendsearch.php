@@ -2,7 +2,6 @@
 
     require_once("includes/init.php");
 
-$id = getUserID(getUsername());
 if(isset($_POST['search']))
 {
 $searchtext = $_POST['search'];
@@ -10,8 +9,8 @@ $likeString = '%' . $searchtext . '%';
 
 $result = $conn->prepare("SELECT username FROM users
                         JOIN friends ON users.id = friends.userid2
-                        WHERE userid = '$id' AND username LIKE ?");
-$result->bind_param("s", $likeString);
+                        WHERE userid = ? AND username LIKE ?");
+$result->bind_param("is", $currentUser->id, $likeString);
 $result->execute();
 $result->store_result();
 $result->bind_result($name);

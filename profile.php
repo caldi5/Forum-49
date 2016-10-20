@@ -11,14 +11,14 @@
 	
 	if( !isset($_GET["user"]) && isLoggedIn() ) {
 			
-		header("Location: profile.php?user=" . getUsername());
+		header("Location: profile.php?user=" . $currentUser->username);
 	}
 	
 	if( isset($_GET["user"]) ){
 	
 		if( !usernameExists($_GET["user"]) && isLoggedIn() ){
 		
-			header("Location: profile.php?user=" . getUsername());
+			header("Location: profile.php?user=" . $currentUser->username);
 		}
 	}
 
@@ -69,7 +69,7 @@
 					<!-- END SIDEBAR USER TITLE -->
 						 
 								<!-- If logged in and not going to private page: load this  (IN FUTURE check if already a friend?) -->
-								<?php if( isLoggedIn() && $user !== getUserName() ){ 
+								<?php if( isLoggedIn() && $user !== $currentUser->username ){ 
 						 
 								?>
 						
@@ -109,7 +109,7 @@
 												
 
 												<!-- If logged in and going to the private page: load this-->
-												<?php if( isLoggedIn() && $user === getUserName() ){ 
+												<?php if( isLoggedIn() && $user === $currentUser->username ){ 
 						 
 												?>
 							<li>

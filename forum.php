@@ -96,7 +96,7 @@
 			<div class="posts">
 <?php
 	// Buttons for for posting, administrating and moderating.
-	if (isAdmin())
+	if ($currentUser->role === "admin")
 	{
 		echo '<div class="actions">';
 		echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';

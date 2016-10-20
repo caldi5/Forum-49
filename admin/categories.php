@@ -1,14 +1,9 @@
 <?php	
-	session_start();
 
-	require_once "../includes/dbconn.php";
-	require_once "../functions/alerts.php";
-	require_once "../functions/get.php";
-	require_once "../functions/user.php";
-	require_once "../functions/admin.php";
-	
+	require_once("../includes/init.php");
+
 	//Kill if users is not admin
-	if(!isAdmin())
+	if($currentUser->role === "admin")
 	{
 		header("Location: /index.php");
 		die();

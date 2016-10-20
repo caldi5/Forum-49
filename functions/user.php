@@ -177,28 +177,6 @@
 	}
 
 	// Returns the username.
-	function getUsername ()
-	{
-		if (isset($_SESSION["id"]))
-		{
-			global $conn;
-			$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
-			$stmt->bind_param('i', $_SESSION["id"]);
-			$stmt->execute();
-			$stmt->store_result();
-			$stmt->bind_result($username);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-			return $username;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	// Returns the username.
 	function getUsernameID ($userID)
 	{
 		global $conn;
@@ -241,31 +219,6 @@
 	function isLoggedIn()
 	{
 		return isset($_SESSION["id"]);
-	}
-
-	// Checks if a user is an admin, returns true if he is, false if he's not logged in or not an admin.
-	function isAdmin ()
-	{
-		if (isset($_SESSION["id"]))
-		{
-			global $conn;
-			$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
-			$stmt->bind_param('i', $_SESSION["id"]);
-			$stmt->execute();
-			$stmt->store_result();
-			$stmt->bind_result($role);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-			if($role === "admin")
-				return true;
-			else
-				return false;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	// Checks if a user with the given user ID is an admin.

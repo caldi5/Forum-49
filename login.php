@@ -4,7 +4,7 @@
 
 	if(isset($_POST["loginForm"])) 
 	{
-		if($user->login($_POST["username"], $_POST["password"]) === true)
+		if($currentUser->login($_POST["username"], $_POST["password"]) === true)
 		{
 			header("Location: /index.php");
 			die();
