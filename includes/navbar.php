@@ -23,7 +23,7 @@
 								<li><a href="/profile.php">Profile</a></li>
 								<li><a href="/usersetting.php">Settings</a></li>
 <?php 
-if($currentUser->role === "admin")
+if($currentUser->isAdmin())
 {
 	echo "\t\t\t\t\t\t\t\t<li><a href=\"/admin/\">Admin</a></li>\r\n"; 
 }
