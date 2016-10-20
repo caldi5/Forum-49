@@ -14,7 +14,10 @@
 			if($stmt->error !== "")
 				$error[] = "SQL error: " . $stmt->error;
 			else
+			{
+				$_SESSION['id'] = getUserID($_GET['email']);
 				$success[] = "Your verified your email!";
+			}
 			$stmt->close();
 		}
 		else
