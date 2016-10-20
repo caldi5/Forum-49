@@ -52,6 +52,7 @@
 				else
 				{
 					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
+					session_destroy();
 				}
 			}
 		}
