@@ -17,6 +17,14 @@
 			$forum = false;
 		}
 	}
+	elseif (isset($_POST['comment']))
+	{
+		$postedComment = $_POST['comment'];
+		if (strlen($postedComment) > 1 && strlen($postedComment) <= 5000)
+		{
+			
+		}
+	}
 	elseif (isset($_GET['id']))
 	{
 		$comments_per_page = 9;
@@ -171,7 +179,7 @@
 				<div class="row post-reply-form">
 					<h3>Reply</h3>
 					<form action="post.php" method="post">
-						<textarea name="comment" maxlength="1500" required></textarea>
+						<textarea name="comment" maxlength="5000" required></textarea>
 						<br>
 						<input type="submit">
 					</form>
