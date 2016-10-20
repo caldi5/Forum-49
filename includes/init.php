@@ -1,4 +1,7 @@
 <?php 
+	
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);
+	
 	session_start();
 	require_once __DIR__.'/../includes/dbconn.php';
 	require_once __DIR__.'/../functions/alerts.php';
