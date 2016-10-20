@@ -19,6 +19,18 @@
 	}
 	elseif (isset($_GET['id']))
 	{
+		$comments_per_page = 9;
+
+		if (isset($_GET['page']))
+		{
+			$page = $_GET['page'];
+		}
+		else
+		{
+			$page = 1;
+		}
+		$commentsOffset = ($comments_per_page*$page)-$comments_per_page;
+
 		$stmt = $conn->prepare('SELECT * FROM posts WHERE id = ?');
 		$stmt->bind_param('i', $_GET['id']);
 		$stmt->execute();
@@ -32,12 +44,20 @@
 
 		$post = $result->fetch_array();
 
-		$repliesSTMT = $conn->prepare('SELECT * FROM comments WHERE postID = ?');
-		$repliesSTMT->bind_param('i', $post['id']);
+		$repliesSTMT = $conn->prepare('SELECT * FROM comments WHERE postID = ? ORDER BY created_at LIMIT ? OFFSET ?');
+		$repliesSTMT->bind_param('iii', $post['id'], $comments_per_page, $commentsOffset);
 		$repliesSTMT->execute();
 		$comments = $repliesSTMT->get_result();
 		$repliesSTMT->store_result();
 
+		$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM posts WHERE forum = ?');
+		$getCount->bind_param('i', $_GET['id']);
+		$getCount->execute();
+		$getCount->bind_result($count);
+		$getCount->fetch();
+
+		$getCount->free_result();
+		$getCount->close();
 		$repliesSTMT->free_result();
 		$stmt->free_result();
 		$stmt->close();
@@ -96,55 +116,70 @@
 			}
 
 
-			
+		if ($count > $comments_per_page)
+		{
+			echo '<nav aria-label="Page navigation">';
+			echo '<div class="row">';
+			echo '<ul class="pagination">';
+			if ($page == 1)
+			{
+				echo '<li class="page-item disabled">';
+				echo '<a class="page-link" href="#" aria-label="Previous">';
+			}
+			else 
+			{
+				echo '<li class="page-item">';
+				echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
+			}
+			echo '<span aria-hidden="true">&laquo;</span>';
+			echo '</a></li>';
+
+			// Number of pages we need, rounded up.
+			$pages = ceil($count / $comments_per_page);
+
+			for ($i = 1; $i <= $pages; $i++)
+			{
+				// Makes the current page active.
+				if ($i == $page)
+					echo '<li class="page-item active"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+				else
+					echo '<li class="page-item"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+			}
+			if ($page == $pages)
+			{
+				echo '<li class="page-item disabled">';
+				echo '<a class="page-link" href="#" aria-label="Next">';
+			}
+			else 
+			{
+				echo '<li class="page-item">';
+				echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
+			}		
+			echo '<span aria-hidden="true">&raquo;</span>';
+			echo '</a></li>';
+			echo '</ul>';
+			echo '</div>';
+			echo '</nav>';
+		}
 			?>
-			<div class="row post-reply">
-				<div class="col-lg-2 post-profile">
-					<h4>Username</h4>
-					<img src="img/cat.jpg" alt="Profile picture">
-				</div>
-				<div class="col-lg-10 post-text">
-					<p>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</p>
-				</div>
-			</div>
 
 
+			<?php
+			if (isLoggedIn())
+			{
+			?>
+				<div class="row post-reply-form">
+					<h3>Reply</h3>
+					<form action="post.php" method="post">
+						<textarea name="comment" maxlength="1500" required></textarea>
+						<br>
+						<input type="submit">
+					</form>
+				</div>
+			<?php
+			}
+			?>
 
-			<div class="row post-reply">
-				<div class="col-lg-2 post-profile">
-					<h4>Username</h4>
-					<img src="img/cat.jpg" alt="Profile picture">
-				</div>
-				<div class="col-lg-10 post-text">
-					<p>asdf</p>
-				</div>
-			</div>
-			<div class="row post-reply">
-				<div class="col-lg-2 post-profile">
-					<h4>Username</h4>
-					<img src="img/cat.jpg" alt="Profile picture">
-				</div>
-				<div class="col-lg-10 post-text">
-					<p>asdf</p>
-				</div>
-			</div>
-			<div class="row">
-				<ul class="pagination">
-				  <li class="active"><a href="#">1</a></li>
-				  <li><a href="#">2</a></li>
-				  <li><a href="#">3</a></li>
-				  <li><a href="#">4</a></li>
-				  <li><a href="#">5</a></li>
-				</ul>
-			</div>
-			<div class="row post-reply-form">
-				<h3>Reply</h3>
-				<form action="post.php" method="post">
-					<textarea name="comment" maxlength="1500" required></textarea>
-					<br>
-					<input type="submit">
-				</form>
-			</div>
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>

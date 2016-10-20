@@ -92,7 +92,7 @@
 			// This should use the function getForumName when that function is done!
 			$categoryID = forumBelongsTo($id);
 
-			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> - '.$name; 
+			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> / '.$name; 
 			 ?>
 			 </h1>
 
