@@ -60,14 +60,14 @@
 		}
 	
 
-		private function setPassword($newPassword)
+		public function setPassword($userID, $newPassword)
 		{
 			global $conn;
 			//Hash new password
 			$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
 			$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
-			$stmt->bind_param('si', $passwordHash, $this->id);
+			$stmt->bind_param('si', $passwordHash, $userID);
 			$stmt->execute();
 			$stmt->close();
 		}

@@ -1,24 +1,5 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
-	require_once __DIR__.'/../functions/user.php';
-
-	function setPassword($userID, $newPassword)
-	{
-		global $conn;
-		global $error;
-		global $success;
-
-		//Hash new password
-		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-
-		$stmt = $conn->prepare('UPDATE users SET password = ? WHERE id = ?');
-		$stmt->bind_param('si', $passwordHash, $userID);
-		$stmt->execute();
-
-		if($stmt->error !== "")
-			$error[] = "SQL error: " . $stmt->error;
-		$stmt->close();
-	}
 
 	function sendValidationEmail($username, $email)
 	{
@@ -47,7 +28,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		global $error;
 
 		//Get id if exists
-		$stmt = $conn->prepare('SELECT id, email FROM users WHERE username = ? OR email = ?');
+		$stmt = $conn->prepare('SELECT id, username, email FROM users WHERE username = ? OR email = ?');
 		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
 		
@@ -57,7 +38,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 			return false;
 		}
 		
-		$stmt->bind_result($id, $email);
+		$stmt->bind_result($id, $username, $email);
 		$stmt->fetch();
 		$stmt->close();
 
@@ -82,7 +63,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 
 		//send email
 		$subject = 'DVA231 Forum - Email Reset'; 
-		$message = 'Dear '. getUsernameID($id) .'!
+		$message = 'Dear '. $username .'!
 Someone have requested to reset the password for you account
 		 
 Please click this link within 30 minutes to reset your password:

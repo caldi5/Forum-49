@@ -58,7 +58,7 @@
 	//-----------------------------------------------------
 	if(isset($_POST['password']) && isset($_SESSION['allowPasswordChange']))
 	{
-		setPassword($_SESSION['allowPasswordChange'], $_POST['password']);
+		$currentUser->setPassword($_SESSION['allowPasswordChange'], $_POST['password']);
 		$success[] = "You have sucessfully set you new password";
 		session_destroy(); //because it's easyer than unset($_SESSION[])
 	}
