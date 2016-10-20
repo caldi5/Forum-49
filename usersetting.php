@@ -2,7 +2,7 @@
 
 	require_once("includes/init.php");
 
-	if(!isLoggedIn())
+	if(!$user->loggedIn)
 	{
 		header("Location: /index.php");
 		die();
@@ -28,7 +28,7 @@
 		//-----------------------------------------------------
 		if(!isset($error))
 		{
-			changePassword($_SESSION["id"], $_POST['oldPassword'], $_POST['newPassword']);
+			$user->changePassword($_SESSION["id"], $_POST['oldPassword'], $_POST['newPassword']);
 		}
 	}
 ?>
