@@ -51,7 +51,7 @@
 				}
 				else
 				{
-					$error[] = "You have not verified your email <a href='#'>this should be a link to resend email</a>";
+					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
 				}
 			}
 		}
