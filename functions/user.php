@@ -47,7 +47,7 @@
 					$this->email = $email;
 					$this->validEmail = $validEmail;
 					$this->banned = $banned;
-					$this->loggedIn = ture;
+					$this->loggedIn = true;
 				}
 				else
 				{
