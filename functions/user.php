@@ -232,11 +232,41 @@
 	function areFriends ($userID, $userID2)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
-		$stmt->bind_param('ii', $userID, $userID2);
+		$stmt = $conn->prepare('SELECT userid from friends WHERE (userid = ? AND userid2 = ?) OR (userid = ? AND userid2 = ?)');
+		$stmt->bind_param('iiii', $userID, $userID2, $userID2, $userID);
 		$stmt->execute();
 		$stmt->store_result();
 		if ($stmt->num_rows == 0)
+			return false;
+		else
+			return true;
+	}
+	// Check if users already exists in frendsRequest table
+	function requestExists ($userID, $userID2)
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT userid from friendRequests WHERE (userid = ? AND userid2 = ?) OR (userid = ? AND userid2 = ?)');
+		$stmt->bind_param('iiii', $userID, $userID2, $userID2, $userID);
+		$stmt->execute();
+		$stmt->store_result();
+		if ($stmt->num_rows == 0)
+			return false;
+		else
+			return true;
+	}
+	// Add userID and userID2 to friendsRequest table 
+	function addFriendRequest ($userID, $userID2)
+	{
+		if(areFriends($userID, $userID2) || requestExists($userID, $userID2) || !userIDExists($userID) || !userIDExists($userID2)){
+			return false;
+		}
+		global $conn;
+		$created_at = time(); // Unix time
+		$stmt = $conn->prepare('INSERT INTO friendRequests (userid, userid2, created_at) VALUES (?, ?, ?)');
+		$stmt->bind_param('iii', $userID, $userID2, $created_at);
+		$stmt->execute();
+		$stmt->store_result();
+		if (PRINT @@ROWCOUNT == 0)
 			return false;
 		else
 			return true;
