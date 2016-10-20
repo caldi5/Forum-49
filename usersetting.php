@@ -28,7 +28,7 @@
 		//-----------------------------------------------------
 		if(!isset($error))
 		{
-			$currentUser->changePassword($_SESSION["id"], $_POST['oldPassword'], $_POST['newPassword']);
+			$currentUser->changePassword($currentUser->id, $_POST['oldPassword'], $_POST['newPassword']);
 		}
 	}
 ?>

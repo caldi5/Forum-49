@@ -86,7 +86,7 @@
 			$stmt->fetch();
 			$stmt->close();
 			
-			if(password_verify($password , $passwordHash))
+			if(password_verify($oldPassword , $passwordHash))
 			{
 				$this->setPassword($userID, $newPassword);
 				$success[] = "You've sucessfully changed your password";
