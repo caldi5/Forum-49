@@ -228,10 +228,10 @@
 		return $array;
 	}
 
-    // Check if two users are friends
-    function areFriends ($userID, $userID2)
-    {
-        global $conn;
+	// Check if user1 are friends with user2
+	function areFriends ($userID, $userID2)
+	{
+		global $conn;
 		$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
 		$stmt->bind_param('ii', $userID, $userID2);
 		$stmt->execute();
@@ -240,6 +240,6 @@
 			return false;
 		else
 			return true;
-    }
+	}
 
 ?>
