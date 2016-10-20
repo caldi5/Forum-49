@@ -7,21 +7,28 @@ $id = getUserID(getUsername());
 if(isset($_POST['search']))
 {
 $searchtext = $_POST['search'];
-    
-$result = $conn->query("SELECT username FROM users
+$likeString = '%' . $searchtext . '%';
+
+$result = $conn->prepare("SELECT username FROM users
                         JOIN friends ON users.id = friends.userid2
-                        WHERE userid = '$id' AND username LIKE '%$searchtext%'");
+                        WHERE userid = '$id' AND username LIKE ?");
+$result->bind_param("s", $likeString);
+$result->execute();
+$result->store_result();
+$result->bind_result($name);
 if($result->num_rows > 0)
 {
-    while($row = $result->fetch_assoc())
+    while($result->fetch())
     {
         ?>
-        <a href="#" class="searchoption" onClick="selectFriend('<?php echo $row["username"]; ?>')">
+        <a href="#" class="searchoption" onClick="selectFriend('<?php echo $name; ?>')">
         <?php
-        echo $row['username'];
+        echo $name;
         echo '</a>';
         echo '<br>';
     }
 }
+    $result->close();
+    $conn->close();
 }
 ?>

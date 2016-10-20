@@ -36,7 +36,6 @@
                 </div>
                 <div class="col-sm-9">
                 <div class="content">
-                    <?php echo $_SESSION['id']; ?>
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
                 </div>
