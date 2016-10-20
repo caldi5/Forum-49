@@ -1,9 +1,6 @@
 <?php
 
-	session_start();
-	require_once("functions/alerts.php");
-	require_once("functions/user.php");
-	require_once("functions/security.php");
+	require_once("includes/init.php");
 
 	if(!isLoggedIn())
 	{

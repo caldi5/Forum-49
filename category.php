@@ -4,10 +4,7 @@
 		- Use the function getCategoryName.
 
 	*/
-	session_start();
-
-	require_once "includes/dbconn.php";
-	require_once "functions/get.php";
+	require_once("includes/init.php");
 
 	// Makes sure that the GET variable id is set.
 	if (isset($_GET['id']))

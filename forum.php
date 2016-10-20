@@ -4,10 +4,7 @@
 		- Use the function getForumName.
 	*/
 
-	session_start();
-	require_once "includes/dbconn.php";
-	require_once "functions/get.php";
-	require_once "functions/user.php";
+	require_once("includes/init.php");
 
 	if (!isset($_GET['id']))
 	{
