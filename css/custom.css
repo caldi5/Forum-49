@@ -152,7 +152,7 @@ span.admin
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-}/* Messages css */
+}
 .profile-content{
     border-style: solid;
     border-width: 30px;
@@ -164,6 +164,7 @@ span.admin
     background-color:#e7e7e7;
     overflow-y: scroll;
 }
+/* Messages css */
 .content {
     overflow-y: scroll;
     border-radius:3px;
@@ -180,8 +181,6 @@ span.admin
     padding-bottom: 4.5em;
     padding-left: 0.5em;
     height: 6em; 
-}
-.sendbtn {
 }
 #p7 {
     display: none;

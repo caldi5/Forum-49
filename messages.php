@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once "includes/dbconn.php"; 
-    require_once "functions/user.php";
+    require_once 'functions/user.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,19 +40,52 @@
 				    <p id="messagecontent"> </p>
                 </div>
             <div class="messageform">
-                <form>
+                <form action="javascript:sendmsg();" name="pmForm" id="pmForm" method="post">
                     <div class="form-group messageformtextbox col-sm-12">
                     Message: <input type="text" class="form-control" id="message">
                     </div>
+                    <input name="senderid" id="senderid" type="hidden" value="<?php echo $_SESSION['id'] ?>" />
                     <div class="col-sm-12">
-                    <button type="button" class="btn btn-default sendbtn">Send</button>
+                    <button name="pmSubmit" type="submit" value="Submit" class="btn btn-default" id="sendbtn">Send</button>
                     </div>
+                    <p id="confirm"></p>
                 </form>
             </div>
             </div>
 		</div>
 		<!-- Content end -->
         <script>
+            function sendmsg()
+            {
+                
+                var sendid = $('#senderid').val();
+                var reciever = $('.searchtext').val();
+                var msg = $('#message').val();
+                if(msg == '' || reciever == '')
+                    {
+                        document.getElementById("message").value = "No message Written";
+                        if(reciever == '')
+                        {
+                            $('.reciever').show();
+                            $('.reciever').val("Choose recipient..");
+                        }
+                    }
+                else 
+                    {
+                        $.ajax({
+                            method: "post",
+                            url: "messageparse.php",
+                            async: true,
+                            data: { senderid: sendid,reciever: reciever, message: msg }
+                        })
+                        .done(function(data){
+                            $('.reciever').val("");
+                            $('#message').val("");
+                            $('#confirm').html(data);
+                        })
+                    }
+                 
+            }
             $(function() 
             {
                 $(".searchtext").on("keydown", function(e) {
@@ -66,7 +99,7 @@
                         data: {search: searchtext}
                         
                     })
-                    .done(function(data){
+                    .done(function(data){  
                      $("#searchboxdiv").html(data);
                     })
                     
@@ -90,6 +123,7 @@
                 $('.reciever').show();
             });
              
+            
             function selectFriend(val)
             {
                 $('.searchtext').val(val);

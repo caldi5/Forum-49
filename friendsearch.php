@@ -29,6 +29,5 @@ if($result->num_rows > 0)
     }
 }
     $result->close();
-    $conn->close();
 }
 ?>
