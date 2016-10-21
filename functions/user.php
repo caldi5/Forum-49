@@ -72,7 +72,7 @@
 			$stmt->close();
 		}
 
-		public function changePassword($userID, $oldPassword, $newPassword)
+		public function changePassword($oldPassword, $newPassword)
 		{
 			global $conn;
 			global $error;
@@ -80,7 +80,7 @@
 
 			//Validate old password
 			$stmt = $conn->prepare('SELECT password FROM users WHERE id=?');
-			$stmt->bind_param('i', $userID);
+			$stmt->bind_param('i', $this->$id);
 			$stmt->execute();			
 			$stmt->bind_result($passwordHash);
 			$stmt->fetch();
