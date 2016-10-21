@@ -2,21 +2,21 @@
 
 	require_once("includes/init.php");	
 
-	if( !isLoggedIn() && !usernameExists($_GET["user"]) ){
+	if( !$currentUser->loggedIn && !usernameExists($_GET["user"]) ){
 
 		// GO TO index.php
 		header("Location: index.php");
 		die();
 	}
 	
-	if( !isset($_GET["user"]) && isLoggedIn() ) {
+	if( !isset($_GET["user"]) && $currentUser->loggedIn ) {
 			
 		header("Location: profile.php?user=" . $currentUser->username);
 	}
 	
 	if( isset($_GET["user"]) ){
 	
-		if( !usernameExists($_GET["user"]) && isLoggedIn() ){
+		if( !usernameExists($_GET["user"]) && $currentUser->loggedIn ){
 		
 			header("Location: profile.php?user=" . $currentUser->username);
 		}
@@ -69,7 +69,7 @@
 					<!-- END SIDEBAR USER TITLE -->
 						 
 								<!-- If logged in and not going to private page: load this  (IN FUTURE check if already a friend?) -->
-								<?php if( isLoggedIn() && $user !== $currentUser->username ){ 
+								<?php if( $currentUser->loggedIn && $user !== $currentUser->username ){ 
 						 
 								?>
 						
@@ -109,7 +109,7 @@
 												
 
 												<!-- If logged in and going to the private page: load this-->
-												<?php if( isLoggedIn() && $user === $currentUser->username ){ 
+												<?php if( $currentUser->loggedIn && $user === $currentUser->username ){ 
 						 
 												?>
 							<li>
