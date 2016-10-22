@@ -75,7 +75,7 @@
 						
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
-												<?php if( !areFriends($_SESSION["id"], getUserID($user)) ){ 
+												<?php if( !areFriends($currentUser->id, getUserID($user)) ){ 
 												?>
 												
 						 <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
