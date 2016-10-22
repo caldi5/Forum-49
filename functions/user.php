@@ -106,7 +106,7 @@
 			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 			$stmt->execute();
 			
-			if($stmt->error !== "")
+			if(!empty($stmt->error))
 				$error[] = "SQL error: " . $stmt->error;
 			
 			$stmt->bind_result($id, $username, $passwordHash, $role, $email, $validEmail, $banned);

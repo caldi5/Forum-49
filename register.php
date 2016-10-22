@@ -57,7 +57,7 @@
 				$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
 				$stmt->bind_param('sss', $_POST["username"], $passwordHash, $_POST["email"]);
 				$stmt->execute();
-				if($stmt->error !== "")
+				if(!empty($stmt->error))
 				{
 					$error[] = "SQL error: " . $stmt->error;
 				}

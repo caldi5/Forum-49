@@ -32,7 +32,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
 		$stmt->execute();
 		
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			$error[] = "SQL error: " . $stmt->error;
 			return false;
@@ -53,7 +53,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$stmt->bind_param('iss', $id, $hash, $hash);
 		$stmt->execute();
 		
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			$error[] = "SQL error: " . $stmt->error;
 			return false;

@@ -16,7 +16,7 @@
 		$stmt = $conn->prepare('INSERT INTO forums(name, description, category, ordering) VALUES (?,?,?,?)');
 		$stmt->bind_param('ssii', $forumName, $description, $categoryID, $ordering);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			$error[] = "SQL error: " . $stmt->error;
 			return false;
@@ -33,7 +33,7 @@
 		$stmt = $conn->prepare('INSERT INTO categories(name, ordering) VALUES (?,?)');
 		$stmt->bind_param('si', $categoryName, $ordering);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			$error[] = "SQL error: " . $stmt->error;
 			return false;
@@ -48,7 +48,7 @@
 		$stmt = $conn->prepare('DELETE FROM users WHERE id = ?');
 		$stmt->bind_param('i', $userID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}
@@ -68,7 +68,7 @@
 		$stmt = $conn->prepare('DELETE FROM categories WHERE id = ?');
 		$stmt->bind_param('i', $categoryID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}
@@ -98,7 +98,7 @@
 			$stmt = $conn->prepare('DELETE FROM forums WHERE id = ?');
 		$stmt->bind_param('i', $forumID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}
@@ -114,7 +114,7 @@
 		$stmt = $conn->prepare('DELETE FROM comments WHERE postID = ?');
 		$stmt->bind_param('i', $postID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}
@@ -124,7 +124,7 @@
 		$stmt = $conn->prepare('DELETE FROM posts WHERE id = ?');
 		$stmt->bind_param('i', $postID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}
@@ -140,7 +140,7 @@
 		$stmt = $conn->prepare('DELETE FROM comments WHERE id = ?');
 		$stmt->bind_param('i', $commentID);
 		$stmt->execute();
-		if($stmt->error !== "")
+		if(!empty($stmt->error))
 		{
 			return false;
 		}

@@ -15,7 +15,7 @@
 			$stmt->bind_param('s', $_GET['email']);
 			$stmt->execute();
 
-			if($stmt->error !== "")
+			if(!empty($stmt->error))
 				$error[] = "SQL error: " . $stmt->error;
 			else
 			{
