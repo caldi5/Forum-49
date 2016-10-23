@@ -15,13 +15,9 @@
 			$forum = false;
 		}
 	}
-	elseif (isset($_POST['comment']))
+	elseif (isset($_POST['comment']) && isLoggedIn() && isset($_GET['id']))
 	{
-		$postedComment = $_POST['comment'];
-		if (strlen($postedComment) > 1 && strlen($postedComment) <= 5000)
-		{
-			
-		}
+		
 	}
 	elseif (isset($_GET['id']))
 	{
