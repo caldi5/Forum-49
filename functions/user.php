@@ -141,6 +141,12 @@
 
 		}
 
+		// Checks if the user is logged in.
+		public function isLoggedIn()
+		{
+			return $this->loggedIn;
+		}
+
 		public function areFriendsWith($userID2)
 		{
 			global $conn;
@@ -222,12 +228,6 @@
 		$stmt->close();
 
 		return $id;
-	}
-
-	// Checks if the user is logged in.
-	function isLoggedIn()
-	{
-		return isset($_SESSION["id"]);
 	}
 
 	// Checks if a user with the given user ID is an admin.

@@ -111,7 +111,7 @@
 		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 		echo '</div>';
 	}
-	elseif (isLoggedIn())
+	elseif ($currentUser->isLoggedIn())
 	{
 		echo '<div class="actions">';
 		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';

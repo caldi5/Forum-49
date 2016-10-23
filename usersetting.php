@@ -2,7 +2,7 @@
 
 	require_once("includes/init.php");
 
-	if(!$currentUser->loggedIn)
+	if(!$currentUser->isLoggedIn())
 	{
 		header("Location: /index.php");
 		die();

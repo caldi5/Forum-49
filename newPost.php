@@ -3,7 +3,7 @@
 	require_once("includes/init.php");
 
 
-	if (isset($_POST['newPost']) && (isset($_GET['forum']) || isset($_POST['id'])) && isLoggedIn())
+	if (isset($_POST['newPost']) && (isset($_GET['forum']) || isset($_POST['id'])) && $currentUser->isLoggedIn())
 	{
 		// Insert new post
 		if (isset($_POST['id']))
@@ -60,7 +60,7 @@
 		}
 
 	}
-	elseif(isset($_GET['forum']) && isLoggedIn())
+	elseif(isset($_GET['forum']) && $currentUser->isLoggedIn())
 	{
 		// Write new post
 

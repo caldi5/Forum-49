@@ -12,7 +12,7 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
 <?php 			
-	if($currentUser->loggedIn)
+	if($currentUser->isLoggedIn())
 	{
 ?>
 						<li><a href="/messages.php">Messages</a></li>

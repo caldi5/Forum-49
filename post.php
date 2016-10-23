@@ -3,7 +3,7 @@
 	require_once("includes/init.php");
 
 
-	if (isset($_POST['comment']) && isLoggedIn() && isset($_POST['id']))
+	if (isset($_POST['comment']) && $currentUser->isLoggedIn() && isset($_POST['id']))
 	{
 		$comment = $_POST['comment'];
 
@@ -176,7 +176,7 @@
 
 
 			<?php
-			if (isLoggedIn())
+			if ($currentUser->isLoggedIn())
 			{
 			?>
 				<div class="row post-reply-form">
