@@ -55,7 +55,7 @@
 	//-----------------------------------------------------
 	// stmt_2 is responsible for getting all of the posts in this forum.
 	//-----------------------------------------------------
-	$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at LIMIT ? OFFSET ?');
+	$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at DESC LIMIT ? OFFSET ?');
 	$stmt_2->bind_param('iii', $_GET['id'], $posts_per_page, $posts);
 	$stmt_2->execute();
 	$result = $stmt_2->get_result();
@@ -99,7 +99,7 @@
 	if ($currentUser->isAdmin())
 	{
 		echo '<div class="actions">';
-		echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 		echo '<a href="admin.php" class="btn btn-default" role="button">Administrate</a>';
 		echo '</div>';
@@ -107,14 +107,14 @@
 	elseif (isModerator($_GET['id']))
 	{
 		echo '<div class="actions">';
-		echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 		echo '</div>';
 	}
 	elseif (isLoggedIn())
 	{
 		echo '<div class="actions">';
-		echo '<a href="post.php?new" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '</div>';
 	}
 		

@@ -2,20 +2,8 @@
 
 	require_once("includes/init.php");
 
-	if (isset($_GET['new']) && isset($_GET['forum']))
-	{
-		if ($forumName = getForumName($_GET['forum']))
-		{
-			$newPost = true;
-			$forum = true;
-		}
-		else
-		{
-			$newPost = true;
-			$forum = false;
-		}
-	}
-	elseif (isset($_POST['comment']) && isLoggedIn() && isset($_GET['id']))
+
+	if (isset($_POST['comment']) && isLoggedIn() && isset($_GET['id']))
 	{
 		
 	}
