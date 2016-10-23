@@ -47,12 +47,15 @@
 		$stmt = $conn->prepare("INSERT INTO posts(creator, title, text, forum, created_at) VALUES (?,?,?,?,?)");
 		$stmt->bind_param('issii', $_SESSION['id'], $title, $text, $forumID, time());
 		$stmt->execute();
-		$stmt->close();
 
 		if (empty($stmt->error))
+		{
+			$stmt->close();
 			header('Location: forum.php?id='.$forumID.'');
+		}
 		else
 		{
+			$stmt->close();
 			echo 'Something something SQL error.';
 		}
 

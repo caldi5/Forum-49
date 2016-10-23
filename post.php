@@ -3,9 +3,30 @@
 	require_once("includes/init.php");
 
 
-	if (isset($_POST['comment']) && isLoggedIn() && isset($_GET['id']))
+	if (isset($_POST['comment']) && isLoggedIn() && isset($_POST['id']))
 	{
-		
+		$comment = $_POST['comment'];
+
+		if(strlen($comment) < 2 || strlen($comment) > 5000)
+		{
+			echo 'comment to long';
+			die();
+		}
+
+		$stmt = $conn->prepare("INSERT INTO comments(userID, postID, text, created_at) VALUES (?,?,?,?)");
+		$stmt->bind_param('iisi', $_SESSION['id'], $_POST['id'], $comment, time());
+		$stmt->execute();
+
+		if (empty($stmt->error))
+		{
+			$stmt->close();
+			header('Location: post.php?id='.$_POST['id'].'');
+		}
+		else
+		{
+			$stmt->close();
+			echo 'Something something SQL error.';
+		}
 	}
 	elseif (isset($_GET['id']))
 	{
@@ -162,6 +183,7 @@
 					<h3>Reply</h3>
 					<form action="post.php" method="post">
 						<textarea name="comment" maxlength="5000" required></textarea>
+						<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
 						<br>
 						<input type="submit">
 					</form>
