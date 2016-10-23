@@ -105,7 +105,7 @@
 					<img src="img/cat.jpg" alt="Profile picture">
 				</div>
 				<div class="col-lg-10 post-text">
-					<p><?php echo $post['text']; ?></p>
+					<p><?php echo nl2br($post['text']); ?></p>
 				</div>
 			</div>
 
@@ -120,7 +120,7 @@
 					echo '<img src="img/cat.jpg" alt="Profile picture">';
 					echo '</div>';
 					echo '<div class="col-lg-10 post-text">';
-					echo '<p>'.$comment['text'].'</p>';
+					echo '<p>'.nl2br($comment['text']).'</p>';
 					echo '</div>';
 					echo '</div>';
 				}
