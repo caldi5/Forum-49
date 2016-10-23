@@ -94,8 +94,8 @@
 			<h2 class="post-title">
 			<?php 
 				$categoryID = forumBelongsTo($post['forum']);
-				echo '<a href="category.php?id='.$categoryID.'">'.getCategoryName($categoryID).'</a> / ';
-				echo '<a href="forum.php?id='.$post['forum'].'">'.getForumName($post['forum']).'</a> / ';
+				echo '<a href="category.php?id='.$categoryID.'">'.htmlspecialchars(getCategoryName($categoryID)).'</a> / ';
+				echo '<a href="forum.php?id='.$post['forum'].'">'.htmlspecialchars(getForumName($post['forum'])).'</a> / ';
 				echo $post['title']; 
 				?>
 			</h2>
@@ -105,7 +105,7 @@
 					<img src="img/cat.jpg" alt="Profile picture">
 				</div>
 				<div class="col-lg-10 post-text">
-					<p><?php echo nl2br($post['text']); ?></p>
+					<p><?php echo nl2br(htmlspecialchars($post['text'])); ?></p>
 				</div>
 			</div>
 
@@ -120,7 +120,7 @@
 					echo '<img src="img/cat.jpg" alt="Profile picture">';
 					echo '</div>';
 					echo '<div class="col-lg-10 post-text">';
-					echo '<p>'.nl2br($comment['text']).'</p>';
+					echo '<p>'.nl2br(htmlspecialchars($comment['text'])).'</p>';
 					echo '</div>';
 					echo '</div>';
 				}
