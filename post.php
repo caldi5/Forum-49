@@ -61,7 +61,7 @@
 		$comments = $repliesSTMT->get_result();
 		$repliesSTMT->store_result();
 
-		$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM posts WHERE forum = ?');
+		$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM comments WHERE postID = ?');
 		$getCount->bind_param('i', $_GET['id']);
 		$getCount->execute();
 		$getCount->bind_result($count);
@@ -126,7 +126,6 @@
 				}
 			}
 
-
 		if ($count > $comments_per_page)
 		{
 			echo '<nav aria-label="Page navigation">';
@@ -140,7 +139,7 @@
 			else 
 			{
 				echo '<li class="page-item">';
-				echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
+				echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
 			}
 			echo '<span aria-hidden="true">&laquo;</span>';
 			echo '</a></li>';
@@ -152,9 +151,9 @@
 			{
 				// Makes the current page active.
 				if ($i == $page)
-					echo '<li class="page-item active"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+					echo '<li class="page-item active"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 				else
-					echo '<li class="page-item"><a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+					echo '<li class="page-item"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
 			}
 			if ($page == $pages)
 			{
@@ -164,7 +163,7 @@
 			else 
 			{
 				echo '<li class="page-item">';
-				echo '<a class="page-link" href="forum.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
+				echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
 			}		
 			echo '<span aria-hidden="true">&raquo;</span>';
 			echo '</a></li>';
