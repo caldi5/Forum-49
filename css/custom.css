@@ -202,3 +202,41 @@ span.admin
     visibility: hidden;
 }
 /* Messages css end */
+
+/* Charbar css start */
+body 
+{
+  margin-bottom: 50px;
+}
+
+.chatbar 
+{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #cecece;
+}
+
+.container > .chatbar
+{
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.conversation
+{
+	height: 50px;
+}
+
+.conversation:hover
+{
+	background-color: grey;
+}
+
+.conversation-content
+{
+	margin-top: 15px;
+}
+
+/* Charbar css end */

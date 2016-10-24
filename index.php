@@ -72,7 +72,7 @@
 			}
 		?>
 		</div>
-		
+		<?php include("includes/chatbar.php"); ?>
 		<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>
