@@ -1,6 +1,7 @@
 <?php	
 
 	require_once("../includes/init.php");
+	require_once("../functions/admin.php");
 
 	//Kill if users is not admin
 	if(!$currentUser->isAdmin())
