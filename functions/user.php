@@ -2,7 +2,40 @@
 	require_once __DIR__.'/../includes/dbconn.php';
 	require_once __DIR__.'/../functions/alerts.php';
 
+
 	class user 
+	{ 
+		public $id;
+		public $username;
+		public $role;
+		public $email;
+		public $validEmail;
+		public $banned;
+
+		function __construct($id)
+		{
+			global $conn;
+			global $error;
+				
+			$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
+			$stmt->bind_param('i', $id);
+			$stmt->execute();
+			$stmt->store_result();		
+			$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			$this->id = $id;
+			$this->username = $username;
+			$this->role = $role;
+			$this->email = $email;
+			$this->validEmail = $validEmail;
+			$this->banned = $banned;
+		}
+	}
+
+	class currentUser 
 	{ 
 		public $id;
 		public $username;
@@ -159,10 +192,8 @@
 			else
 				return true;
 		}
-
 	} 
 
-	
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
 	{
