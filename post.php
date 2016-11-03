@@ -101,7 +101,7 @@
 			</h3>
 			<div class="row post-post">
 				<div class="col-lg-2 post-profile">
-					<h4><?php echo '<a class="profile-name" href="'.$post['creator'].'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
+					<h4><?php echo '<a class="profile-name" href="profile.php?user='.$post['creator'].'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
 					<img src="img/cat.jpg" alt="Profile picture">
 				</div>
 				<div class="col-lg-10 post-text">
