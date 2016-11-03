@@ -38,7 +38,6 @@ body
 	margin-bottom: 5px;
 	margin-left: 0px;
 	padding-top: 10px;
-	max-width: 90%;
 }
 
 .forum-title
@@ -312,7 +311,7 @@ body
 
 .navbar-default .navbar-brand:hover
 {
-	color: #ff3B3F;
+	color: black;
 }
 
 .navbar-default .navbar-nav>li>a:hover
