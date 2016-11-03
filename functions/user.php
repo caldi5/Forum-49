@@ -73,7 +73,19 @@
 				$stmt->fetch();
 				$stmt->free_result();
 				$stmt->close();
-				if($validEmail === 1)
+				if(!$validEmail)
+				{
+					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
+					unset($_SESSION['id']);
+					session_destroy();
+				}
+				else if($banned)
+				{
+					$error[] = "You are banned";
+					unset($_SESSION['id']);
+					session_destroy();
+				}
+				else
 				{
 					$this->id = $id;
 					$this->username = $username;
@@ -82,12 +94,6 @@
 					$this->validEmail = $validEmail;
 					$this->banned = $banned;
 					$this->loggedIn = true;
-				}
-				else
-				{
-					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
-					unset($_SESSION['id']);
-					session_destroy();
 				}
 			}
 		}
