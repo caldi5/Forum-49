@@ -31,9 +31,9 @@ if($result->num_rows > 0)
     $result->close();
     
 $result2 = $conn->prepare("SELECT username, message, messages.timestamp FROM users 
-                   JOIN messages ON users.id = messages.to_user
+                   JOIN messages ON users.id = messages.from_user
 				   WHERE to_user = ? AND from_user = ?");
-$result2->bind_param("ii", $withUser, $currentUser->id);
+$result2->bind_param("ii", $currentUser->id, $withUser);
 $result2->execute();
 $result2->store_result();
 $result2->bind_result($name,$message,$timestamp);

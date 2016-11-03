@@ -25,7 +25,7 @@ if($result->num_rows > 0)
          ?>
                     
                     <a href="#" class="list-group-item" onclick="showConversation('<?php echo $toUser; ?>','<?php echo $i; ?>')">
-                    <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; ?></h4>
+                    <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
         <?php
         $result2 = $conn->prepare("SELECT message, max(timestamp) FROM messages
                         WHERE to_user = ?");
@@ -39,13 +39,12 @@ if($result->num_rows > 0)
             {
                ?>
                     <p class="list-group-item-text"><?php if(ISSET($lastMessage)) {echo $lastMessage;} ?></p>    
-                    </a>
                 <?php
             }
-                
-       
-       }   
-        $result2->close();
+       } 
+        ?>
+                </a>
+        <?php
     }
 }
             $result3 = $conn->prepare("SELECT DISTINCT username, to_user, from_user FROM users 
@@ -56,7 +55,7 @@ if($result->num_rows > 0)
             $result3->store_result();
             $result3->bind_result($name,$toUser,$fromUser);
 
-if($result3->num_rows > 0)
+if($result->num_rows == 0)
 {
     while($result3->fetch())
     {
@@ -71,23 +70,21 @@ if($result3->num_rows > 0)
         $result4->execute();
         $result4->store_result();
         $result4->bind_result($lastMessage,$timestamp);
-       if($result4->num_rows > 0)
+       if($result4->num_rows > 0 && $result->num_rows < 1)
        {
            while($result4->fetch())
             {
                ?>
                     <p class="list-group-item-text"><?php if(ISSET($lastMessage)) {echo $lastMessage;} ?></p>    
-                    </a>
                 <?php
             }
-                
-       
-       }   
-        $result4->close();
+       }
+        ?>
+                </a>
+        <?php
     }
 }
-         
-    $result3->close();        
+                
 ?>
         </div>
     </body>
