@@ -6,13 +6,17 @@
     <body>
 <?php
 require_once("includes/init.php");
-            $result = $conn->prepare("SELECT DISTINCT username, to_user, from_user FROM users 
+            $result = $conn->prepare("select distinct username from((SELECT DISTINCT username, to_user, from_user FROM users 
                         JOIN messages ON users.id = messages.to_user
-                        WHERE from_user = ?");
-            $result->bind_param("i", $currentUser->id);
+                        WHERE from_user = ?)
+                        UNION
+                        (SELECT DISTINCT username, to_user, from_user FROM users 
+                        JOIN messages ON users.id = messages.from_user
+                        WHERE to_user = ?)) as a");
+            $result->bind_param("ii", $currentUser->id, $currentUser->id);
             $result->execute();
             $result->store_result();
-            $result->bind_result($name,$toUser,$fromUser);
+            $result->bind_result($name);
             $i = 0;
 ?>
     <div class="list-group col-sm-12 friends">
@@ -22,23 +26,26 @@ if($result->num_rows > 0)
 {
     while($result->fetch())
     {
+         $conversWithID = getUserID($name)
          ?>
                     
-                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $toUser; ?>','<?php echo $i; ?>')">
+                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $conversWithID; ?>','<?php echo $i; ?>')">
                     <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
         <?php
-        $result2 = $conn->prepare("SELECT message, max(timestamp) FROM messages
-                        WHERE to_user = ?");
-        $result2->bind_param("i", $currentUser->id);
+        $result2 = $conn->prepare("SELECT message, timestamp, id FROM messages
+                        WHERE to_user = ? AND from_user = ?
+						order by timestamp desc
+						limit 1");
+        $result2->bind_param("ii", $currentUser->id,$conversWithID);
         $result2->execute();
         $result2->store_result();
-        $result2->bind_result($lastMessage,$timestamp);
-       if($resul2->num_rows > 0)
+        $result2->bind_result($lastMessage,$timestamp, $messageid);
+       if($result2->num_rows > 0)
        {
            while($result2->fetch())
             {
                ?>
-                    <p class="list-group-item-text"><?php if(ISSET($lastMessage)) {echo $lastMessage;} ?></p>    
+                    <p class="list-group-item-text"><?php echo $lastMessage; ?></p>    
                 <?php
             }
        } 
@@ -47,45 +54,7 @@ if($result->num_rows > 0)
         <?php
     }
 }
-            $result3 = $conn->prepare("SELECT DISTINCT username, to_user, from_user FROM users 
-                        JOIN messages ON users.id = messages.from_user
-                        WHERE to_user = ?");
-            $result3->bind_param("i", $currentUser->id);
-            $result3->execute();
-            $result3->store_result();
-            $result3->bind_result($name,$toUser,$fromUser);
-
-if($result3->num_rows > 0 && $result->num_rows == 0)
-{
-    while($result3->fetch())
-    {
-         ?>
-                    
-                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $fromUser; ?>','<?php echo $i; ?>')">
-                    <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
-        <?php
-        $result4 = $conn->prepare("SELECT message, max(timestamp) FROM messages
-                        WHERE to_user = ?");
-        $result4->bind_param("i", $currentUser->id);
-        $result4->execute();
-        $result4->store_result();
-        $result4->bind_result($lastMessage,$timestamp);
-       if($result4->num_rows > 0 && $result->num_rows < 1)
-       {
-           while($result4->fetch())
-            {
-               ?>
-                    <p class="list-group-item-text"><?php if(ISSET($lastMessage)) {echo $lastMessage;} ?></p>    
-                <?php
-            }
-       }
-        ?>
-                </a>
-        <?php
-    }
-}
-                
-?>
+     ?>
         </div>
     </body>
 </html>
