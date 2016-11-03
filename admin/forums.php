@@ -131,7 +131,7 @@ if(isset($error))
 										<td><?php echo getCategoryName($category); ?></td>
 										<td><?php echo $ordering; ?></td>
 										<td><?php echo numberOfPosts($id); ?></td>
-										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
 <?php
 	}
