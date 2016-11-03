@@ -12,30 +12,18 @@
 	</head>
 	<body>
 <?php require_once "includes/navbar.php"; ?>
-        
-<?php
-        
-?>
 		<!-- Content start -->
 		<div class="container">
                 <form>
                     <button type="button" class="btn btn-success newconversation">New</button>
-                    <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever searchtext" onfocus="showSearchBox()">
+                    <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">
                 </form>
                 <div id="searchboxdiv">
                 </div>
-                <div class="list-group col-sm-3 friends">
-                    <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">André</h4>
-                    <p class="list-group-item-text">Last Message?</p>    
-                    </a>
-                    <a href="#" class="list-group-item ">
-                    <h4 class="list-group-item-heading">William</h4>
-                    <p class="list-group-item-text">Last Message?</p>    
-                    </a>
+                <div class="container col-sm-3 conversationlist">
                 </div>
                 <div class="col-sm-9">
-                <div class="content">
+                <div class="content col-sm-12">
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
                 </div>
@@ -55,15 +43,30 @@
 		</div>
 		<!-- Content end -->
         <script>
+            $(function() 
+            {
+                      
+                    $.ajax({
+                        method: "post",
+                        url: "getConversations.php",
+                        async: true
+                        
+                    })
+                    .done(function(data){  
+                     $(".conversationlist").html(data);
+                    })
+                    
+                
+                
+            })
             function sendmsg()
             {
-                
                 var sendid = $('#senderid').val();
                 var reciever = $('.searchtext').val();
                 var msg = $('#message').val();
                 if(msg == '' || reciever == '')
                     {
-                        document.getElementById("message").value = "No message Written";
+                        document.getElementById("message").value = "No message Written...";
                         if(reciever == '')
                         {
                             $('.reciever').show();
@@ -122,8 +125,25 @@
             $('.newconversation').on('click', function() {
                 $('.reciever').show();
             });
-             
             
+            function showConversation(withUser,pos)
+            {
+                $(".content").empty();
+                $('.reciever').show();
+                var to = document.getElementById(pos).innerHTML;
+                $('.searchtext').val(to); 
+                 $.ajax({
+                        method: "post",
+                        url: "showConversation.php",
+                        async: true,
+                        data: {withUser: withUser}
+                        
+                    })
+                    .done(function(data){  
+                     $(".content").html(data);
+                    })
+
+            }
             function selectFriend(val)
             {
                 $('.searchtext').val(val);
