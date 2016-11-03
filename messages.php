@@ -66,11 +66,11 @@
                 var msg = $('#message').val();
                 if(msg == '' || reciever == '')
                     {
-                        document.getElementById("message").value = "No message Written...";
+                        document.getElementById("message").placeholder = "No message Written...";
                         if(reciever == '')
                         {
                             $('.reciever').show();
-                            $('.reciever').val("Choose recipient..");
+                           document.getElementById("searchtext").placeholder = "Choose recipient...";
                         }
                     }
                 else 
@@ -87,7 +87,6 @@
                             $('#confirm').html(data);
                         })
                     }
-                 
             }
             $(function() 
             {
