@@ -16,9 +16,24 @@
 		die();
 	}
 
+	if(isset($_POST["editUserForm"]))
+	{
+		$stmt = $conn->prepare('UPDATE users SET username=?, email=?, role=?, banned=? WHERE id=?');
+		$stmt->bind_param('sssii', $_POST["username"], $_POST["email"], $_POST["role"], $_POST["banned"], $_GET['id']);
+		$stmt->execute();
+		if(!empty($stmt->error))
+		{
+			$error[] = "SQL error: " . $stmt->error;
+		}
+		else
+		{
+			$success[] = "Successfully Updated User";
+		}
+		$stmt->close();
+	}
+
 	$user = new user($_GET['id']);
-
-
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,6 +49,7 @@
 <?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
 <?php if(isset($error)){ displayAlerts($error); } ?>
+<?php if(isset($success)){ displayAlerts($success); } ?>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Edit User
@@ -61,13 +77,13 @@
 								</div>
 								<div class="form-group">	
 									<label>Banned status</label>
-									<select class="form-control" name="role" value="test">
+									<select class="form-control" name="banned" value="test">
 										<option<?php if(!$user->banned){echo " selected";}	?> value="0">Not Banned</option>
 										<option<?php if($user->banned){echo " selected";}	?> value="1">Banned</option>
 									</select>
 								</div>
-								<button class="btn btn-lg btn-primary btn-block" type="" name="">Cancel</button>
-								<button class="btn btn-lg btn-success btn-block" type="submit" name="">Save</button>
+								<button class="btn btn-lg btn-primary btn-block" type="">Cancel</button>
+								<button class="btn btn-lg btn-success btn-block" type="submit" name="editUserForm">Save</button>
 							</form>
 						</div>
 					</div>
