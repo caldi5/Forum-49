@@ -43,13 +43,13 @@ html, h1, h2, h3, h4, h5, h6
 {
 	margin-bottom: 5px;
 	text-decoration: none;
-	color: #333;
+	color: black;
 }
 
-.category-title:hover
+a.category-title:hover
 {
-	text-decoration: none;
-	color: #333;
+	text-decoration: underline;
+	color: black;
 }
 
 .category a
@@ -121,6 +121,11 @@ html, h1, h2, h3, h4, h5, h6
 .post-title
 {
 	margin-bottom: 10px;
+}
+
+.post-title a
+{
+	color: black;
 }
 
 span.mod
@@ -245,3 +250,13 @@ body
 }
 
 /* Charbar css end */
+
+.profile-name
+{
+	color: black;
+}
+
+.profile-name:hover
+{
+	color: black;
+}
