@@ -101,7 +101,7 @@ if(isset($error))
 									<div class="row">
 										<div class="col-sm-3">
 											<span class="input-group-btn">
-												<button type="submit" name="newForum" class="btn btn-sm btn-success">Create Category</button>
+												<button type="submit" name="newForum" class="btn btn-sm btn-success">Create Forum</button>
 									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>							
 											</span>
 										</div>

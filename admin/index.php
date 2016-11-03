@@ -27,6 +27,7 @@
 if(isset($error))
 	displayAlerts($error); 
 ?>
+				</div>
 			</div>
 		</div>
 		<!-- Content end -->
