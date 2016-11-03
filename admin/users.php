@@ -15,7 +15,7 @@
 	//-----------------------------------------------------
 	if (isset($_GET['action']) && isset($_GET['id']))
 	{
-		if($_GET['action'] === "delete")
+		if($_GET['action'] === "delete" && $_GET['id'] !== $currentUser->id)
 			deleteUser($_GET['id']);
 	}
 
@@ -73,18 +73,18 @@ if(isset($error))
 										<td><?php echo $username; ?></td>
 										<td><?php echo $role; ?></td>
 										<td><?php
-										if($banned === 0)
-											echo "No"; 
+										if($banned)
+											echo "Yes"; 
 										else
-											echo "Yes";
+											echo "No";
 										?></td>
 										<td><?php
-										if($validEmail === 0)
-											echo "No"; 
+										if($validEmail)
+											echo "Yes"; 
 										else
-											echo "Yes";
+											echo "No";
 										?></td>
-										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if($id === $currentUser->id){ echo "disabled";} ?>">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
 									</tr>
 <?php
 	}

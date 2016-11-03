@@ -78,9 +78,8 @@ if(isset($error))
 											</div>
 										</div>
 										<div class="col-sm-3">
-											<span class="input-group-btn">
 												<button type="submit" name="newCategory" class="btn btn-sm btn-success">Create Category</button>
-									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>							
+									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>
 											</span>
 										</div>
 									</div>
@@ -107,7 +106,7 @@ if(isset($error))
 										<td><?php echo $name; ?></td>
 										<td><?php echo $ordering; ?></td>
 										<td><?php echo getNumberOfForums($id); ?></td>
-										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?>">Delete</a><a href="editcategory.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?>">Delete</a><a href="editcategory.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
 									</tr>
 <?php
 	}

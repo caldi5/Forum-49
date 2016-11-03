@@ -100,10 +100,8 @@ if(isset($error))
 									</div>
 									<div class="row">
 										<div class="col-sm-3">
-											<span class="input-group-btn">
 												<button type="submit" name="newForum" class="btn btn-sm btn-success">Create Forum</button>
-									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>							
-											</span>
+									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>
 										</div>
 									</div>
 								</form>
@@ -131,7 +129,7 @@ if(isset($error))
 										<td><?php echo getCategoryName($category); ?></td>
 										<td><?php echo $ordering; ?></td>
 										<td><?php echo numberOfPosts($id); ?></td>
-										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
 									</tr>
 <?php
 	}
