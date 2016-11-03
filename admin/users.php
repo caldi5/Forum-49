@@ -84,7 +84,7 @@ if(isset($error))
 										else
 											echo "Yes";
 										?></td>
-										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="?action=edit&id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
+										<td><span class="input-group-btn"><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="edituser?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></span></td>
 									</tr>
 <?php
 	}
