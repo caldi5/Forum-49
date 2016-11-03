@@ -61,7 +61,7 @@ if($result->num_rows == 0)
     {
          ?>
                     
-                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $toUser; ?>','<?php echo $i; ?>')">
+                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $fromUser; ?>','<?php echo $i; ?>')">
                     <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
         <?php
         $result4 = $conn->prepare("SELECT message, max(timestamp) FROM messages
