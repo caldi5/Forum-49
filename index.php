@@ -31,7 +31,7 @@
 				while ($row = $result->fetch_assoc())
 				{
 					echo '<div class="row category">';
-					echo '<h2 class="category-title"><a href="category.php?id='.$row['id'].'">'.$row['name'].'</a></h2>';
+					echo '<h3 class="category-title"><a href="category.php?id='.$row['id'].'">'.$row['name'].'</a></h3>';
 
 					// Here we get the forums that belongs to the current category.
 					$stmt = $conn->prepare('SELECT * FROM forums WHERE category = ? ORDER BY ordering LIMIT 3');
@@ -72,7 +72,5 @@
 			}
 		?>
 		</div>
-		<?php include("includes/chatbar.php"); ?>
-		<?php include("includes/standard_footer.php"); ?>
 	</body>
 </html>

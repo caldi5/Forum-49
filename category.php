@@ -58,7 +58,7 @@
 	<!-- Content start -->
 		<div class="container">
 			<div class="row category">
-				<h2 class="category-title"><?php echo $name; ?></h2>
+				<h3 class="category-title"><?php echo $name; ?></h3>
 
 				<?php
 					// Checks if there's at least one forum in the category.

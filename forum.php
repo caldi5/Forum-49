@@ -84,14 +84,14 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h1>
+			<h3>
 			<?php
 			// This should use the function getForumName when that function is done!
 			$categoryID = forumBelongsTo($id);
 
 			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> / '.$name; 
 			 ?>
-			 </h1>
+			 </h3>
 
 			<div class="posts">
 <?php

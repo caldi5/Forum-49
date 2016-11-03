@@ -6,6 +6,12 @@ html, h1, h2, h3, h4, h5, h6
 {
 	margin: 0;
 	padding: 0;
+	font-family: 'Roboto', sans-serif;
+}
+
+body
+{
+	background-color: white;
 }
 
 
@@ -16,8 +22,8 @@ html, h1, h2, h3, h4, h5, h6
 
 .category
 {
-	background-color: #eeeeee;
-	margin-bottom: 5px;
+	background-color: none;
+	margin-bottom: 10px;
 	padding-left: 10px;
 }
 
@@ -28,10 +34,11 @@ html, h1, h2, h3, h4, h5, h6
 
 .forum
 {
-	background-color: #cecece;
+	background-color: #EFEFEF;
 	margin-bottom: 5px;
-	margin-left: -5px;
+	margin-left: 0px;
 	padding-top: 10px;
+	max-width: 90%;
 }
 
 .forum-title
@@ -43,24 +50,46 @@ html, h1, h2, h3, h4, h5, h6
 {
 	margin-bottom: 5px;
 	text-decoration: none;
-	color: black;
+	color: #ff3B3F;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 
 a.category-title:hover
 {
-	text-decoration: underline;
 	color: black;
+	text-decoration: none;
 }
 
 .category a
 {
-	color: #333;
+	color: #ff3B3F;
 	text-decoration: none;
 }
 
-.forum:hover
+.category a:hover
 {
-	background-color: grey;
+	color: black;
+}
+
+.forum-title
+{
+	color: black;
+}
+
+.forum-desc
+{
+	color: black;
+}
+
+.forum:hover .forum-title
+{
+	color: #ff3B3F;
+}
+
+.forum:hover .forum-desc
+{
+	color: #ff3B3F;
 }
 
 .posts
@@ -92,14 +121,14 @@ a.category-title:hover
 
 .post-post, .post-reply
 {
-	background-color: #cecece;
+	background-color: #EFEFEF;
 	padding: 5px;
 	margin-bottom: 10px;
 }
 
 .post-post
 {
-	border-bottom: 3px solid black;
+	border-bottom: 3px solid #ff3B3F;
 }
 
 .post-reply-form textarea
@@ -125,7 +154,9 @@ a.category-title:hover
 
 .post-title a
 {
-	color: black;
+	color: #ff3B3F;
+		font-weight: bold;
+	text-transform: uppercase;
 }
 
 span.mod
@@ -253,10 +284,38 @@ body
 
 .profile-name
 {
-	color: black;
+	color: #ff3B3F;
 }
 
 .profile-name:hover
 {
+	color: #ff3B3F;
+}
+
+.navbar-default
+{
+	background-color: white;
+	border-color: #CAEBF2;
+}
+
+.navbar-default .navbar-brand
+{
 	color: black;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.navbar-default .navbar-nav>li>a
+{
+	color: black;
+}
+
+.navbar-default .navbar-brand:hover
+{
+	color: #ff3B3F;
+}
+
+.navbar-default .navbar-nav>li>a:hover
+{
+	color: #ff3B3F;
 }

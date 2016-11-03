@@ -91,14 +91,14 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
-			<h2 class="post-title">
+			<h3 class="post-title">
 			<?php 
 				$categoryID = forumBelongsTo($post['forum']);
 				echo '<a href="category.php?id='.$categoryID.'">'.htmlspecialchars(getCategoryName($categoryID)).'</a> / ';
 				echo '<a href="forum.php?id='.$post['forum'].'">'.htmlspecialchars(getForumName($post['forum'])).'</a> / ';
 				echo $post['title']; 
 				?>
-			</h2>
+			</h3>
 			<div class="row post-post">
 				<div class="col-lg-2 post-profile">
 					<h4><?php echo '<a class="profile-name" href="'.$post['creator'].'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
