@@ -30,7 +30,7 @@
             <div class="messageform">
                 <form action="javascript:sendmsg();" name="pmForm" id="pmForm" method="post">
                     <div class="form-group messageformtextbox col-sm-12">
-                    Message: <input type="text" class="form-control" id="message">
+                    Message: <input type="text" class="form-control" id="message" autocomplete="off">
                     </div>
                     <input name="senderid" id="senderid" type="hidden" value="<?php echo $_SESSION['id'] ?>" />
                     <div class="col-sm-12">

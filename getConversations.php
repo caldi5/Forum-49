@@ -55,7 +55,7 @@ if($result->num_rows > 0)
             $result3->store_result();
             $result3->bind_result($name,$toUser,$fromUser);
 
-if($result->num_rows == 0)
+if($result3->num_rows > 0 && $result->num_rows == 0)
 {
     while($result3->fetch())
     {
