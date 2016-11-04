@@ -2,47 +2,33 @@
 
 	require_once("includes/init.php");	
 
-	if( !$currentUser->isLoggedIn() && !usernameExists($_GET["user"]) ){
-
+	if(!$currentUser->isLoggedIn() || (isset($_GET["user"]) && !usernameExists($_GET["user"])))
+	{
 		// GO TO index.php
 		header("Location: index.php");
 		die();
 	}
-	
-	if( !isset($_GET["user"]) && $currentUser->isLoggedIn() ) {
-			
-		header("Location: profile.php?user=" . $currentUser->username);
-	}
-	
-	if( isset($_GET["user"]) ){
-	
-		if( !usernameExists($_GET["user"]) && $currentUser->isLoggedIn() ){
-		
-			header("Location: profile.php?user=" . $currentUser->username);
-		}
-	}
 
-	// Need something like this so we don't fail later checks because of capital/normal letters.
-	$user = getUsernameID(getUserID($_GET["user"]));
+	if(isset($_GET["user"]))
+		$user = new user(getUserID($_GET["user"]));
+	else
+		$user = new user($currentUser->id);
 
-	$userID = getUserID($_GET["user"]);
+	if(isset($_GET["sendReq"])){
+		$currentUser->sendFriendRequest($user->id);
+	}
 
 	$comments = $conn->prepare('SELECT postID, text, created_at FROM comments WHERE userID = ? ORDER BY created_at DESC LIMIT 10');
-	$comments->bind_param('i', $userID);
+	$comments->bind_param('i', $user->id);
 	$comments->execute();
 	$comments->store_result();
 	$comments->bind_result($commentsID, $commentsText, $commentsTime);
 
 	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? ORDER BY created_at DESC LIMIT 10');
-	$posts->bind_param('i', $userID);
+	$posts->bind_param('i', $user->id);
 	$posts->execute();
 	$posts->store_result();
 	$posts->bind_result($postsID, $postsTitle, $postsTime);
-
-
-	if(isset($_GET["sendReq"])){
-		$currentUser->sendFriendRequest($userID);
-	}
 
 ?>
 <!DOCTYPE html>
@@ -63,13 +49,13 @@
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name">
 						
-												<h1><?php echo $user; ?></h1>
+												<h1><?php echo $user->username; ?></h1>
 					
 						</div>
 						<div class="profile-usertitle-userType">
 												
 						<?php  
-												if(isAdminUsername($user) === true)
+												if(isAdminUsername($user->username) === true)
 												{
 														echo "Administrator";
 												}
@@ -84,19 +70,19 @@
 					<!-- END SIDEBAR USER TITLE -->
 						 
 								<!-- If logged in and not going to private page: load this  (IN FUTURE check if already a friend?) -->
-								<?php if( $currentUser->isLoggedIn() && $user !== $currentUser->username ){ 
+								<?php if( $currentUser->isLoggedIn() && $user->username !== $currentUser->username ){ 
 						 
 								?>
 						
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
-											<?php if($currentUser->friendRequestExists($userID)){ 
+											<?php if($currentUser->friendRequestExists($user->id)){ 
 											?>
 												
 											 	<a type="button" class="btn btn-success btn-sm" href="#">Req Sent</a>
 												
 												<?php }
-														elseif($currentUser->areFriendsWith($userID)) { 
+														elseif($currentUser->areFriendsWith($user->id)) { 
 												?>
 						
 												<a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
@@ -105,7 +91,7 @@
 														else {
 												?>
 												
-														<a type="button" class="btn btn-success btn-sm" href="profile.php?user=<?php echo $user;?>&sendReq">Add Friend</a>
+														<a type="button" class="btn btn-success btn-sm" href="profile.php?user=<?php echo $user->username;?>&sendReq">Add Friend</a>
 											<?php }
 											?>
 												
@@ -129,7 +115,7 @@
 												
 
 												<!-- If logged in and going to the private page: load this-->
-												<?php if( $currentUser->isLoggedIn() && $user === $currentUser->username ){ 
+												<?php if( $currentUser->isLoggedIn() && $user->username === $currentUser->username ){ 
 						 
 												?>
 							<li>
