@@ -15,7 +15,7 @@
 	if($currentUser->isLoggedIn())
 	{
 ?>
-						<li><a href="/messages.php">Messages</a></li>
+						<li><a href="/messages.php">Messages (<?php echo $currentUser->getNumberOfUnreadMessages(); ?>)</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							<span class="glyphicon glyphicon-user"></span> <?php echo $currentUser->username; ?> <span class="caret"></span></a>

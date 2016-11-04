@@ -98,7 +98,6 @@
 			}
 		}
 	
-
 		public function setPassword($userID, $newPassword)
 		{
 			global $conn;
@@ -197,6 +196,22 @@
 				return false;
 			else
 				return true;
+		}
+
+		// Returns the number of unred messages,
+		public function getNumberOfUnreadMessages()
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) FROM messages WHERE to_user = ? AND isread = 0');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			return $count;
 		}
 	} 
 
