@@ -32,7 +32,7 @@
 	$comments->store_result();
 	$comments->bind_result($commentsID, $commentsText, $commentsTime);
 
-	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? LIMIT 5');
+	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? LIMIT 10');
 	$posts->bind_param('i', $userID);
 	$posts->execute();
 	$posts->store_result();
