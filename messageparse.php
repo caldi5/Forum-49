@@ -15,7 +15,7 @@ if(isset($_POST['message']))
     $msg = $conn->real_escape_string($msg);
     $t = time();
     
-    if(!usernameExists($to))
+    if(!user::usernameExists($to))
     {
         echo '<p>User does not exist</p>';
         exit();

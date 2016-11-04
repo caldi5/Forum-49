@@ -132,11 +132,11 @@
 			echo '<h4 class="post-title">' . $row['title'] . '</h4>';
 
 			// Nice admin and moderator colors for the "creator" text. Blue is for moderator and red is for admin.
-			if (isAdminID($row['creator']))
+			if (user::isAdminID($row['creator']))
 			{
 				echo '<p class="post-poster"><span class="admin">'.getUsernameID($row['creator']) . ' [A]</span></p>';
 			}
-			elseif (isModeratorID($row['creator'], $id))
+			elseif (user::isModeratorID($row['creator'], $id))
 			{
 				echo '<p class="post-poster"><span class="mod">'.getUsernameID($row['creator']).' [M]</span></p>';
 			}

@@ -2,7 +2,7 @@
 
 	require_once("includes/init.php");	
 
-	if(!$currentUser->isLoggedIn() || (isset($_GET["user"]) && !usernameExists($_GET["user"])))
+	if(!$currentUser->isLoggedIn() || (isset($_GET["user"]) && !user::usernameExists($_GET["user"])))
 	{
 		// GO TO index.php
 		header("Location: index.php");

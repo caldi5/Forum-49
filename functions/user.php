@@ -32,90 +32,59 @@
 			$this->validEmail = $validEmail;
 			$this->banned = $banned;
 		}
-		public function isAdmin()
-		{
-			if($this->role === "admin")
-				return true;
-			return false;
-		}
-	}
 
-	//======================================================================
-	// currentUser START
-	//======================================================================
-	class currentUser 
-	{ 
-		public $id;
-		public $username;
-		public $role;
-		public $email;
-		public $validEmail;
-		public $banned;
-		public $loggedIn;
-
-		function __construct()
+		public static	function usernameExists ($username)
 		{
 			global $conn;
-			global $alerts;
-
-			$this->loggedIn = false;
-
-			if(isset($_SESSION['id']))
-			{
-
-				$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
-				$stmt->bind_param('i', $_SESSION['id']);
-				$stmt->execute();
-				$stmt->store_result();
-
-				//if username does not exist in database, detroy session and redirect to index.
-				if ($stmt->num_rows == 0)
-				{
-					unset($_SESSION['id']);
-					session_destroy();
-					header("Location: /index.php");
-					die();
-				}
-				
-				
-				$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
-				$stmt->fetch();
-				$stmt->free_result();
-				$stmt->close();
-				if(!$validEmail)
-				{
-					$alerts[] = new alert("danger", "Error:", "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>");
-					unset($_SESSION['id']);
-					session_destroy();
-				}
-				else if($banned)
-				{
-					$alerts[] = new alert("danger", "Error:", "You are banned");
-					unset($_SESSION['id']);
-					session_destroy();
-				}
-				else
-				{
-					$this->id = $id;
-					$this->username = $username;
-					$this->role = $role;
-					$this->email = $email;
-					$this->validEmail = $validEmail;
-					$this->banned = $banned;
-					$this->loggedIn = true;
-
-					$friendRequests = $this->getFriendRequests();
-					if(isset($friendRequests) && !empty($friendRequests))
-					{
-						foreach($friendRequests as $friendRequest) 
-						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
-						}
-					}
-				}
-			}
+			$stmt = $conn->prepare('SELECT id from users WHERE username = ?');
+			$stmt->bind_param('s', $username);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				return false;
+			else
+				return true;
 		}
-		
+
+		// Returns the username.
+		public static function getUsernameID ($userID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
+			$stmt->bind_param('i', $userID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($username);
+
+			if($stmt->num_rows == 0)
+				return false;
+
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+			return $username;
+		}
+
+		// Returns the user ID.
+		public static function getUserID ($usernameOrEmail)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT id from users where username = ? OR email = ?');
+			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($id);
+
+			if($stmt->num_rows == 0)
+				return false;
+
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			return $id;
+		}
+
 		//-----------------------------------------------------
 		// Security Start
 		//-----------------------------------------------------
@@ -198,6 +167,140 @@
 				return true;
 			return false;
 		}
+
+		public static function isAdminID($userID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
+			$stmt->bind_param('i', $userID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($role);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+			if($role === "admin")
+				return true;
+			else
+				return false;
+		}
+
+		public function isModerator($forumID)
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+			$stmt->bind_param('ii', $this->id, $forumID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			if ($count == 0)
+				return false;
+			else
+				return true;
+		}
+		
+		// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
+		public static function isModeratorID ($userID, $forumID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+			$stmt->bind_param('ii', $userID, $forumID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			if ($count == 0)
+				return false;
+			else
+				return true;
+		}
+		//-----------------------------------------------------
+		// Security END
+		//-----------------------------------------------------
+
+	}
+
+	//======================================================================
+	// currentUser START
+	//======================================================================
+	class currentUser extends user
+	{ 
+		public $loggedIn;
+
+		function __construct()
+		{
+			global $conn;
+			global $alerts;
+
+			$this->loggedIn = false;
+
+			if(isset($_SESSION['id']))
+			{
+
+				$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
+				$stmt->bind_param('i', $_SESSION['id']);
+				$stmt->execute();
+				$stmt->store_result();
+
+				//if username does not exist in database, detroy session and redirect to index.
+				if ($stmt->num_rows == 0)
+				{
+					unset($_SESSION['id']);
+					session_destroy();
+					header("Location: /index.php");
+					die();
+				}
+				
+				
+				$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
+				$stmt->fetch();
+				$stmt->free_result();
+				$stmt->close();
+				if(!$validEmail)
+				{
+					$alerts[] = new alert("danger", "Error:", "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>");
+					unset($_SESSION['id']);
+					session_destroy();
+				}
+				else if($banned)
+				{
+					$alerts[] = new alert("danger", "Error:", "You are banned");
+					unset($_SESSION['id']);
+					session_destroy();
+				}
+				else
+				{
+					$this->id = $id;
+					$this->username = $username;
+					$this->role = $role;
+					$this->email = $email;
+					$this->validEmail = $validEmail;
+					$this->banned = $banned;
+					$this->loggedIn = true;
+
+					$friendRequests = $this->getFriendRequests();
+					if(isset($friendRequests) && !empty($friendRequests))
+					{
+						foreach($friendRequests as $friendRequest) 
+						{
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
+						}
+					}
+				}
+			}
+		}
+		
+		//-----------------------------------------------------
+		// Security Start
+		//-----------------------------------------------------
 
 		public function isLoggedIn()
 		{
@@ -296,20 +399,21 @@
 		{
 			global $conn;
 			global $alerts;
+			$username = getUsernameID($userID);
 
-			if(!userIDExists($userID))
+			if(!$username)
 			{
 				$alerts[] = new alert("danger", "Error:", "That user does not exist");
 				return false;
 			}	
 			if($this->friendRequestExists($userID))
 			{
-				$alerts[] = new alert("danger", "Error:", "You have already sent a friend request to: " . getUsernameID($userID) . ".");
+				$alerts[] = new alert("danger", "Error:", "You have already sent a friend request to: " . $username . ".");
 				return false;
 			}
 			if($this->areFriendsWith($userID))
 			{
-				$alerts[] = new alert("danger", "Error:", "You are already friends with: " . getUsernameID($userID) . ".");
+				$alerts[] = new alert("danger", "Error:", "You are already friends with: " . $username . ".");
 				return false;
 			}
 
@@ -352,7 +456,7 @@
 			return true;
 		}
 		//-----------------------------------------------------
-		// Friends functions Start
+		// Friends functions END
 		//-----------------------------------------------------
 
 		// Returns the number of unred messages,
@@ -370,60 +474,12 @@
 
 			return $count;
 		}
-
-		// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
-		public function isModerator ($forumID)
-		{
-			global $conn;
-			$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
-			$stmt->bind_param('ii', $this->id, $forumID);
-			$stmt->execute();
-			$stmt->store_result();
-			$stmt->bind_result($count);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-
-			if ($count == 0)
-				return false;
-			else
-				return true;
-			
-		}
 	} 
 	//======================================================================
 	// currentUser END
 	//======================================================================
-
-
-	// Checks if a user with the given ID exists
-	function userIDExists ($userID)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT id from users WHERE id = ?');
-		$stmt->bind_param('i', $userID);
-		$stmt->execute();
-		$stmt->store_result();
-		if ($stmt->num_rows == 0)
-			return false;
-		else
-			return true;
-	}
-
-	// Checks if a user with the given username exists
-	function usernameExists ($username)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT id from users WHERE username = ?');
-		$stmt->bind_param('s', $username);
-		$stmt->execute();
-		$stmt->store_result();
-		if ($stmt->num_rows == 0)
-			return false;
-		else
-			return true;
-	}
-
+	
+	//To be removed use user::getUsernameID instead 
 	// Returns the username.
 	function getUsernameID ($userID)
 	{
@@ -443,6 +499,7 @@
 		return $username;
 	}
 
+	//To be removed use user::getUserID instead 
 	// Returns the user ID.
 	function getUserID ($usernameOrEmail)
 	{
@@ -463,65 +520,7 @@
 		return $id;
 	}
 
-	// Checks if a user with the given user ID is an admin.
-	function isAdminID ($userID)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT role FROM users WHERE id = ?');
-		$stmt->bind_param('i', $userID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($role);
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-		if($role === "admin")
-			return true;
-		else
-			return false;
-	}
-
-	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
-	function isModerator ($forumID)
-	{
-		global $conn;
-		if (!isset($_SESSION["id"]))
-			return false;
-
-		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
-		$stmt->bind_param('ii', $_SESSION["id"], $forumID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($count);
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		if ($count == 0)
-			return false;
-		else
-			return true;
-	}
-
-	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
-	function isModeratorID ($userID, $forumID)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
-		$stmt->bind_param('ii', $userID, $forumID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($count);
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		if ($count == 0)
-			return false;
-		else
-			return true;
-	}
-
+	//Jag känner att denna inte borde var här... //Anton
 	// Returns an array of all the forums that the user with the given user ID is moderator for.
 	function isModeratorFor ($userID)
 	{

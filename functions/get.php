@@ -51,7 +51,7 @@
 
 			$this->id = $id;
 			$this->name = $name;
-			$this->description = $descriptio;
+			$this->description = $description;
 			$this->categoryID = $categoryID;
 			$this->sortOrder = $sortOrder;
 		}
