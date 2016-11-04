@@ -74,8 +74,8 @@
 <?php include("includes/navbar.php");?>
 		<!-- Content start -->		
 		<div class="container">
-			<div class="col-md-8 col-md-offset-2">
 <?php displayAlerts(); ?>
+			<div class="col-md-8 col-md-offset-2">
 <?php 
 	if(!isset($success) && !isset($error) && !isset($_SESSION['allowPasswordChange']))
 	{

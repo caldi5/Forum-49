@@ -57,6 +57,7 @@
 <?php include("includes/navbar.php"); ?>		
 	<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<div class="row category">
 				<h3 class="category-title"><?php echo $name; ?></h3>
 

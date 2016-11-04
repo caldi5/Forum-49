@@ -10,6 +10,7 @@
 <?php require_once "includes/navbar.php"; ?>
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
                 <form>
                     <button type="button" class="btn btn-success newconversation">New</button>
                     <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">

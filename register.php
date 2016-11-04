@@ -80,9 +80,9 @@
 
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Registration</h1>
-<?php displayAlerts(); ?>
 				<form id="registrationForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username:</label>

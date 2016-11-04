@@ -44,9 +44,7 @@
 
 		<!-- Content start -->
 		<div class="container">
-			<div class="col-md-8 col-md-offset-2">
 <?php displayAlerts(); ?>
-			</div>
 		</div>
 <?php include("includes/standard_footer.php"); ?>
 	</body>

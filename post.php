@@ -91,6 +91,7 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<h3 class="post-title">
 			<?php 
 				$categoryID = forumBelongsTo($post['forum']);

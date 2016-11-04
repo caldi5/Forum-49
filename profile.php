@@ -56,6 +56,7 @@
 <?php require_once("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<div class="row">
 		 		<div class="col-lg-2">
 					<!-- SIDEBAR USER TITLE -->

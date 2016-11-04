@@ -84,6 +84,7 @@
 <?php include("includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<h3>
 			<?php
 			// This should use the function getForumName when that function is done!

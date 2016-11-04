@@ -43,9 +43,9 @@
 
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Change Password</h1>
-<?php displayAlerts(); ?>
 				<form id="passwordchangeForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Old Password:</label>

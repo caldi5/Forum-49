@@ -89,9 +89,9 @@
 	<title>New Post</title>
 </head>
 <body>
-	<?php include("includes/navbar.php"); ?>
-
+<?php include("includes/navbar.php"); ?>
 	<div class="container">
+<?php displayAlerts(); ?>
 		<h2>You are posting in <span class="red-text"><?php echo $forumName; ?></span></h2>
 		<br>
 		<div class="row post-reply-form">

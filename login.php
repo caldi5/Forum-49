@@ -21,9 +21,9 @@
 <?php include("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
+<?php displayAlerts(); ?>
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Login</h1>
-<?php displayAlerts(); ?>
 				<form id="loginForm" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Username or Email:</label>
