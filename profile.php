@@ -32,7 +32,7 @@
 	$comments->store_result();
 	$comments->bind_result($commentsID, $commentsText, $commentsTime);
 
-	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? LIMIT 10');
+	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? ORDER BY created_at DESC LIMIT 10');
 	$posts->bind_param('i', $userID);
 	$posts->execute();
 	$posts->store_result();
@@ -148,9 +148,9 @@
 									echo '<a href="post.php?id='.$commentsID.'">';
 									echo '<div class="col-lg-12 profile-comment">';
 									if (strlen($commentsText) > 50)
-										echo substr($commentsText, 0, 45).'...';
+										echo htmlspecialchars(substr($commentsText, 0, 45)).'...';
 									else
-										echo $commentsText;
+										echo htmlspecialchars($commentsText);
 
 									echo '<br><span class="post-time">'.date('H:i d/m/y', $commentsTime).'</span>';
 									echo '</div>';
@@ -181,9 +181,9 @@
 									echo '<a href="post.php?id='.$postsID.'">';
 									echo '<div class="col-lg-12 profile-comment">';
 									if (strlen($postsTitle) > 50)
-										echo substr($postsTitle, 0, 45).'...';
+										echo htmlspecialchars(substr($postsTitle, 0, 45)).'...';
 									else
-										echo $postsTitle;
+										echo htmlspecialchars($postsTitle);
 
 									echo '<br><span class="post-time">'.date('H:i d/m/y', $postsTime).'</span>';
 									echo '</div>';
