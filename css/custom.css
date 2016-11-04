@@ -123,9 +123,16 @@ a.category-title:hover
 	color: #ff3B3F;
 }
 
+.post-time
+{
+	color: grey;
+	font-style: italic;
+}
+
 .post-poster
 {
 	font-style: italic;
+	display: inline-block;
 }
 
 .post-post, .post-reply

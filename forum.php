@@ -143,7 +143,7 @@
 			{
 				echo '<p class="post-poster">'.getUsernameID($row['creator']).'</p>';
 			}
-
+			echo '<span class="post-time"> - '.date('H:i d/m/y', $row['created_at']).'</span>';
 			echo '</div>';
 			echo '<div class="col-lg-2">';
 			echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
