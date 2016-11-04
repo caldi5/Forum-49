@@ -353,3 +353,39 @@ body
 {
 	color: #ff3B3F;
 }
+
+.profile-comment
+{
+	word-wrap: break-word;
+	background-color: #EFEFEF;
+	margin: 5px;
+	padding: 5px;
+}
+
+.profile-post
+{
+	word-wrap: break-word;
+	background-color: #EFEFEF;
+	margin: 5px;
+	padding: 5px;
+}
+
+a .profile-comment
+{
+	color: black;
+}
+
+a .profile-comment:hover
+{
+	color: #A9A9A9;
+}
+
+a .profile-post
+{
+	color: black;
+}
+
+a .profile-post:hover
+{
+	color: #A9A9A9;
+}

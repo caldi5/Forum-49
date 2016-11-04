@@ -24,7 +24,19 @@
 
 	// Need something like this so we don't fail later checks because of capital/normal letters.
 	$user = getUsernameID(getUserID($_GET["user"]));
+	$userID = getUserID($_GET["user"]);
 
+	$comments = $conn->prepare('SELECT postID, text FROM comments WHERE userID = ? ORDER BY created_at DESC LIMIT 10');
+	$comments->bind_param('i', $userID);
+	$comments->execute();
+	$comments->store_result();
+	$comments->bind_result($commentsID, $commentsText);
+
+	$posts = $conn->prepare('SELECT id, title FROM posts WHERE creator = ? LIMIT 5');
+	$posts->bind_param('i', $userID);
+	$posts->execute();
+	$posts->store_result();
+	$posts->bind_result($postsID, $postsTitle);
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,17 +50,12 @@
 		<!-- Content start -->
 		<div class="container">
 			<div class="row">
-		 		<div class="col-md-3">
-					<!-- SIDEBAR USERPIC -->
-					<div class="profile-userpic">
-						<img src="img/testprofilepic.jpg" class="img-responsive" alt="">
-					</div>
-					<!-- END SIDEBAR USERPIC -->
+		 		<div class="col-lg-2">
 					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name">
 						
-												<b><?php echo $user; ?></b>
+												<h1><?php echo $user; ?></h1>
 					
 						</div>
 						<div class="profile-usertitle-userType">
@@ -74,6 +81,7 @@
 								?>
 						
 					<!-- SIDEBAR BUTTONS -->
+
 					<div class="profile-userbuttons">
 												<?php if( !areFriends($currentUser->id, getUserID($user)) ){ 
 												?>
@@ -129,15 +137,55 @@
 				</div>
 		
 				<!-- OVERVIEW CONTENT -->
-				<div id="profile-content-div" class="col-md-9">
-					<div class="profile-content-header">
+				<div class="col-lg-10">
+					<div class="col-lg-5 profile-comments">
+						<h3>Latest Comments</h3>
+						<?php
+							if ($comments->num_rows > 0)
+							{
+								while ($comments->fetch())
+								{
+									echo '<a href="post.php?id='.$commentsID.'">';
+									echo '<div class="col-lg-12 profile-comment">';
+									echo $commentsText;
+									echo '</div>';
+									echo '</a>';
+								}
 								
-						<h2 id="overview-header-text" align="center">Overview</h2>
-								
+							}
+							else
+							{
+								echo 'hej';
+							}
+
+							$comments->free_result();
+							$comments->close();
+						?>
 					</div>
-					<div class="profile-content">
-				 		Some user related/created content goes here... 
+
+					<div class="col-lg-5 profile-posts">
+						<h3>Latest Posts</h3>
+						<?php
+							if ($posts->num_rows > 0)
+							{
+								while ($posts->fetch())
+								{
+									echo '<a href="post.php?id='.$postsID.'">';
+									echo '<div class="col-lg-12 profile-comment">';
+									echo $postsTitle;
+									echo '</div>';
+									echo '</a>';
+								}
 								
+							}
+							else
+							{
+								echo 'hej';
+							}
+
+							$posts->free_result();
+							$posts->close();
+						?>
 					</div>
 				</div>
 				<!-- OVERVIEW CONTENT END -->
