@@ -20,38 +20,34 @@
 		
 		//Username
 		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["username"]) !== 1)
-			$alerts[] = new alert("danger", "Error:", "Only alfanumeric characters allowed in Username");
+			$error[] = "Only alfanumeric characters allowed in Username";
 		if(strlen($_POST["username"]) < 5)
-			$alerts[] = new alert("danger", "Error:", "Your Username must contain at least 5 characters");
+			$error[] = "Your Username must contain at least 5 characters";
 		
 		//Password
 		if(preg_match("/.*[A-Za-z].*/", $_POST["password"]) !== 1)
-			$alerts[] = new alert("danger", "Error:", "Your password must contain a letter");
+			$error[] = "Your password must contain a letter";
 		if(preg_match("/.*[0-9].*/", $_POST["password"]) !== 1)
-			$alerts[] = new alert("danger", "Error:", "Your password must contain a number");
+			$error[] = "Your password must contain a number";
 		if(preg_match("/.*[^A-Za-z0-9].*/", $_POST["password"]) !== 1)
-			$alerts[] = new alert("danger", "Error:", "Your password must contain a special character");
+			$error[] = "Your password must contain a special character";
 		if(strlen($_POST["password"]) < 8)
-			$alerts[] = new alert("danger", "Error:", "Your password must contain at least 8 characters");
+			$error[] = "Your password must contain at least 8 characters";
 		if($_POST["password"] !== $_POST["confirmPassword"])
-			$alerts[] = new alert("danger", "Error:", "Passwords does not match");
-
+			$error[] = "Passwords does not match";
 		//Email
 		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-			$alerts[] = new alert("danger", "Error:", "Email does not look valid");
-
+			$error[] = "Email does not look valid";
 		//Captcha
 		if (!$response->isSuccess())
-			$alerts[] = new alert("danger", "Error:", "Captcha failed");
-
+			$error[] = "Captcha failed";
 		//-----------------------------------------------------
 		//Insert the data in the database
 		//-----------------------------------------------------
-		if(!$alerts)
+		if(!isset($error))
 		{
 			//Hash the password
 			$passwordHash = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
 			if($passwordHash !== false)
 			{
 				$stmt = $conn->prepare('INSERT INTO users(username, password, email) VALUES (?,?,?)');
@@ -59,17 +55,16 @@
 				$stmt->execute();
 				if(!empty($stmt->error))
 				{
-					$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
+					$error[] = "SQL error: " . $stmt->error;
 				}
 				//Sucessfull regristration.
 				else
 				{
 					sendValidationEmail($_POST["username"], $_POST["email"]);
-					$alerts[] = new alert("success", "Success:", "You successfully registerd, now you just have to verify your email");
+					$success[] = "You successfully registerd, now you just have to verify your email";
 				}
 				$stmt->close();
 			}
-
 		}
 	}
 ?>
