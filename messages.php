@@ -1,12 +1,8 @@
-<?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-    require_once("includes/init.php");
-?>
+<?php require_once("includes/init.php"); ?>
 <!DOCTYPE html>
 <html>
 	<head>
-<?php require_once "/includes/standard_head.php"; ?>    
+<?php require_once "includes/standard_head.php"; ?>    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Messages</title>
 	</head>
