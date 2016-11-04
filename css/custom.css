@@ -62,8 +62,13 @@ a.category-title:hover
 
 .category a
 {
-	color: #ff3B3F;
+	color: black;
 	text-decoration: none;
+}
+
+.category-title a
+{
+	color: #ff3B3F;
 }
 
 .category a:hover
