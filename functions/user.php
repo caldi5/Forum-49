@@ -185,7 +185,6 @@
 			if($this->role === "admin")
 				return true;
 			return false;
-
 		}
 
 		// Checks if the user is logged in.
@@ -198,11 +197,28 @@
 		// Friends functions start
 		//---------------------------
 
+		private function addFriend($userID)
+		{
+			global $conn;
+			global $alerts;
+
+			$stmt = $conn->prepare('INSERT INTO friends (userid, userid2, created_at) VALUES (?, ?, ?)');
+			$stmt->bind_param('iii', $this->id, $userID, time());
+			$stmt->execute();
+			$stmt->store_result();
+			if(!empty($stmt->error))
+			{
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
+				return false;
+			}
+			return true;
+		}
+
 		public function areFriendsWith($userID)
 		{
 			global $conn;
-			$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
-			$stmt->bind_param('ii', $this->id, $userID);
+			$stmt = $conn->prepare('SELECT userid from friends WHERE (userid = ? AND userid2 = ?) OR (userid = ? AND userid2 = ?)');
+			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id);
 			$stmt->execute();
 			$stmt->store_result();
 			if ($stmt->num_rows == 0)
@@ -211,7 +227,6 @@
 				return true;
 		}
 
-		//todo: update to use getFriendRequests()
 		public function friendRequestExists($userID)
 		{
 			global $conn;
@@ -251,6 +266,7 @@
 		public function sendFriendRequest($userID)
 		{
 			global $conn;
+			global $alerts;
 
 			if(!userIDExists($userID))
 			{
@@ -279,6 +295,37 @@
 			}
 			return true;
 		}
+
+		private function deleteFriendRequest($from, $to)
+		{
+			$stmt = $conn->prepare('DELETE FROM friendRequests WHERE userid=? AND userid2=?');
+			$stmt->bind_param('ii', $from, $to);
+			$stmt->execute();
+		}
+
+		public function acceptFriendRequest($username)
+		{
+			$userID = getUserID($username);
+
+			if(!friendRequestExists($userID))
+				return false;
+
+			$this->addFriend($userID);
+			$this->deleteFriendRequest($userID, $this->id);
+			return true;
+		}
+
+		public function denyFriendRequest($username)
+		{
+			$userID = getUserID($username);
+			
+			if(!friendRequestExists($userID))
+				return false;
+
+			$this->deleteFriendRequest($userID, $this->id);
+			return true;
+		}
+
 
 		//---------------------------
 		// Friends functions end
