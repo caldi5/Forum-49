@@ -48,10 +48,10 @@
 <?php include("../includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container-fluid"">
+<?php displayAlerts(); ?>
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
-<?php displayAlerts(); ?>
 					<!-- Categories Start -->
 					<div id="pannelAdminCategories" class="panel panel-default">
 						<div class="panel-heading">
