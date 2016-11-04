@@ -134,11 +134,11 @@
 			if(password_verify($oldPassword , $passwordHash))
 			{
 				$this->setPassword($userID, $newPassword);
-				$alerts[] = new alert("success", "Sucess:", "You've sucessfully changed your password";
+				$alerts[] = new alert("success", "Sucess:", "You've sucessfully changed your password");
 			}
 			else
 			{
-				$alerts[] = new alert("danger", "Error:", "Wrong current password";
+				$alerts[] = new alert("danger", "Error:", "Wrong current password");
 			}
 		}
 
