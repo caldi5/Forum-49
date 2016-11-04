@@ -16,20 +16,20 @@
 			$stmt->execute();
 
 			if(!empty($stmt->error))
-				$error[] = "SQL error: " . $stmt->error;
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 			else
 			{
 				$_SESSION['id'] = getUserID($_GET['email']);
-				$success[] = "Your verified your email!";
+				$alerts[] = new alert("success", "Success:", "Your verified your email!");
 			}
 			$stmt->close();
 		}
 		else
-			$error[] = "Something is wrong";
+			$alerts[] = new alert("danger", "Error:", "Something is wrong");
 	}
 	else
 	{
-		$error[] = "Something is wrong";
+		$alerts[] = new alert("danger", "Error:", "Something is wrong");
 	}
 
 ?>

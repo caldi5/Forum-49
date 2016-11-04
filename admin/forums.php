@@ -49,10 +49,7 @@
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
-<?php 
-if(isset($error))
-	displayAlerts($error); 
-?>
+<?php displayAlerts(); ?>
 					<!-- Forums Start -->
 					<div class="panel panel-default">
 						<div class="panel-heading">

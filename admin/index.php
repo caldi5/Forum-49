@@ -23,10 +23,7 @@
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
-<?php 
-if(isset($error))
-	displayAlerts($error); 
-?>
+<?php displayAlerts(); ?>
 				</div>
 			</div>
 		</div>

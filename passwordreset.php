@@ -8,7 +8,7 @@
 	if(isset($_POST['username']))
 	{
 		sendPasswordResetEmail($_POST['username']);
-		$success[] = "A password reset link was sent to your email.";
+		$alerts[] = new alert("success", "Success:", "A password reset link was sent to your email.");
 	}
 
 	//-----------------------------------------------------
@@ -47,7 +47,7 @@
 		}
 		else
 		{
-			$error[] = "Reset link has expired or is not valid";
+			$alerts[] = new alert("danger", "Error:", "Reset link has expired or is not valid");
 		}
 
 		$stmt->close();
@@ -59,7 +59,7 @@
 	if(isset($_POST['password']) && isset($_SESSION['allowPasswordChange']))
 	{
 		$currentUser->setPassword($_SESSION['allowPasswordChange'], $_POST['password']);
-		$success[] = "You have sucessfully set you new password";
+		$alerts[] = new alert("success", "Success:", "You have sucessfully set you new password");
 		session_destroy(); //because it's easyer than unset($_SESSION[])
 	}
 

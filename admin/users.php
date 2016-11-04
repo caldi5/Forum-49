@@ -40,11 +40,8 @@
 		<div class="container-fluid"">
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
-				<div class="col-sm-10">
-<?php 
-if(isset($error))
-	displayAlerts($error); 
-?>
+				<div class="col-sm-10"> 
+<?php displayAlerts(); ?>
 <!-- Users Start -->
 					<div id="pannelAdminUsers" class="panel panel-default">
 						<div class="panel-heading">

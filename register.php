@@ -20,29 +20,29 @@
 		
 		//Username
 		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["username"]) !== 1)
-			$error[] = "Only alfanumeric characters allowed in Username";
+			$alerts[] = new alert("danger", "Error:", "Only alfanumeric characters allowed in Username");
 		if(strlen($_POST["username"]) < 5)
-			$error[] = "Your Username must contain at least 5 characters";
+			$alerts[] = new alert("danger", "Error:", "Your Username must contain at least 5 characters");
 		
 		//Password
 		if(preg_match("/.*[A-Za-z].*/", $_POST["password"]) !== 1)
-			$error[] = "Your password must contain a letter";
+			$alerts[] = new alert("danger", "Error:", "Your password must contain a letter");
 		if(preg_match("/.*[0-9].*/", $_POST["password"]) !== 1)
-			$error[] = "Your password must contain a number";
+			$alerts[] = new alert("danger", "Error:", "Your password must contain a number");
 		if(preg_match("/.*[^A-Za-z0-9].*/", $_POST["password"]) !== 1)
-			$error[] = "Your password must contain a special character";
+			$alerts[] = new alert("danger", "Error:", "Your password must contain a special character");
 		if(strlen($_POST["password"]) < 8)
-			$error[] = "Your password must contain at least 8 characters";
+			$alerts[] = new alert("danger", "Error:", "Your password must contain at least 8 characters");
 		if($_POST["password"] !== $_POST["confirmPassword"])
-			$error[] = "Passwords does not match";
+			$alerts[] = new alert("danger", "Error:", "Passwords does not match");
 
 		//Email
 		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-			$error[] = "Email does not look valid";
+			$alerts[] = new alert("danger", "Error:", "Email does not look valid");
 
 		//Captcha
 		if (!$response->isSuccess())
-			$error[] = "Captcha failed";
+			$alerts[] = new alert("danger", "Error:", "Captcha failed");
 
 		//-----------------------------------------------------
 		//Insert the data in the database
@@ -59,13 +59,13 @@
 				$stmt->execute();
 				if(!empty($stmt->error))
 				{
-					$error[] = "SQL error: " . $stmt->error;
+					$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 				}
 				//Sucessfull regristration.
 				else
 				{
 					sendValidationEmail($_POST["username"], $_POST["email"]);
-					$success[] = "You successfully registerd, now you just have to verify your email";
+					$alerts[] = new alert("success", "Success:", "You successfully registerd, now you just have to verify your email");
 				}
 				$stmt->close();
 			}

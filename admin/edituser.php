@@ -23,11 +23,11 @@
 		$stmt->execute();
 		if(!empty($stmt->error))
 		{
-			$error[] = "SQL error: " . $stmt->error;
+			$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 		}
 		else
 		{
-			$success[] = "Successfully Updated User";
+			$alerts[] = new alert("success", "Success:", "Successfully Updated User");
 		}
 		$stmt->close();
 	}
@@ -48,8 +48,7 @@
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
 				<div class="col-sm-10">
-<?php if(isset($error)){ displayAlerts($error); } ?>
-<?php if(isset($success)){ displayAlerts($success); } ?>
+<?php displayAlerts(); ?>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Edit User

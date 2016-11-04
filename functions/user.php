@@ -101,7 +101,7 @@
 					{
 						foreach($friendRequests as $friendRequest) 
 						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request form wille.");
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .". Accept / Delete");
 						}
 					}
 				}
@@ -124,7 +124,6 @@
 		{
 			global $conn;
 			global $error;
-			global $success;
 
 			//Validate old password
 			$stmt = $conn->prepare('SELECT password FROM users WHERE id=?');
