@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<?php include("includes/standard_head.php"); ?>
-		<title>Forum</title>
+		<title>Flow</title>
 
 		<script type="text/javascript">
 			var last = Math.floor(Date.now() / 1000);
