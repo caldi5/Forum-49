@@ -7,7 +7,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span> 
 					</button>
-					<a href="/index.php" class="navbar-brand">Forum #49</a>
+					<a href="/index.php" class="navbar-brand">Forum <span class="red-text">#49</span></a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">

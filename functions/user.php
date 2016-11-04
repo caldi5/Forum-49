@@ -354,6 +354,26 @@
 
 			return $count;
 		}
+
+		// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
+		public function isModerator ($forumID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
+			$stmt->bind_param('ii', $this->id, $forumID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			if ($count == 0)
+				return false;
+			else
+				return true;
+			
+		}
 	} 
 	//======================================================================
 	// currentUser END
