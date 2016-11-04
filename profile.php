@@ -25,6 +25,11 @@
 	// Need something like this so we don't fail later checks because of capital/normal letters.
 	$user = getUsernameID(getUserID($_GET["user"]));
 
+
+	if(isset[$_GET["addReq"]]){
+		$currentUser->add
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,8 +83,14 @@
 												<?php if( !areFriends($currentUser->id, getUserID($user)) ){ 
 												?>
 												
-						 <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+						 <a type="button" class="btn btn-success btn-sm" id="friendButton" href="#">Add Friend</a>
+											
+												<?php }
+														elseif (requestExists($currentUser->id, $_GET["user"])) { 
+												?>
 												
+														<a type="button" class="btn btn-success btn-sm" href="#">Request Sent</a>
+						
 												<?php }
 														else { 
 												?>
