@@ -11,14 +11,27 @@
 		<title>Flow</title>
 
 		<script type="text/javascript">
-			var last = Math.floor(Date.now() / 1000);
+			var last = <?php echo time(); ?>
+
+			function getTime() 
+			{
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
+						window.last = this.responseText;
+					}
+				};
+				xmlhttp.open("GET", "getTime.php", true);
+				xmlhttp.send();
+				
+			}
 
 			function update() 
 			{
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200 && this.responseText !== false) {
-						window.last = Math.floor(Date.now() / 1000);
+					if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
+						window.last = Math.floor($.now() / 1000);
 						$("#liveContainer").prepend(this.responseText);
 					}
 				};
