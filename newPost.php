@@ -92,7 +92,7 @@
 	<?php include("includes/navbar.php"); ?>
 
 	<div class="container">
-		<h2>You are posting in <?php echo $forumName; ?></h2>
+		<h2>You are posting in <span class="red-text"><?php echo $forumName; ?></span></h2>
 		<br>
 		<div class="row post-reply-form">
 			<form action="newPost.php" method="post">

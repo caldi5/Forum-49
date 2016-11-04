@@ -108,9 +108,14 @@ a.category-title:hover
 	padding-top: 5px;
 }
 
-.post:hover
+.post:hover .post-title 
 {
-	background-color: grey;
+	color: #ff3B3F;
+}
+
+.post:hover .post-poster
+{
+	color: #ff3B3F;
 }
 
 .post-poster
@@ -156,6 +161,13 @@ a.category-title:hover
 	color: #ff3B3F;
 	font-weight: bold;
 	text-transform: uppercase;
+}
+
+.post-title a:hover
+{
+	color: black;
+	text-transform: uppercase;
+	text-decoration: none;
 }
 
 span.mod
@@ -323,4 +335,9 @@ body
 {
 	margin-right: 0;
 	margin-left: 0;
+}
+
+.red-text
+{
+	color: #ff3B3F;
 }
