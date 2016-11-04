@@ -97,7 +97,7 @@
 					$this->loggedIn = true;
 
 					$friendRequests = $this->getFriendRequests();
-					foreach($friendRequests as $friendRequests) 
+					foreach($friendRequests as $friendRequest) 
 					{
 						$alerts[] = new alert("info", "New Friend Reques:", "You have a new request form wille.");
 					}
