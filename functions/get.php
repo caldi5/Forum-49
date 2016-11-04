@@ -51,7 +51,7 @@
 
 			$this->id = $id;
 			$this->name = $name;
-			$this->description = $description;
+			$this->description = $descriptio;
 			$this->categoryID = $categoryID;
 			$this->sortOrder = $sortOrder;
 		}
@@ -191,22 +191,6 @@
 		if ($stmt->num_rows == 0)
 			return false;
 
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		return $count;
-	}
-
-	// Returns the number of unred messages given the user ID
-	function numberOfUnreadMessages ($userID)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT COUNT(*) FROM messages WHERE to_user = ? AND isread = 0');
-		$stmt->bind_param('i', $userID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($count);
 		$stmt->fetch();
 		$stmt->free_result();
 		$stmt->close();
