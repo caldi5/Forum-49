@@ -55,7 +55,7 @@
 						<div class="profile-usertitle-userType">
 												
 						<?php  
-												if(isAdminUsername($user->username) === true)
+												if($user->isAdmin())
 												{
 														echo "Administrator";
 												}

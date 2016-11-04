@@ -32,6 +32,12 @@
 			$this->validEmail = $validEmail;
 			$this->banned = $banned;
 		}
+		public function isAdmin()
+		{
+			if($this->role === "admin")
+				return true;
+			return false;
+		}
 	}
 
 	//======================================================================
@@ -475,24 +481,6 @@
 			return false;
 	}
 
-	// Checks if a user with the given username is an admin.
-	function isAdminUsername ($username)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT role FROM users WHERE username = ?');
-		$stmt->bind_param('s', $username);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($role);
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-		if($role === "admin")
-			return true;
-		else
-			return false;
-	}
-
 	// Checks if a user is a moderator, returns true if he is, false if he's not logged in or not a moderator.
 	function isModerator ($forumID)
 	{
@@ -519,29 +507,6 @@
 	function isModeratorID ($userID, $forumID)
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
-		$stmt->bind_param('ii', $userID, $forumID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($count);
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		if ($count == 0)
-			return false;
-		else
-			return true;
-	}
-
-	// Checks if the user with the given username is moderator for the forum with the given forum ID.
-	function isModeratorUsername ($username, $forumID)
-	{
-		global $conn;
-		$userID = getUserID($username);
-		if ($userID == false)
-			return false;
-
 		$stmt = $conn->prepare('SELECT COUNT(*) from moderators WHERE userID = ? AND forumID = ?');
 		$stmt->bind_param('ii', $userID, $forumID);
 		$stmt->execute();
