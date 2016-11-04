@@ -15,7 +15,6 @@
 		function __construct($id)
 		{
 			global $conn;
-			global $error;
 				
 			$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
 			$stmt->bind_param('i', $id);
@@ -130,11 +129,11 @@
 		public function changePassword($oldPassword, $newPassword)
 		{
 			global $conn;
-			global $error;
+			global $alerts;
 
 			//Validate old password
 			$stmt = $conn->prepare('SELECT password FROM users WHERE id=?');
-			$stmt->bind_param('i', $this->$id);
+			$stmt->bind_param('i', $this->id);
 			$stmt->execute();			
 			$stmt->bind_result($passwordHash);
 			$stmt->fetch();
@@ -142,7 +141,7 @@
 			
 			if(password_verify($oldPassword , $passwordHash))
 			{
-				$this->setPassword($userID, $newPassword);
+				$this->setPassword($this->id, $newPassword);
 				$alerts[] = new alert("success", "Sucess:", "You've sucessfully changed your password");
 			}
 			else
@@ -154,7 +153,7 @@
 		public function login($usernameOrEmail, $password)
 		{
 			global $conn;
-			global $error;
+			global $alerts;
 
 			$stmt = $conn->prepare('SELECT id, username, password, role, email, validEmail, banned FROM users WHERE username = ? OR email = ?');
 			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
