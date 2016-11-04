@@ -128,7 +128,7 @@
 			echo '<a href="post.php?id=' . $row['id'] . '">';
 			echo '<div class="col-lg-12 post">';
 			echo '<div class="col-lg-10">';
-			echo '<h3 class="post-title">' . $row['title'] . '</h3>';
+			echo '<h4 class="post-title">' . $row['title'] . '</h4>';
 
 			// Nice admin and moderator colors for the "creator" text. Blue is for moderator and red is for admin.
 			if (isAdminID($row['creator']))
