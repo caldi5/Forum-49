@@ -223,6 +223,21 @@
 			return true;
 		}
 
+		public function unFriend($userID)
+		{
+			global $conn;
+			global $alerts;
+
+			$stmt = $conn->prepare('DELETE FROM friends WHERE (userid=? AND userid2=?) OR (userid=? AND userid2=?)');
+			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id;
+			$stmt->execute();
+			if(!empty($stmt->error))
+			{
+				return false;
+			}
+			return true;
+		}
+
 		public function areFriendsWith($userID)
 		{
 			global $conn;
