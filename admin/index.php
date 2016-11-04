@@ -8,26 +8,7 @@
 		header("Location: /index.php");
 		die();
 	}
+	else
+		header("Location: /admin/users.php");
 
 ?>
-<!DOCTYPE html>
-<html>
-	<head>
-<?php include("../includes/standard_head.php"); ?>
-		<title>Admin</title>
-	</head>
-	<body>
-<?php include("../includes/navbar.php"); ?>
-		<!-- Content start -->
-		<div class="container-fluid"">
-<?php displayAlerts(); ?>
-			<div class="row">
-<?php include("../includes/admin_menu.php"); ?>
-				<div class="col-sm-10">
-				</div>
-			</div>
-		</div>
-		<!-- Content end -->
-<?php include("../includes/standard_footer.php"); ?>
-	</body>
-</html>

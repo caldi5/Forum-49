@@ -44,7 +44,7 @@
 	<body>
 <?php include("../includes/navbar.php"); ?>
 		<!-- Content start -->
-		<div class="container-fluid"">
+		<div class="container">
 <?php displayAlerts(); ?>
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
@@ -90,6 +90,7 @@
 			</div>
 		</div>
 		<!-- Content end -->
+		<script src="/js/custom/admin-menu.js"></script> 
 <?php include("../includes/standard_footer.php"); ?>
 	</body>
 </html>

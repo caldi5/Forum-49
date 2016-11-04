@@ -45,34 +45,34 @@
 	<body>
 <?php include("../includes/navbar.php"); ?>
 		<!-- Content start -->
-		<div class="container-fluid"">
+		<div class="container">
 <?php displayAlerts(); ?>
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
-				<div class="col-sm-10">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Edit Category
-						</div>
-						<div class="panel-body">
-							<form id="editCategoryForm" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<label>Name:</label>
-									<input type="text" maxlength="50" class="form-control" name="name" value="<?php echo $category->name; ?>" required>
-								</div>
-								<div class="form-group">				
-									<label>Sort Order:</label>
-									<input type="text" maxlength="50" class="form-control" name="sortOrder" value="<?php echo $category->sortOrder; ?>" required>
-								</div>
-								<button class="btn btn-lg btn-primary btn-block" type="">Cancel</button>
-								<button class="btn btn-lg btn-success btn-block" type="submit" name="editCategoryForm">Save</button>
-							</form>
-						</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Edit Category
+					</div>
+					<div class="panel-body">
+						<form id="editCategoryForm" method="post" enctype="multipart/form-data">
+							<div class="form-group">
+								<label>Name:</label>
+								<input type="text" maxlength="50" class="form-control" name="name" value="<?php echo $category->name; ?>" required>
+							</div>
+							<div class="form-group">				
+								<label>Sort Order:</label>
+								<input type="text" maxlength="50" class="form-control" name="sortOrder" value="<?php echo $category->sortOrder; ?>" required>
+							</div>
+							<button class="btn btn-lg btn-primary btn-block" type="">Cancel</button>
+							<button class="btn btn-lg btn-success btn-block" type="submit" name="editCategoryForm">Save</button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- Content end -->
+		<script src="/js/custom/admin-menu.js"></script> 
 <?php include("../includes/standard_footer.php"); ?>
+		<script src="/js/custom/admin-menu.js"></script> 
 	</body>
 </html>

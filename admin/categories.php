@@ -47,74 +47,72 @@
 	<body>
 <?php include("../includes/navbar.php"); ?>
 		<!-- Content start -->
-		<div class="container-fluid"">
+		<div class="container">
 <?php displayAlerts(); ?>
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
-				<div class="col-sm-10">
-					<!-- Categories Start -->
-					<div id="pannelAdminCategories" class="panel panel-default">
-						<div class="panel-heading">
-							Categories
-							<button  type="button" class="btn btn-xs btn-success pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
-						</div>
-						<div class="panel-body">
-							<div id="newCategoryWell" class="well well-sm collapse">
-								<form id="newCategory" method="post" enctype="multipart/form-data">
-									<div class="row">
-										<div class="col-sm-7">
-											<div class="input-group">
-												<span class="input-group-addon">Name: </span>
-												<input type="text" name="categoryName" class="form-control" placeholder="Category name">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="input-group">
-												<span class="input-group-addon">Order:</span>
-												<input type="text" name="ordering" class="form-control" size="1" placeholder="1">
-											</div>
-										</div>
-										<div class="col-sm-3">
-												<button type="submit" name="newCategory" class="btn btn-sm btn-success">Create Category</button>
-									    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>
-											</span>
+				<!-- Categories Start -->
+				<div id="pannelAdminCategories" class="panel panel-default">
+					<div class="panel-heading">
+						Categories
+						<button  type="button" class="btn btn-xs btn-success pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
+					</div>
+					<div class="panel-body">
+						<div id="newCategoryWell" class="well well-sm collapse">
+							<form id="newCategory" method="post" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-sm-7">
+										<div class="input-group">
+											<span class="input-group-addon">Name: </span>
+											<input type="text" name="categoryName" class="form-control" placeholder="Category name">
 										</div>
 									</div>
-								</form>
-							</div>
-							<!-- List existing categories start-->
-							<table class="table">
-						    <thead>
-						        <tr>
-						        	<th>ID</th>
-						        	<th>Category</th>
-						        	<th>Sort Order</th>
-						        	<th>#of Forums</th>
-						        	<th></th>
-						        	</tr>
-						    </thead>
-						    <tbody>
+									<div class="col-sm-2">
+										<div class="input-group">
+											<span class="input-group-addon">Order:</span>
+											<input type="text" name="ordering" class="form-control" size="1" placeholder="1">
+										</div>
+									</div>
+									<div class="col-sm-3">
+											<button type="submit" name="newCategory" class="btn btn-sm btn-success">Create Category</button>
+								    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>
+										</span>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- List existing categories start-->
+						<table class="table">
+					    <thead>
+					        <tr>
+					        	<th>ID</th>
+					        	<th>Category</th>
+					        	<th>Sort Order</th>
+					        	<th>#of Forums</th>
+					        	<th></th>
+					        	</tr>
+					    </thead>
+					    <tbody>
 <?php
 	while($stmt->fetch())
 	{
 ?>
-									<tr>
-										<td><?php echo $id; ?></td>
-										<td><?php echo $name; ?></td>
-										<td><?php echo $ordering; ?></td>
-										<td><?php echo getNumberOfForums($id); ?></td>
-										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?>">Delete</a><a href="editcategory.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
-									</tr>
+								<tr>
+									<td><?php echo $id; ?></td>
+									<td><?php echo $name; ?></td>
+									<td><?php echo $ordering; ?></td>
+									<td><?php echo getNumberOfForums($id); ?></td>
+									<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?>">Delete</a><a href="editcategory.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+								</tr>
 <?php
 	}
 	$stmt->free_result();
 	$stmt->close();
 ?>
-								</tbody>
-							</table>
-								<!-- List existing categories end-->
-							</form>
-						</div>
+							</tbody>
+						</table>
+							<!-- List existing categories end-->
+						</form>
 					</div>
 					<!-- Categories End -->
 					<!-- Modal confirmation start -->
@@ -139,10 +137,11 @@
 		</div>
 		<!-- Content end -->
 <?php include("../includes/standard_footer.php"); ?>
-	<script>
-		$('#confirm-delete').on('show.bs.modal', function(e) {
-			$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-		});
-	</script>
+		<script src="/js/custom/admin-menu.js"></script> 
+		<script>
+			$('#confirm-delete').on('show.bs.modal', function(e) {
+				$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+			});
+		</script>
 	</body>
 </html>
