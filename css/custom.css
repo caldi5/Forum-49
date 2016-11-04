@@ -421,3 +421,8 @@ a .profile-post:hover
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 }
+
+.btn-group-xs>.btn, .btn-xs
+{
+	border-radius: 0;
+}
