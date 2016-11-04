@@ -227,6 +227,7 @@ span.admin
 .content {
     overflow-y: scroll;
     border-radius:3px;
+    border:solid 2px;
     height: 10cm;
 }
 .messagecont
@@ -292,6 +293,7 @@ body
     height: 87.5%;
     background-color: whitesmoke;
     border-left: solid 2px;
+    border-top: solid 1px;
     border-color: grey;
 }
 .container > .chatbar

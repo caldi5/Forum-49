@@ -20,6 +20,7 @@
                 <div class="container col-sm-3 conversationlist">
                 </div>
                 <div class="col-sm-9">
+                <h4>Messages</h4>
                 <div class="content col-sm-12">
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
@@ -38,7 +39,7 @@
             </div>
             </div>
 		</div>
-        <?php require_once "includes/chatbar.php"; ?>
+         <!--<php require_once "includes/chatbar.php"; ?>-->
 		<!-- Content end -->
         <script>
             $(function() 
