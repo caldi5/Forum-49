@@ -229,7 +229,7 @@
 			global $alerts;
 
 			$stmt = $conn->prepare('DELETE FROM friends WHERE (userid=? AND userid2=?) OR (userid=? AND userid2=?)');
-			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id;
+			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id);
 			$stmt->execute();
 			if(!empty($stmt->error))
 			{
