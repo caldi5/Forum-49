@@ -47,7 +47,7 @@
 		//-----------------------------------------------------
 		//Insert the data in the database
 		//-----------------------------------------------------
-		if(!isset($error))
+		if(!$alerts)
 		{
 			//Hash the password
 			$passwordHash = password_hash($_POST["password"], PASSWORD_DEFAULT);
