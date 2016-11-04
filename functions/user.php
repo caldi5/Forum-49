@@ -35,6 +35,9 @@
 		}
 	}
 
+	//======================================================================
+	// currentUser START
+	//======================================================================
 	class currentUser 
 	{ 
 		public $id;
@@ -187,7 +190,6 @@
 			return false;
 		}
 
-		// Checks if the user is logged in.
 		public function isLoggedIn()
 		{
 			return $this->loggedIn;
@@ -298,6 +300,7 @@
 
 		private function deleteFriendRequest($from, $to)
 		{
+			global $conn;
 			$stmt = $conn->prepare('DELETE FROM friendRequests WHERE userid=? AND userid2=?');
 			$stmt->bind_param('ii', $from, $to);
 			$stmt->execute();
@@ -307,7 +310,7 @@
 		{
 			$userID = getUserID($username);
 
-			if(!friendRequestExists($userID))
+			if(!$this->friendRequestExists($userID))
 				return false;
 
 			$this->addFriend($userID);
@@ -347,6 +350,10 @@
 			return $count;
 		}
 	} 
+	//======================================================================
+	// currentUser END
+	//======================================================================
+
 
 	// Checks if a user with the given ID exists
 	function userIDExists ($userID)
