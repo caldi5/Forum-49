@@ -1,12 +1,11 @@
 <?php
 
     require_once("includes/init.php");
-
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-<?php require_once "includes/standard_head.php"; ?>
+<?php require_once "/includes/standard_head.php"; ?>    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Messages</title>
 	</head>
@@ -47,7 +46,7 @@
             {
                     $.ajax({
                         method: "post",
-                        url: "getConversations.php",
+                        url: "/ajax/getConversations.php",
                         async: true
                         
                     })
@@ -156,6 +155,8 @@
                 document.getElementById("searchboxdiv").style.visibility = 'hidden';
             }
         </script>
+        
+<?php require_once "/includes/chatbar.php"; ?>
 <?php require_once("includes/standard_footer.php"); ?>
 	</body>
 </html>

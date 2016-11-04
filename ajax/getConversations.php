@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-<?php require_once "includes/standard_head.php"; ?>
+<?php require_once "../includes/standard_head.php"; ?>
     </head>
     <body>
 <?php
-require_once("includes/init.php");
+require_once("../includes/init.php");
             $result = $conn->prepare("select distinct username from((SELECT DISTINCT username, to_user, from_user FROM users 
                         JOIN messages ON users.id = messages.to_user
                         WHERE from_user = ?)

@@ -1,3 +1,5 @@
+<div class="pull-right col-md-2 col-sm-4 col-xs-6 conversations">
+</div>
 <footer class="chatbar">
 	<div class="container-fluid">
 		<div id="conversation1">
@@ -25,4 +27,17 @@
 			</div>
 		</div>
 	</div>
+    <script>
+        $(function() 
+            {
+                    $.ajax({
+                        method: "post",
+                        url: "/ajax/getConversations.php",
+                        async: true    
+                    })
+                    .done(function(data){  
+                     $(".conversations").html(data);
+                    })
+            })
+    </script>
 </footer>
