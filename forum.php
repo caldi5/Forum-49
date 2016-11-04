@@ -104,7 +104,7 @@
 		echo '<a href="admin/editforum.php?id='. $id . '" class="btn btn-default" role="button">Administrate</a>';
 		echo '</div>';
 	}
-	elseif (isModerator($_GET['id']))
+	elseif ($currentUser->isModerator($_GET['id']))
 	{
 		echo '<div class="actions">';
 		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
