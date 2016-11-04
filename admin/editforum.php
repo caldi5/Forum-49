@@ -19,8 +19,8 @@
 
 	if(isset($_POST["editForumForm"]))
 	{
-		$stmt = $conn->prepare('UPDATE forums SET name=?, category=?, ordering=? WHERE id=?');
-		$stmt->bind_param('siii', $_POST["name"], $_POST["category"], $_POST["sortOrder"], $_GET['id']);
+		$stmt = $conn->prepare('UPDATE forums SET name=?, description=?, category=?, ordering=? WHERE id=?');
+		$stmt->bind_param('ssiii', $_POST["name"], $_POST["description"], $_POST["category"], $_POST["sortOrder"], $_GET['id']);
 		$stmt->execute();
 		if(!empty($stmt->error))
 		{
@@ -59,7 +59,11 @@
 							<form id="editForumForm" method="post" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>Name:</label>
-									<input type="text" maxlength="50" class="form-control" name="name" value="<?php echo $forum->name; ?>" required>
+									<input type="text" maxlength="50" class="form-control" name="name" value="<?php echo htmlspecialchars($forum->name); ?>" required>
+								</div>
+								<div class="form-group">
+									<label>Description:</label>
+									<textarea name="description" cols="30" rows="2" class="form-control"><?php echo htmlspecialchars($forum->description); ?></textarea>
 								</div>
 								<div class="form-group">				
 									<label>Category:</label>

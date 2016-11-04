@@ -31,6 +31,7 @@
 	{
 		public $id;
 		public $name;
+		public $description;
 		public $categoryID;
 		public $sortOrder;
 
@@ -39,17 +40,18 @@
 			global $conn;
 			global $error;
 				
-			$stmt = $conn->prepare('SELECT id, name, category, ordering FROM forums WHERE id = ?');
+			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
 			$stmt->store_result();		
-			$stmt->bind_result($id, $name, $categoryID, $sortOrder);
+			$stmt->bind_result($id, $name, $description, $categoryID, $sortOrder);
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
 
 			$this->id = $id;
 			$this->name = $name;
+			$this->description = $description;
 			$this->categoryID = $categoryID;
 			$this->sortOrder = $sortOrder;
 		}
