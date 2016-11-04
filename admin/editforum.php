@@ -10,7 +10,7 @@
 	}
 
 	//Rediret to forums if no ID is set or if no forum by that ID exists
-	if(!isset($_GET['id']) OR !getCategoryName($_GET['id']))
+	if(!isset($_GET['id']) OR !getForumName($_GET['id']))
 	{
 		header("Location: forums.php");
 		die();
