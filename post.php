@@ -102,7 +102,8 @@
 			<div class="row post-post">
 				<div class="col-lg-2 post-profile">
 					<h4><?php echo '<a class="profile-name" href="profile.php?user='.$post['creator'].'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
-					<img src="img/cat.jpg" alt="Profile picture">
+					<a href="#">Report</a><br>
+					<a href="#">Delete</a>
 				</div>
 				<div class="col-lg-8 post-text">
 					<p><?php echo nl2br(htmlspecialchars($post['text'])); ?></p>
@@ -120,7 +121,8 @@
 					echo '<div class="row post-reply">';
 					echo '<div class="col-lg-2 post-profile">';
 					echo '<h4><a class="profile-name" href="profile.php?user='.$comment['userID'].'">'.getUsernameID($comment['userID']).'</a></h4>';
-					echo '<img src="img/cat.jpg" alt="Profile picture">';
+					echo '<a href="#">Report</a><br>';
+					echo '<a href="#">Delete</a>';
 					echo '</div>';
 					echo '<div class="col-lg-8 post-text">';
 					echo '<p>'.nl2br(htmlspecialchars($comment['text'])).'</p>';
