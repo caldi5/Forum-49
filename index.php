@@ -49,8 +49,8 @@
 						{
 							echo '<a href="forum.php?id='.$forum['id'].'">';
 							echo '<div class="col-lg-12 forum">';
-							echo '<h4 class="forum-title">'.$forum['name'].'</h4>';
-							echo '<p class="forum-desc">'.$forum['description'].'</p>';
+							echo '<h4 class="forum-title">'.htmlspecialchars($forum['name']).'</h4>';
+							echo '<p class="forum-desc">'.htmlspecialchars($forum['description']).'</p>';
 							echo '</div>';
 							echo '</a>';
 						}
