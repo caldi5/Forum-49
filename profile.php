@@ -40,8 +40,8 @@
 	$posts->bind_result($postsID, $postsTitle, $postsTime);
 
 
-	if($_GET["sendReq"]){
-		
+	if(isset($_GET["sendReq"])){
+		$currentUser->sendFriendRequest($userID);
 	}
 
 ?>
@@ -105,8 +105,7 @@
 														else {
 												?>
 												
-														<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
-												
+														<a type="button" class="btn btn-success btn-sm" href="profile.php?user=<?php echo $user;?>&sendReq">Add Friend</a>
 											<?php }
 											?>
 												
