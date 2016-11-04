@@ -213,4 +213,34 @@
 
 		return $id;
 	}
+
+	function postBelongsTo ($postID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT forum FROM posts WHERE id = ?');
+		$stmt->bind_param('i', $postID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($forum);
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $forum;
+	}
+
+	function getPostTitle ($postID)
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT title FROM posts WHERE id = ?');
+		$stmt->bind_param('i', $postID);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($title);
+		$stmt->fetch();
+		$stmt->free_result();
+		$stmt->close();
+
+		return $title;
+	}
 ?>
