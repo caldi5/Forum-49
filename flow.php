@@ -27,7 +27,7 @@
 				
 			}
 
-			setInterval(update, 3000);
+			setInterval(update, 5000);
 		</script>
 	</head>
 	<body>

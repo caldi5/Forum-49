@@ -24,13 +24,13 @@
 			echo '<div class="col-lg-10">';
 			if ($row['type'] == "post")
 			{
-				echo '<h4 class="liveTitle">'.getUsernameID($row['userID']).' posted '.$row['title'].' in '.getForumName(postBelongsTo($row['postID'])).'</h4>';
-				echo '<p class="liveText">'.$row['text'].'</p>';
+				echo '<h4 class="liveTitle">'.getUsernameID($row['userID']).' posted '.htmlspecialchars($row['title']).' in '.getForumName(postBelongsTo($row['postID'])).'</h4>';
+				echo '<p class="liveText">'.htmlspecialchars($row['text']).'</p>';
 			}
 			elseif ($row['type'] == "comment")
 			{
 				echo '<h4 class="liveTitle">'.getUsernameID($row['userID']).' commented on '.getPostTitle($row['postID']).' in '.getForumName(postBelongsTo($row['postID'])).'</h4>';
-				echo '<p class="liveText">'.$row['text'].'</p>';
+				echo '<p class="liveText">'.htmlspecialchars($row['text']).'</p>';
 			}
 			
 			//echo '<p class="liveText">'.$row['text'].'</p>';
