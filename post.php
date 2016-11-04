@@ -104,8 +104,11 @@
 					<h4><?php echo '<a class="profile-name" href="profile.php?user='.$post['creator'].'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
 					<img src="img/cat.jpg" alt="Profile picture">
 				</div>
-				<div class="col-lg-10 post-text">
+				<div class="col-lg-8 post-text">
 					<p><?php echo nl2br(htmlspecialchars($post['text'])); ?></p>
+				</div>
+				<div class="col-lg-2">
+					<span class="post-time"><?php echo date('H:i d/m/y', $post['created_at']); ?></span>
 				</div>
 			</div>
 
@@ -119,8 +122,11 @@
 					echo '<h4><a class="profile-name" href="profile.php?user='.$comment['userID'].'">'.getUsernameID($comment['userID']).'</a></h4>';
 					echo '<img src="img/cat.jpg" alt="Profile picture">';
 					echo '</div>';
-					echo '<div class="col-lg-10 post-text">';
+					echo '<div class="col-lg-8 post-text">';
 					echo '<p>'.nl2br(htmlspecialchars($comment['text'])).'</p>';
+					echo '</div>';
+					echo '<div class="col-lg-2">';
+					echo '<span class="post-time">'.date('H:i d/m/y', $comment['created_at']).'</span>';
 					echo '</div>';
 					echo '</div>';
 				}
