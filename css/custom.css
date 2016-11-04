@@ -401,3 +401,23 @@ a .profile-post:hover
 {
 	color: #ff3B3F;
 }
+
+.panel
+{
+	border-radius: 0;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover
+{
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	color: black;
+	background-color: #EFEFEF;
+	border: none;
+}
+
+.list-group-item:last-child
+{
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
