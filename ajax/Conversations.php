@@ -28,7 +28,7 @@ if($result->num_rows > 0)
          $conversWithID = getUserID($name)
          ?>
                     
-                    <a href="#" class="list-group-item" onclick="showConversation('<?php echo $conversWithID; ?>','<?php echo $i; ?>')">
+                    <a href="#" class="list-group-item" onclick="displayConversation('<?php echo $conversWithID; ?>','<?php echo $i; ?>')">
                     <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
         <?php
         $result2 = $conn->prepare("SELECT message, timestamp, id FROM messages
