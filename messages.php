@@ -40,6 +40,7 @@
             </div>
             </div>
 		</div>
+        <?php require_once "/includes/chatbar.php"; ?>
 		<!-- Content end -->
         <script>
             $(function() 
@@ -155,8 +156,6 @@
                 document.getElementById("searchboxdiv").style.visibility = 'hidden';
             }
         </script>
-        
-<?php require_once "/includes/chatbar.php"; ?>
 <?php require_once("includes/standard_footer.php"); ?>
 	</body>
 </html>

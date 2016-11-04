@@ -1,4 +1,4 @@
-<div class="pull-right col-md-2 col-sm-4 col-xs-6 conversations">
+<div class="pull-right conversations">
 </div>
 <footer class="chatbar">
 	<div class="container-fluid">
@@ -32,7 +32,7 @@
             {
                     $.ajax({
                         method: "post",
-                        url: "/ajax/getConversations.php",
+                        url: "/ajax/Conversations.php",
                         async: true    
                     })
                     .done(function(data){  
