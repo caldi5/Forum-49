@@ -37,14 +37,14 @@
             </div>
             </div>
 		</div>
-        <?php require_once "/includes/chatbar.php"; ?>
+        <?php require_once "includes/chatbar.php"; ?>
 		<!-- Content end -->
         <script>
             $(function() 
             {
                     $.ajax({
                         method: "post",
-                        url: "/ajax/getConversations.php",
+                        url: "ajax/getConversations.php",
                         async: true
                         
                     })
