@@ -147,7 +147,10 @@
 								{
 									echo '<a href="post.php?id='.$commentsID.'">';
 									echo '<div class="col-lg-12 profile-comment">';
-									echo $commentsText;
+									if (strlen($commentsText) > 50)
+										echo substr($commentsText, 0, 45).'...';
+									else
+										echo $commentsText;
 									echo '</div>';
 									echo '</a>';
 								}
@@ -155,7 +158,9 @@
 							}
 							else
 							{
-								echo 'hej';
+								echo '<div class="col-lg-12 profile-comment">';
+								echo '<p>User has no comments yet.</p>';
+								echo '</div>';
 							}
 
 							$comments->free_result();
@@ -172,7 +177,10 @@
 								{
 									echo '<a href="post.php?id='.$postsID.'">';
 									echo '<div class="col-lg-12 profile-comment">';
-									echo $postsTitle;
+									if (strlen($postsTitle) > 50)
+										echo substr($postsTitle, 0, 45).'...';
+									else
+										echo $postsTitle;
 									echo '</div>';
 									echo '</a>';
 								}
@@ -180,7 +188,9 @@
 							}
 							else
 							{
-								echo 'hej';
+								echo '<div class="col-lg-12 profile-comment">';
+								echo '<p>User has no posts yet.</p>';
+								echo '</div>';
 							}
 
 							$posts->free_result();
