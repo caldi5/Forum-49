@@ -104,7 +104,7 @@
 					{
 						foreach($friendRequests as $friendRequest) 
 						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .". Accept / Delete");
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="/ajax/freindrequest.php?accept='. $friendRequest .'">Accept</a> / <a href="/ajax/freindrequest.php?deny='. $friendRequest .'">Deny</a>');
 						}
 					}
 				}
@@ -313,10 +313,8 @@
 			$stmt->execute();
 		}
 
-		public function acceptFriendRequest($username)
+		public function acceptFriendRequest($userID)
 		{
-			$userID = getUserID($username);
-
 			if(!$this->friendRequestExists($userID))
 				return false;
 
@@ -325,11 +323,9 @@
 			return true;
 		}
 
-		public function denyFriendRequest($username)
+		public function denyFriendRequest($userID)
 		{
-			$userID = getUserID($username);
-			
-			if(!friendRequestExists($userID))
+			if(!$this->friendRequestExists($userID))
 				return false;
 
 			$this->deleteFriendRequest($userID, $this->id);
@@ -483,7 +479,6 @@
 			return false;
 		else
 			return true;
-		
 	}
 
 	// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
