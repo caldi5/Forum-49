@@ -48,7 +48,8 @@
 		function __construct()
 		{
 			global $conn;
-			global $error;
+			global $alerts;
+
 			$this->loggedIn = false;
 
 			if(isset($_SESSION['id']))
@@ -75,13 +76,13 @@
 				$stmt->close();
 				if(!$validEmail)
 				{
-					$error[] = "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>";
+					$alerts[] = new alert("danger", "Error:", "You have not verified your email. <a href='/verify.php?username=" . $username ."&email=" . $email ."'>Resend Verification Email</a>");
 					unset($_SESSION['id']);
 					session_destroy();
 				}
 				else if($banned)
 				{
-					$error[] = "You are banned";
+					$alerts[] = new alert("danger", "Error:", "You are banned");
 					unset($_SESSION['id']);
 					session_destroy();
 				}
@@ -94,6 +95,12 @@
 					$this->validEmail = $validEmail;
 					$this->banned = $banned;
 					$this->loggedIn = true;
+
+					$friendRequests = $this->getFriendRequests();
+					foreach($friendRequests as $friendRequests) 
+					{
+						$alerts[] = new alert("info", "New Friend Reques:", "You have a new request form wille.");
+					}
 				}
 			}
 		}
@@ -127,11 +134,11 @@
 			if(password_verify($oldPassword , $passwordHash))
 			{
 				$this->setPassword($userID, $newPassword);
-				$success[] = "You've sucessfully changed your password";
+				$alerts[] = new alert("success", "Sucess:", "You've sucessfully changed your password";
 			}
 			else
 			{
-				$error[] = "Wrong current password";
+				$alerts[] = new alert("danger", "Error:", "Wrong current password";
 			}
 		}
 
@@ -145,7 +152,7 @@
 			$stmt->execute();
 			
 			if(!empty($stmt->error))
-				$error[] = "SQL error: " . $stmt->error;
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 			
 			$stmt->bind_result($id, $username, $passwordHash, $role, $email, $validEmail, $banned);
 			$stmt->fetch();
@@ -166,7 +173,7 @@
 			}
 			else
 			{
-				$error[] = "Login Failed";
+				$alerts[] = new alert("danger", "Error:", "Login Failed");
 				return false;
 			}
 		}
@@ -185,11 +192,15 @@
 			return $this->loggedIn;
 		}
 
-		public function areFriendsWith($userID2)
+		//---------------------------
+		// Friends functions start
+		//---------------------------
+
+		public function areFriendsWith($userID)
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT userid from friends WHERE userid = ? AND userid2 = ?');
-			$stmt->bind_param('ii', $this->id, $userID2);
+			$stmt->bind_param('ii', $this->id, $userID);
 			$stmt->execute();
 			$stmt->store_result();
 			if ($stmt->num_rows == 0)
@@ -197,6 +208,79 @@
 			else
 				return true;
 		}
+
+		//todo: update to use getFriendRequests()
+		public function friendRequestExists($userID)
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT userid from friendRequests WHERE (userid = ? AND userid2 = ?) OR (userid = ? AND userid2 = ?)');
+			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				return false;
+			else
+				return true;
+		}
+
+		public function getFriendRequests()
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT userid from friendRequests WHERE userid2 = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				return false;
+			
+			$stmt->bind_result($userID);
+			while ($stmt->fetch()) 
+			{
+				$requestsFrom[] = $userID;
+			}
+
+			$stmt->free_result();
+			$stmt->close();
+			return $requestsFrom;
+		}
+
+		public function sendFriendRequest($userID)
+		{
+			global $conn;
+
+			if(!userIDExists($userID))
+			{
+				$alerts[] = new alert("danger", "Error:", "That user does not exist");
+				return false;
+			}	
+			if($this->friendRequestExists($userID))
+			{
+				$alerts[] = new alert("danger", "Error:", "You have already sent a friend request to: " . getUsernameID($userID) . ".");
+				return false;
+			}
+			if($this->areFriendsWith($userID))
+			{
+				$alerts[] = new alert("danger", "Error:", "You are already friends with: " . getUsernameID($userID) . ".");
+				return false;
+			}
+
+			$stmt = $conn->prepare('INSERT INTO friendRequests (userid, userid2, created_at) VALUES (?, ?, ?)');
+			$stmt->bind_param('iii', $this->id, $userID, time());
+			$stmt->execute();
+			$stmt->store_result();
+			if(!empty($stmt->error))
+			{
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
+				return false;
+			}
+			return true;
+		}
+
+		//---------------------------
+		// Friends functions end
+		//---------------------------
 
 		// Returns the number of unred messages,
 		public function getNumberOfUnreadMessages()
