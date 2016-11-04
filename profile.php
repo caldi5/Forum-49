@@ -40,6 +40,10 @@
 	$posts->bind_result($postsID, $postsTitle, $postsTime);
 
 
+	if($_GET["sendReq"]){
+		
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,24 +88,23 @@
 								?>
 						
 					<!-- SIDEBAR BUTTONS -->
-
 					<div class="profile-userbuttons">
-											<?php if($currentUser->friendRequestExists($_GET["user"]) ){ 
+											<?php if($currentUser->friendRequestExists($userID)){ 
 											?>
 												
-											 	<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+											 	<a type="button" class="btn btn-success btn-sm" href="#">Req Sent</a>
 												
 												<?php }
-														elseif(!$currentUser->areFriendsWith($_GET["user"])) { 
+														elseif($currentUser->areFriendsWith($userID)) { 
 												?>
 						
-												<a type="button" class="btn btn-success btn-sm" href="#">Req Sent</a>
+												<a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
 												
 												<?php }
-														else { 
+														else {
 												?>
 												
-														<a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
+														<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
 												
 											<?php }
 											?>
