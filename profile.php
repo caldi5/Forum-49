@@ -86,10 +86,16 @@
 					<!-- SIDEBAR BUTTONS -->
 
 					<div class="profile-userbuttons">
-												<?php if( !areFriends($currentUser->id, getUserID($user)) ){ 
-												?>
+											<?php if($currentUser->friendRequestExists($_GET["user"]) ){ 
+											?>
 												
-						 <a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+											 	<a type="button" class="btn btn-success btn-sm" href="#">Add Friend</a>
+												
+												<?php }
+														elseif(!$currentUser->areFriendsWith($_GET["user"])) { 
+												?>
+						
+												<a type="button" class="btn btn-success btn-sm" href="#">Req Sent</a>
 												
 												<?php }
 														else { 
@@ -97,8 +103,8 @@
 												
 														<a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
 												
-												<?php }
-												?>
+											<?php }
+											?>
 												
 					 <a type="button" class="btn btn-danger btn-sm" href="/messages.php">Message</a>
 					</div>
