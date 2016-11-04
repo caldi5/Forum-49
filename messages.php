@@ -45,7 +45,6 @@
         <script>
             $(function() 
             {
-                      
                     $.ajax({
                         method: "post",
                         url: "getConversations.php",
@@ -55,9 +54,6 @@
                     .done(function(data){  
                      $(".conversationlist").html(data);
                     })
-                    
-                
-                
             })
             function sendmsg()
             {
@@ -140,6 +136,9 @@
                     })
                     .done(function(data){  
                      $(".content").html(data);
+                     var scroll = $('.content');
+                     var height = scroll[0].scrollHeight;
+                     scroll.scrollTop(height);
                     })
 
             }

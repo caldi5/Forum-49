@@ -26,6 +26,11 @@ if($result->num_rows > 0)
         <?php
     }
 }
+$result2 = $conn->prepare("UPDATE messages
+                           SET isread=1
+                           WHERE to_user = ? AND from_user = ?");
+$result2->bind_param("ii",$currentUser->id,$withUser);
+$result2->execute();
 }
 ?>
      </div>
