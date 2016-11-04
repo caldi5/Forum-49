@@ -26,17 +26,17 @@
 	$user = getUsernameID(getUserID($_GET["user"]));
 	$userID = getUserID($_GET["user"]);
 
-	$comments = $conn->prepare('SELECT postID, text FROM comments WHERE userID = ? ORDER BY created_at DESC LIMIT 10');
+	$comments = $conn->prepare('SELECT postID, text, created_at FROM comments WHERE userID = ? ORDER BY created_at DESC LIMIT 10');
 	$comments->bind_param('i', $userID);
 	$comments->execute();
 	$comments->store_result();
-	$comments->bind_result($commentsID, $commentsText);
+	$comments->bind_result($commentsID, $commentsText, $commentsTime);
 
-	$posts = $conn->prepare('SELECT id, title FROM posts WHERE creator = ? LIMIT 5');
+	$posts = $conn->prepare('SELECT id, title, created_at FROM posts WHERE creator = ? LIMIT 5');
 	$posts->bind_param('i', $userID);
 	$posts->execute();
 	$posts->store_result();
-	$posts->bind_result($postsID, $postsTitle);
+	$posts->bind_result($postsID, $postsTitle, $postsTime);
 ?>
 <!DOCTYPE html>
 <html>
@@ -151,6 +151,8 @@
 										echo substr($commentsText, 0, 45).'...';
 									else
 										echo $commentsText;
+
+									echo '<br><span class="post-time">'.date('H:i d/m/y', $commentsTime).'</span>';
 									echo '</div>';
 									echo '</a>';
 								}
@@ -160,6 +162,7 @@
 							{
 								echo '<div class="col-lg-12 profile-comment">';
 								echo '<p>User has no comments yet.</p>';
+
 								echo '</div>';
 							}
 
@@ -181,6 +184,8 @@
 										echo substr($postsTitle, 0, 45).'...';
 									else
 										echo $postsTitle;
+
+									echo '<br><span class="post-time">'.date('H:i d/m/y', $postsTime).'</span>';
 									echo '</div>';
 									echo '</a>';
 								}
