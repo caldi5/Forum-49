@@ -15,6 +15,7 @@
 	if($currentUser->isLoggedIn())
 	{
 ?>
+						<li><a href="flow.php">Flow</a></li>
 						<li><a href="/messages.php">Messages (<?php echo $currentUser->getNumberOfUnreadMessages(); ?>)</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -36,6 +37,7 @@ if($currentUser->isAdmin())
 	else
 	{ 
 ?>
+						<li><a href="flow.php">Flow</a></li>
 						<li><a href="/login.php"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
 						<li><a href="/register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 <?php

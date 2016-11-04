@@ -428,3 +428,31 @@ a .profile-post:hover
 {
 	border-radius: 0;
 }
+
+.liveContent
+{
+	background-color: #EFEFEF;
+	margin: 5px;
+	padding: 5px;
+	word-wrap: break-word;
+}
+
+.liveTitle
+{
+	color: black;
+}
+
+.liveText
+{
+	color: #969696;
+}
+
+.liveContent:hover .liveTitle
+{
+	color: #ff3B3F;
+}
+
+.liveContent:hover .liveText
+{
+	color: #ff3B3F;
+}

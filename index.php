@@ -20,6 +20,7 @@
 		<title>Forum</title>
 	</head>
 	<body>
+
 		<?php include("includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
