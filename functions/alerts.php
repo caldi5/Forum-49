@@ -30,10 +30,10 @@
 		{
 			foreach ($alerts as $alert) 
 			{
-				echo "<div class=\"alert alert-". $alert->type ."\">\r\n";
-				echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\r\n";
-				echo "<strong>". $alert->title ."</strong> ". $alert->message. "\r\n";
-				echo "</div>" . "\r\n";
+				echo '<div class="alert alert-'. $alert->type .'">';
+				echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+				echo '<strong>'. $alert->title .'</strong>'. $alert->message;
+				echo '</div>';
 			}
 		}
 
