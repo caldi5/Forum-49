@@ -26,9 +26,7 @@
 	$user = getUsernameID(getUserID($_GET["user"]));
 
 
-	if(isset[$_GET["addReq"]]){
-		$currentUser->add
-	}
+
 
 ?>
 <!DOCTYPE html>
