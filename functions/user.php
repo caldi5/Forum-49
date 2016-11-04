@@ -103,7 +103,7 @@
 					{
 						foreach($friendRequests as $friendRequest) 
 						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="/ajax/freindrequest.php?accept='. $friendRequest .'">Accept</a> / <a href="/ajax/freindrequest.php?deny='. $friendRequest .'">Deny</a>');
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
 						}
 					}
 				}
