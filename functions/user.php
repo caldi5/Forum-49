@@ -19,7 +19,11 @@
 			$stmt = $conn->prepare('SELECT id, username, role, email, validEmail, banned FROM users WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			
+			if($stmt->num_rows == 0)
+				return false;
+			
 			$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -419,7 +423,6 @@
 			$stmt = $conn->prepare('INSERT INTO friendRequests (userid, userid2, created_at) VALUES (?, ?, ?)');
 			$stmt->bind_param('iii', $this->id, $userID, time());
 			$stmt->execute();
-			$stmt->store_result();
 			if(!empty($stmt->error))
 			{
 				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
@@ -458,6 +461,10 @@
 		// Friends functions END
 		//-----------------------------------------------------
 
+		//-----------------------------------------------------
+		// Message functions START
+		//-----------------------------------------------------
+		
 		// Returns the number of unred messages,
 		public function getNumberOfUnreadMessages()
 		{
@@ -473,6 +480,32 @@
 
 			return $count;
 		}
+
+		public function sendMessage($toUser, $message)
+		{
+			global $conn;
+			global $alerts;
+		
+			if(!user::usernameExists($toUser))
+			{
+				$alerts[] = new alert("danger", "Error:", "That user does not exist");
+				return false;
+			}
+
+			$stmt = $conn->prepare('INSERT INTO messages (from_user, to_user, message, timestamp) VALUES(?,?,?,?)');
+			$stmt->bind_param('iisi', $this->id, $toUser, $message, time());
+			$stmt->execute();
+			if(!empty($stmt->error))
+			{
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
+				return false;
+			}
+			return true;
+		}
+
+		//-----------------------------------------------------
+		// Message functions END
+		//-----------------------------------------------------
 	} 
 	//======================================================================
 	// currentUser END
