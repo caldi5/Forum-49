@@ -1,6 +1,28 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
 
+	//returns an array with all categories names
+	function getCategories()
+	{
+		global $conn;
+		$stmt = $conn->prepare('SELECT id FROM categories');
+		$stmt->execute();
+		$stmt->bind_result($id);
+		while ($stmt->fetch()) 
+		{
+			$ids[] = $id;
+		}
+		$stmt->close();
+
+		
+		foreach($ids as $id) 
+		{
+			$categories[] = new category($id);
+		}
+
+		return $categories;
+	}
+
 	class category
 	{
 		public $id;
@@ -23,6 +45,27 @@
 			$this->id = $id;
 			$this->name = $name;
 			$this->sortOrder = $sortOrder;
+		}
+
+		public function getForums()
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT id FROM forums WHERE category = ?  ORDER BY ordering');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			foreach($ids as $id) 
+			{
+				$forums[] = new forum($id);
+			}
+
+			return $forums;
 		}
 
 		public static function getNumberOfForums($categoryID)
@@ -80,11 +123,11 @@
 				$this->views = $views;
 		}
 
-		public static function getNumberOfPosts($forumID)
+		public function getNumberOfPosts()
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT COUNT(*) FROM posts WHERE forum = ?');
-			$stmt->bind_param('i', $forumID);
+			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
 			$stmt->bind_result($count);
 			$stmt->fetch();
