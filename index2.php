@@ -33,7 +33,7 @@
 					echo '<p>Posts:<br> '.$forum->getNumberOfPosts().'</p>';
 					echo '</div>';
 					echo '<div class="col-lg-1">';
-					echo '<p>Views:<br>'. $forum->views .'</p>';
+					echo '<p>Views:<br>'. $forum->getNumberOfviews() .'</p>';
 					echo '</div>';
 					echo '</div>';
 					echo '</a>';

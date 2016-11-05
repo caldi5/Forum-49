@@ -154,7 +154,7 @@
 			echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
 			echo '</div>';
 			echo '<div class="col-lg-1">';
-			echo '<p>Views:<br>'. $postObject->views .'</p>';
+			echo '<p>Views:<br>'. $postObject->getNumberOfviews() .'</p>';
 			echo '</div>';
 			echo '</div>';
 			echo '</a>';

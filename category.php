@@ -82,7 +82,7 @@
 							echo '<p>Posts:<br> ' . numberOfPosts( $row['id']) . '</p>' . "\r\n";
 							echo '</div>' . "\r\n";
 							echo '<div class="col-lg-1">';
-							echo '<p>Views:<br>'. $forumObject->views .'</p>';
+							echo '<p>Views:<br>'. $forumObject->getNumberOfviews() .'</p>';
 							echo '</div>';
 							echo '</div>' . "\r\n";
 							echo '</a>' . "\r\n";

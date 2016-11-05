@@ -68,11 +68,11 @@
 			return $forums;
 		}
 
-		public static function getNumberOfForums($categoryID)
+		public function getNumberOfForums()
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT COUNT(*) FROM forums WHERE category = ?');
-			$stmt->bind_param('i', $categoryID);
+			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
 			$stmt->bind_result($count);
 			$stmt->fetch();
@@ -89,7 +89,6 @@
 		public $description;
 		public $categoryID;
 		public $sortOrder;
-		public $views;
 
 		function __construct($id)
 		{
@@ -110,9 +109,13 @@
 			$this->description = $description;
 			$this->categoryID = $categoryID;
 			$this->sortOrder = $sortOrder;
+		}
+		public function getNumberOfviews()
+		{
+			global $conn;
 
 			$stmt = $conn->prepare('SELECT SUM(views) FROM posts Where forum = ?');
-			$stmt->bind_param('i', $id);
+			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
 			$stmt->bind_result($views);
 			$stmt->fetch();
@@ -120,7 +123,8 @@
 			$stmt->close();
 
 			if(!empty($views))				
-				$this->views = $views;
+				return $views;
+			return 0;
 		}
 
 		public function getNumberOfPosts()
@@ -183,6 +187,11 @@
 			$stmt->fetch();
 			$stmt->close();
 			return $count;
+		}
+
+		public function getNumberOfviews()
+		{
+			return $this->views;
 		}
 
 		public function view()

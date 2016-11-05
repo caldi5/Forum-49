@@ -61,7 +61,7 @@
 							echo '<p>Posts:<br> '.numberOfPosts($forum['id']).'</p>';
 							echo '</div>';
 							echo '<div class="col-lg-1">';
-							echo '<p>Views:<br>'. $forumObject->views .'</p>';
+							echo '<p>Views:<br>'. $forumObject->getNumberOfviews() .'</p>';
 							echo '</div>';
 							echo '</div>';
 							echo '</a>';
