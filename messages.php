@@ -72,7 +72,7 @@
                     {
                         $.ajax({
                             method: "post",
-                            url: "messageparse.php",
+                            url: "ajax/messageparse.php",
                             async: true,
                             data: { senderid: sendid,reciever: reciever, message: msg }
                         })

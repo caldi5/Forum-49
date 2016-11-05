@@ -23,7 +23,7 @@
 			
 			if($stmt->num_rows == 0)
 				return false;
-			
+
 			$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -485,19 +485,16 @@
 		{
 			global $conn;
 			global $alerts;
-		
-			if(!user::usernameExists($toUser))
-			{
-				$alerts[] = new alert("danger", "Error:", "That user does not exist");
-				return false;
-			}
 
+			if(!$this->loggedIn)
+				return false;
+			
+			$time = time();
 			$stmt = $conn->prepare('INSERT INTO messages (from_user, to_user, message, timestamp) VALUES(?,?,?,?)');
-			$stmt->bind_param('iisi', $this->id, $toUser, $message, time());
+			$stmt->bind_param('iisi', $this->id, $toUser, $message, $time);
 			$stmt->execute();
 			if(!empty($stmt->error))
 			{
-				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 				return false;
 			}
 			return true;

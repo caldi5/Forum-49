@@ -1,4 +1,9 @@
 <?php
+/*
+ *
+ * NOT USED ANYMORE!
+ *
+ */
 
     require_once("includes/init.php");
 
