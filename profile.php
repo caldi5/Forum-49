@@ -119,7 +119,7 @@
 						 
 												?>
 							<li>
-							 <a href="#">
+							 <a href="/friends.php">
 							 <i class="glyphicon glyphicon-user"></i>
 							 Friends </a>
 							</li>
