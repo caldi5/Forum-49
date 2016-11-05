@@ -4,12 +4,12 @@
 	$time = $_GET['t'];
 
 	$stmt = $conn->prepare('
-(SELECT "comment" as type, (SELECT username from users where id = userID) as username, (SELECT title from posts where id = postID) as post, postID, (select name from forums where id = (select forum from posts where id = postID)) as forum, text, created_at, created_at as date FROM comments WHERE created_at > ?)
+(SELECT "comment" as type, (SELECT username from users where id = userID) as username, (SELECT title from posts where id = postID) as post, postID, (SELECT name FROM forums WHERE id = (SELECT forum FROM posts WHERE id = postID)) as forum, text, created_at, created_at as date FROM comments WHERE created_at > ?)
 UNION
-(SELECT "post" as type, (SELECT username from users where id = creator) as username, title as post, id as postID, (select name from forums where id = forum) as forum, text, created_at, created_at as date FROM posts WHERE created_at > ?)
+(SELECT "post" as type, (SELECT username from users where id = creator) as username, title as post, id as postID, (SELECT name FROM forums WHERE id = forum) as forum, text, created_at, created_at as date FROM posts WHERE created_at > ?)
 ORDER BY created_at ASC
 			');
-	
+
 	$stmt->bind_param('ii', $time, $time);
 	$stmt->execute();
 	$result = $stmt->get_result();
