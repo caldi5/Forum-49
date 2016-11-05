@@ -26,7 +26,6 @@
 	$friends->execute();
 	$friends->store_result();
 	$friends->bind_result($friendsTime, $friendID);
-	echo $currentUser->getUsernameID($friendID);
 ?>
 <!DOCTYPE html>
 <html>
