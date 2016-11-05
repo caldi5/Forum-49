@@ -48,47 +48,49 @@
 					</div>
 					<div class="panel-body">
 						<!-- List existing users start-->
-						<table class="table">
-							<thead>
-									<tr>
-										<th>ID</th>
-										<th>Username</th>
-										<th>Role</th>
-										<th>Banned</th>
-										<th>Valid Email</th>
-										<th></th>
-										</tr>
-							</thead>
-							<tbody>
+						<div style="overflow-x: auto;">
+							<table class="table">
+								<thead>
+										<tr>
+											<th>ID</th>
+											<th>Username</th>
+											<th>Role</th>
+											<th>Banned</th>
+											<th>Valid Email</th>
+											<th></th>
+											</tr>
+								</thead>
+								<tbody>
 <?php
 	while($stmt->fetch())
 	{
 ?>
-								<tr>
-									<td><?php echo $id; ?></td>
-									<td><?php echo $username; ?></td>
-									<td><?php echo $role; ?></td>
-									<td><?php
-									if($banned)
-										echo "Yes"; 
-									else
-										echo "No";
-									?></td>
-									<td><?php
-									if($validEmail)
-										echo "Yes"; 
-									else
-										echo "No";
-									?></td>
-									<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if($id === $currentUser->id){ echo "disabled";} ?>">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
-								</tr>
+									<tr>
+										<td><?php echo $id; ?></td>
+										<td><?php echo $username; ?></td>
+										<td><?php echo $role; ?></td>
+										<td><?php
+										if($banned)
+											echo "Yes"; 
+										else
+											echo "No";
+										?></td>
+										<td><?php
+										if($validEmail)
+											echo "Yes"; 
+										else
+											echo "No";
+										?></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if($id === $currentUser->id){ echo "disabled";} ?>">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+									</tr>
 <?php
 	}
 	$stmt->free_result();
 	$stmt->close();
 ?>
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 						<!-- List existing users end-->
 					</div>
 				</div>

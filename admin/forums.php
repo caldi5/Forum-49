@@ -30,10 +30,10 @@
 	//-----------------------------------------------------
 	//Get existing Forums
 	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, name, category, ordering FROM forums');
+	$stmt = $conn->prepare('SELECT id, name, category, ordering, guestAccess FROM forums');
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($id, $name, $category, $ordering);
+	$stmt->bind_result($id, $name, $category, $ordering, $guestAccess);
 
 ?>
 <!DOCTYPE html>
@@ -59,13 +59,13 @@
 						<div id="newForumWell" class="well well-sm collapse">
 							<form id="newForum" method="post" enctype="multipart/form-data">
 								<div class="row">
-									<div class="col-sm-7">
+									<div class="col-md-4 col-sm-6">
 										<div class="input-group">
 											<span class="input-group-addon">Name: </span>
 											<input type="text" name="forumName" class="form-control" placeholder="Forum name">
 										</div>
 									</div>
-									<div class="col-sm-3">
+									<div class="col-md-3 col-sm-6">
 										<div class="input-group">
 											<span class="input-group-addon">Category:</span>
 											<select class="form-control" name="category">
@@ -76,13 +76,21 @@
 		echo "<option>". $CategoryName ."</option>";
 	} 
 ?>
-									  	</select>
-									  </div>
-								  </div>
-									<div class="col-sm-2">
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-6">
 										<div class="input-group">
 											<span class="input-group-addon">Order:</span>
 											<input type="text" name="ordering" class="form-control" size="1" placeholder="1">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-6">
+										<div class="input-group">
+											<span class="input-group-addon">Allow Guest Access:</span>
+											<span class="input-group-addon">
+												<input type="checkbox" name="allowGuest">
+											</span>
 										</div>
 									</div>
 								</div>
@@ -95,46 +103,52 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-3">
+									<div class="col-sm-12">
+										<div class="input-group">
 											<button type="submit" name="newForum" class="btn btn-sm btn-success">Create Forum</button>
-								    	<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>
+											<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>
+										</div>
 									</div>
 								</div>
 							</form>
 						</div>
 						<!-- List existing Forums start-->
-						<table class="table">
-					    <thead>
-					        <tr>
-					        	<th>ID</th>
-					        	<th>Name</th>
-					        	<th>Category</th>
-					        	<th>Sort Order</th>
-					        	<th>#of Posts</th>
-					        	<th></th>
-					        	</tr>
-					    </thead>
-					    <tbody>
+						<div style="overflow-x: auto;">
+							<table class="table">
+								<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Category</th>
+											<th>Sort Order</th>
+											<th>Allow Guest Access</th>
+											<th>#of Posts</th>
+											<th></th>
+											</tr>
+								</thead>
+								<tbody>
 <?php
 	while($stmt->fetch())
 	{
 ?>
-								<tr>
-									<td><?php echo $id; ?></td>
-									<td><?php echo $name; ?></td>
-									<td><?php echo getCategoryName($category); ?></td>
-									<td><?php echo $ordering; ?></td>
-									<td><?php echo numberOfPosts($id); ?></td>
-									<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
-								</tr>
+									<tr>
+										<td><?php echo $id; ?></td>
+										<td><?php echo $name; ?></td>
+										<td><?php echo getCategoryName($category); ?></td>
+										<td><?php echo $ordering; ?></td>
+										<td><?php echo $guestAccess; ?></td>
+										<td><?php echo numberOfPosts($id); ?></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+									</tr>
 <?php
 	}
 	$stmt->free_result();
 	$stmt->close();
 ?>
-							</tbody>
-						</table>
-							<!-- List existing Forums end-->
+								</tbody>
+							</table>
+						</div>
+						<!-- List existing Forums end-->
 						</form>
 					</div>
 				</div>
