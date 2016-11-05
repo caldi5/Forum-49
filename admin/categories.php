@@ -27,16 +27,6 @@
 		newCategory($_POST["categoryName"], $_POST["ordering"]);
 	}
 
-	//-----------------------------------------------------
-	//Get existing categories
-	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, name, ordering FROM categories');
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($id, $name, $ordering);
-
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,20 +85,22 @@
 								</thead>
 								<tbody>
 <?php
-	while($stmt->fetch())
+	$categories = getCategories();
+	foreach ($categories as $category) 
 	{
-?>
-									<tr>
-										<td><?php echo $id; ?></td>
-										<td><?php echo $name; ?></td>
-										<td><?php echo $ordering; ?></td>
-										<td><?php echo getNumberOfForums($id); ?></td>
-										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if(getNumberOfForums($id) !== 0){ echo "disabled";} ?>">Delete</a><a href="editcategory.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
-									</tr>
-<?php
+		echo '<tr>';
+		echo '<td>'. $category->id .'</td>';
+		echo '<td>'. $category->name .'</td>';
+		echo '<td>'. $category->sortOrder .'</td>';
+		echo '<td>'. $category->getNumberOfForums() .'</td>';
+		echo '<td><a href="#", data-href="?action=delete&id='. $category->id .'" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right'; 
+		if($category->getNumberOfForums() !== 0)
+			{ 
+				echo ' disabled';
+			}
+		echo '">Delete</a><a href="editcategory.php?id='. $category->id .'" class="btn btn-xs btn-success pull-right">Edit</a></td>';
+		echo '</tr>';
 	}
-	$stmt->free_result();
-	$stmt->close();
 ?>
 								</tbody>
 							</table>
