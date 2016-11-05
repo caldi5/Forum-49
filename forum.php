@@ -125,6 +125,11 @@
 		// Outputs every post.
 		while ($row = $result->fetch_assoc())
 		{
+			//Anton test code for objects start
+			$post = new post($row['id']);
+			$post->views;
+			//anton test code for objects end
+
 			echo '<div class="row">';
 			echo '<a href="post.php?id=' . $row['id'] . '">';
 			echo '<div class="col-lg-12 post">';
@@ -146,8 +151,11 @@
 			}
 			echo '<span class="post-time"> - '.date('H:i d/m/y', $row['created_at']).'</span>';
 			echo '</div>';
-			echo '<div class="col-lg-2">';
+			echo '<div class="col-lg-1">';
 			echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
+			echo '</div>';
+			echo '<div class="col-lg-1">';
+			echo '<p>Views:<br>'. $post->views .'</p>';
 			echo '</div>';
 			echo '</div>';
 			echo '</a>';

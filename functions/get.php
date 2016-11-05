@@ -1,62 +1,6 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
 
-	class category
-	{
-		public $id;
-		public $name;
-		public $sortOrder;
-
-		function __construct($id)
-		{
-			global $conn;
-			global $error;
-				
-			$stmt = $conn->prepare('SELECT id, name, ordering FROM categories WHERE id = ?');
-			$stmt->bind_param('i', $id);
-			$stmt->execute();
-			$stmt->store_result();		
-			$stmt->bind_result($id, $name, $sortOrder);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-
-			$this->id = $id;
-			$this->name = $name;
-			$this->sortOrder = $sortOrder;
-		}
-	}
-
-	class forum
-	{
-		public $id;
-		public $name;
-		public $description;
-		public $categoryID;
-		public $sortOrder;
-
-		function __construct($id)
-		{
-			global $conn;
-			global $error;
-				
-			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
-			$stmt->bind_param('i', $id);
-			$stmt->execute();
-			$stmt->store_result();		
-			$stmt->bind_result($id, $name, $description, $categoryID, $sortOrder);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-
-			$this->id = $id;
-			$this->name = $name;
-			$this->description = $description;
-			$this->categoryID = $categoryID;
-			$this->sortOrder = $sortOrder;
-		}
-	}
-
 	// Returns the name of a category given the category ID
 	function getCategoryName ($categoryID)
 	{

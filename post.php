@@ -42,6 +42,11 @@
 		}
 		$commentsOffset = ($comments_per_page*$page)-$comments_per_page;
 
+		//Anton test code for objects start
+		$postObject = new post($_GET['id']);
+		$postObject->view();
+		//anton test code for objects end
+
 		$stmt = $conn->prepare('SELECT * FROM posts WHERE id = ?');
 		$stmt->bind_param('i', $_GET['id']);
 		$stmt->execute();
