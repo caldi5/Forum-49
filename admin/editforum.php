@@ -67,17 +67,16 @@
 								<label>Category:</label>
 									<select class="form-control" name="category">
 <?php
-	$CategoryNames =getAllCategoryNames();
-	foreach ($CategoryNames as $CategoryName)
+	$Categories =getAllCategoryIDs();
+	foreach ($Categories as $category)
 	{
-		$categoryID = getCategoryID($CategoryName);
-		if($forum->CategoryID === getCategoryID($CategoryNames))
+		if($forum->categoryID === $category)
 		{
-			echo "<option selected value=\"". $categoryID ."\">". $CategoryName ."</option>";
+			echo '<option selected value="'. $category .'">'. getCategoryName($category) .'</option>';
 		}
 		else
 		{
-			echo "<option value=\"". $categoryID ."\">". $CategoryName ."</option>";
+			echo '<option value="'. $category .'">'. getCategoryName($category) .'</option>';
 		}
 	} 
 ?>

@@ -3,18 +3,16 @@
 	require_once __DIR__.'/alerts.php';
 	require_once __DIR__.'/get.php';
 
-	function newForum($forumName, $description, $categoryName, $ordering)
+	function newForum($forumName, $description, $categoryID, $guestAccess, $ordering)
 	{
 		global $conn;
 		global $error;
 
-		$categoryID = getCategoryID($categoryName);
-
 		if($categoryID === false)
 			return false;
 
-		$stmt = $conn->prepare('INSERT INTO forums(name, description, category, ordering) VALUES (?,?,?,?)');
-		$stmt->bind_param('ssii', $forumName, $description, $categoryID, $ordering);
+		$stmt = $conn->prepare('INSERT INTO forums(name, description, category, guestAccess, ordering) VALUES (?,?,?,?,?)');
+		$stmt->bind_param('ssiii', $forumName, $description, $categoryID, $guestAccess, $ordering);
 		$stmt->execute();
 		if(!empty($stmt->error))
 		{

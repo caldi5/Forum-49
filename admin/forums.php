@@ -24,7 +24,7 @@
 	//-----------------------------------------------------
 	if(isset($_POST["newForum"])) 
 	{
-		newForum($_POST["forumName"], $_POST["description"], $_POST["category"], $_POST["ordering"]);
+		newForum($_POST["forumName"], $_POST["description"], $_POST["category"], $_POST["ordering"], $_POST["guestAccess"]);
 	}
 
 	//-----------------------------------------------------
@@ -70,10 +70,10 @@
 											<span class="input-group-addon">Category:</span>
 											<select class="form-control" name="category">
 <?php
-	$CategoryNames =getAllCategoryNames();
-	foreach ($CategoryNames as $CategoryName)
+	$Categories =getAllCategoryIDs();
+	foreach ($Categories as $category)
 	{
-		echo "<option>". $CategoryName ."</option>";
+		echo '<option value="'. $category .'">'. getCategoryName($category) .'</option>';
 	} 
 ?>
 											</select>
@@ -89,7 +89,7 @@
 										<div class="input-group">
 											<span class="input-group-addon">Allow Guest Access:</span>
 											<span class="input-group-addon">
-												<input type="checkbox" name="allowGuest">
+												<input type="checkbox" name="guestAccess">
 											</span>
 										</div>
 									</div>

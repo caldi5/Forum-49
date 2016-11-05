@@ -21,45 +21,20 @@
 		return $name;
 	}
 
-	// Returns the ID of a category given the category name
-	function getCategoryID ($categoryName)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT id FROM categories WHERE name = ?');
-		$stmt->bind_param('s', $categoryName);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($id);
-
-		if ($stmt->num_rows == 0)
-			return false;
-
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		return $id;
-	}
-
 	//returns an array with all categories names
-	function getAllCategoryNames ()
+	function getAllCategoryIDs()
 	{
 		global $conn;
-		$stmt = $conn->prepare('SELECT name FROM categories');    
+		$stmt = $conn->prepare('SELECT id FROM categories');
 		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($name);
-
-		if ($stmt->num_rows == 0)
-			return false;
+		$stmt->bind_result($id);
 		while ($stmt->fetch()) 
 		{
-			$categoryNames[] = $name;
+			$categoryIDs[] = $id;
 		}
-		$stmt->free_result();
 		$stmt->close();
 
-		return $categoryNames;
+		return $categoryIDs;
 	}
 
 	// Returns the name of a forum given the forum ID

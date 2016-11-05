@@ -24,6 +24,19 @@
 			$this->name = $name;
 			$this->sortOrder = $sortOrder;
 		}
+
+		public static function getNumberOfForums($categoryID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) FROM forums WHERE category = ?');
+			$stmt->bind_param('i', $categoryID);
+			$stmt->execute();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->close();
+
+			return $count;
+		}
 	}
 
 	class forum
@@ -66,6 +79,19 @@
 			if(!empty($views))				
 				$this->views = $views;
 		}
+
+		public static function getNumberOfPosts($forumID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) FROM posts WHERE forum = ?');
+			$stmt->bind_param('i', $forumID);
+			$stmt->execute();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->close();
+
+			return $count;
+		}
 	}
 
 	class post
@@ -77,6 +103,7 @@
 		public $forum;
 		public $views;
 		public $CreatedAt;
+		public $numberOfReplies;
 
 		function __construct($id)
 		{
@@ -98,7 +125,23 @@
 			$this->forum = $forum;
 			$this->views = $views;
 			$this->CreatedAt = $CreatedAt;
+
+			$this->numberOfReplies = $this->getNumberOfReplies($id);
 		}
+		
+		public static function getNumberOfReplies($postID)
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT COUNT(*) FROM comments WHERE postID = ?');
+			$stmt->bind_param('i', $postID);
+			$stmt->execute();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->close();
+			return $count;
+		}
+
 		public function view()
 		{
 			global $conn;
