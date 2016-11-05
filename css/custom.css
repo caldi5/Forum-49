@@ -456,3 +456,13 @@ a .profile-post:hover
 {
 	color: #ff3B3F;
 }
+
+/* Admin Menu Start */
+@media (min-width: 768px) 
+{
+  .adminMenuHeader 
+  {
+    display: none;
+  }
+}
+/* Admin Menu End */
