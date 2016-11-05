@@ -102,7 +102,7 @@
 		public $text;
 		public $forum;
 		public $views;
-		public $CreatedAt;
+		public $createdAt;
 		public $numberOfReplies;
 
 		function __construct($id)

@@ -24,7 +24,7 @@
 	//-----------------------------------------------------
 	if(isset($_POST["newForum"])) 
 	{
-		newForum($_POST["forumName"], $_POST["description"], $_POST["category"], $_POST["ordering"], $_POST["guestAccess"]);
+		newForum($_POST["forumName"], $_POST["description"], $_POST["category"], $_POST["guestAccess"], $_POST["ordering"]);
 	}
 
 	//-----------------------------------------------------
