@@ -126,8 +126,7 @@
 		while ($row = $result->fetch_assoc())
 		{
 			//Anton test code for objects start
-			$post = new post($row['id']);
-			$post->views;
+			$postObject = new post($row['id']);
 			//anton test code for objects end
 
 			echo '<div class="row">';
@@ -155,7 +154,7 @@
 			echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
 			echo '</div>';
 			echo '<div class="col-lg-1">';
-			echo '<p>Views:<br>'. $post->views .'</p>';
+			echo '<p>Views:<br>'. $postObject->views .'</p>';
 			echo '</div>';
 			echo '</div>';
 			echo '</a>';

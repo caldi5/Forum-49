@@ -33,10 +33,12 @@
 		public $description;
 		public $categoryID;
 		public $sortOrder;
+		public $views;
 
 		function __construct($id)
 		{
 			global $conn;
+			$this->views = 0;
 
 			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $id);
@@ -52,6 +54,17 @@
 			$this->description = $description;
 			$this->categoryID = $categoryID;
 			$this->sortOrder = $sortOrder;
+
+			$stmt = $conn->prepare('SELECT SUM(views) FROM posts Where forum = ?');
+			$stmt->bind_param('i', $id);
+			$stmt->execute();
+			$stmt->bind_result($views);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			if(!empty($views))				
+				$this->views = $views;
 		}
 	}
 

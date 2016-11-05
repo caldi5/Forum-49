@@ -48,14 +48,20 @@
 						// Lopps thru the forums for this category.
 						while ($forum = $result_2->fetch_assoc())
 						{
+							//Anton test code for objects start
+							$forumObject = new forum($forum['id']);
+							//Anton test code for objects END
 							echo '<a href="forum.php?id='.$forum['id'].'">';
 							echo '<div class="col-lg-12 forum">';
 							echo '<div class="col-lg-10">';
 							echo '<h4 class="forum-title">'.htmlspecialchars($forum['name']).'</h4>';
 							echo '<p class="forum-desc">'.htmlspecialchars($forum['description']).'</p>';
 							echo '</div>';
-							echo '<div class="col-lg-2">';
-							echo '<p>Posts: '.numberOfPosts($forum['id']).'</p>';
+							echo '<div class="col-lg-1">';
+							echo '<p>Posts:<br> '.numberOfPosts($forum['id']).'</p>';
+							echo '</div>';
+							echo '<div class="col-lg-1">';
+							echo '<p>Views:<br>'. $forumObject->views .'</p>';
 							echo '</div>';
 							echo '</div>';
 							echo '</a>';

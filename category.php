@@ -68,15 +68,22 @@
 						// Prints all of the forums.
 						while ($row = $result->fetch_assoc())
 						{
+							//Anton test code for objects start
+							$forumObject = new forum($row['id']);
+							//Anton test code for objects END
+
 							echo '<a href="forum.php?id=' . $row['id'] . '">' . "\r\n";
 							echo '<div class="col-lg-12 forum">' . "\r\n";
 							echo '<div class="col-lg-10">' . "\r\n";
 							echo '<h4 class="forum-title">' . $row['name'] . '</h4>' . "\r\n";
 							echo '<p class="forum-desc">' . $row['description'] .'</p>' . "\r\n";
 							echo '</div>' . "\r\n";
-							echo '<div class="col-lg-2">' . "\r\n";
-							echo '<p>Posts: ' . numberOfPosts( $row['id']) . '</p>' . "\r\n";
+							echo '<div class="col-lg-1">' . "\r\n";
+							echo '<p>Posts:<br> ' . numberOfPosts( $row['id']) . '</p>' . "\r\n";
 							echo '</div>' . "\r\n";
+							echo '<div class="col-lg-1">';
+							echo '<p>Views:<br>'. $forumObject->views .'</p>';
+							echo '</div>';
 							echo '</div>' . "\r\n";
 							echo '</a>' . "\r\n";
 						}
