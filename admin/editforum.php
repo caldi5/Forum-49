@@ -16,7 +16,6 @@
 		die();
 	}
 
-
 	if(isset($_POST["editForumForm"]))
 	{
 		$stmt = $conn->prepare('UPDATE forums SET name=?, description=?, category=?, ordering=? WHERE id=?');
@@ -67,16 +66,16 @@
 								<label>Category:</label>
 									<select class="form-control" name="category">
 <?php
-	$Categories =getAllCategoryIDs();
-	foreach ($Categories as $category)
+	$categories = getCategories();
+	foreach ($categories as $category) 
 	{
-		if($forum->categoryID === $category)
+		if($forum->categoryID === $category->id)
 		{
-			echo '<option selected value="'. $category .'">'. getCategoryName($category) .'</option>';
+			echo '<option selected value="'. $category->id .'">'. $category->name .'</option>';
 		}
 		else
 		{
-			echo '<option value="'. $category .'">'. getCategoryName($category) .'</option>';
+			echo '<option value="'. $category->id .'">'. $category->name .'</option>';
 		}
 	} 
 ?>

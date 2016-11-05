@@ -70,10 +70,10 @@
 											<span class="input-group-addon">Category:</span>
 											<select class="form-control" name="category">
 <?php
-	$Categories =getAllCategoryIDs();
-	foreach ($Categories as $category)
+	$categories = getCategories();
+	foreach ($categories as $category) 
 	{
-		echo '<option value="'. $category .'">'. getCategoryName($category) .'</option>';
+		echo '<option value="'. $category->id .'">'. $category->name .'</option>';
 	} 
 ?>
 											</select>
