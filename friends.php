@@ -95,12 +95,6 @@
 							}
 						?>
 					</div>
-
-					<div class="col-lg-5 profile-posts">
-                        
-						<!-- Lägg till vänner här också -->
-
-					</div>
 				</div>
 				<!-- OVERVIEW CONTENT END -->
 			</div>
