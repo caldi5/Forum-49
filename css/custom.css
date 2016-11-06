@@ -561,8 +561,8 @@ a .profile-post:hover
 	min-height: 40px;
 	width: 50%;
 	background-color: #A9A9A9;
-	border-radius: 13px;
 	padding: 3px;
+	margin-right: 3px;
 }
 
 .messageReceived
@@ -571,8 +571,8 @@ a .profile-post:hover
 	min-height: 40px;
 	width: 50%;
 	background-color: #CAEBF2;
-	border-radius: 13px;
 	padding: 3px;
+	margin-left: 3px;
 }
 
 .conversationPartners
