@@ -241,7 +241,7 @@
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
 			$stmt->store_result();		
-			$stmt->bind_result($id, $creator, $post, $text, $CreatedAt);
+			$stmt->bind_result($id, $creator, $post, $text, $createdAt);
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
@@ -250,7 +250,7 @@
 			$this->creator = $creator;
 			$this->post = $post;
 			$this->text = $text;
-			$this->CreatedAt = $CreatedAt;
+			$this->createdAt = $createdAt;
 
 		}
 	}
