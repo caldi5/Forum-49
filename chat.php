@@ -1,5 +1,45 @@
 <script type="text/javascript">
 
+	function getNewMessages()
+	{
+		$($(".conversation").get().reverse()).each(function (index, value){
+			var userid = $(this).data("userid");
+			var lastMessage = $(this).attr("data-last");
+
+			if (lastMessage != '')
+			{
+				var messages = new Array();
+				var xmlhttp = new XMLHttpRequest();
+				var number = index;
+
+				xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
+					messages = JSON.parse(this.responseText);
+
+					$("#conversation"+number).attr("data-last", messages[0].created_at);
+					$.each(messages, function(index2, value2){
+						if (value2.type == "sent")
+						{
+							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageSent'>"+value2.message+"</div></div>");
+						}
+						else
+						{
+							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
+							$("#conversation"+index+" .conversationFooterName").append("<span class='red-text'> - NEW</span>");
+						}
+					})
+
+					var convo = $("#conversation"+index+" .conversationText .conversationMessages");
+					convo.scrollTop(convo.prop("scrollHeight"))
+				}
+				};
+				xmlhttp.open("GET", "getMessages.php?id="+userid+"&t="+lastMessage, true);
+				xmlhttp.send();
+				
+			}
+		});
+	}
+
 	function openConversationPartners()
 	{
 		var people = new Array();
@@ -15,7 +55,7 @@
 				people = JSON.parse(this.responseText);
 
 				$.each(people, function(index, value){
-					$("#startNewConversation .conversationPartners ul").append("<li><a href='#' onclick='openConversation("+value.partnerID+", \""+value.partnerUsername+"\")'>"+value.partnerUsername+"</a></li>");
+					$("#startNewConversation .conversationPartners ul").append("<a href='#' onclick='openConversation("+value.partnerID+", \""+value.partnerUsername+"\")'><li>"+value.partnerUsername+"</li></a>");
 				});
 			}
 		};
@@ -43,7 +83,7 @@
 		
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMini'>");
-		$("#conversation"+id+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+id+", "+partner+")'><h4>"+name+"</h4></div><div class='conversationFooterClose'><span onclick='closeConversation("+id+")''>X</span></div>");
+		$("#conversation"+id+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+id+", "+partner+")'><h4 class='conversationPartnerName'>"+name+"</h4></div><div class='conversationFooterClose' onclick='closeConversation("+id+")'><span>X</span></div>");
 	}
 
 	function maximizeConversation(id, partner)
@@ -56,7 +96,7 @@
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form action='#' onsubmit='sendNewMessage()' id='userID'><input type='text' name='newMessage' class='conversationWriteMessage'></form></div>");
 		$("#conversation"+id).append("<div class='conversationText'>");
-		$("#conversation"+id+" .conversationText").append("<div class='conversationHeader'><div class='conversationHeaderName' onclick='minimizeConversation("+id+", "+partner+")''><h4>"+name+"</h4></div><div class='conversationHeaderClose'><span onclick='closeConversation("+id+")''>X</span></div></div>");
+		$("#conversation"+id+" .conversationText").append("<div class='conversationHeader'><div class='conversationHeaderName' onclick='minimizeConversation("+id+", "+partner+")''><h4>"+name+"</h4 class='conversationPartnerName'></div><div class='conversationHeaderClose' onclick='closeConversation("+id+")'><span>X</span></div></div>");
 		$("#conversation"+id+" .conversationText").append("<div class='conversationMessages'>");
 
 		
@@ -64,6 +104,8 @@
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
 				messages = JSON.parse(this.responseText);
+
+				$("#conversation"+id).attr("data-last", messages[0].created_at);
 
 				$.each(messages, function(index, value){
 					if (value.type == "sent")
@@ -86,7 +128,13 @@
 
 	function closeConversation(id)
 	{
-		$("#conversation"+id+"").remove();
+		$("#conversation"+id).remove();
+		$($(".conversation").get().reverse()).each(function(index, value){
+			var userid = $(this).data("userid");
+			$(this).attr("id", "conversation"+index);
+			$("#conversation"+index+" .conversationFooterName").attr("onclick", "maximizeConversation("+index+", "+userid+")");
+			$("#conversation"+index+" .conversationHeaderName").attr("onclick", "minimizeConversation("+index+", "+userid+")");
+		});
 	}
 	
 	function openConversation(id, partnerName)
@@ -100,13 +148,15 @@
 		}
 		else
 		{
-			$("#convContainer").prepend("<div class='conversation' id='conversation"+(conversationsOpen)+"'>");
+			$("#convContainer").prepend("<div class='conversation' id='conversation"+(conversationsOpen)+"' data-userid='"+partner+"' data-last='' >");
 			$("#conversation"+(conversationsOpen)).prepend("<div class='conversationFooterMini'>");
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+(conversationsOpen)+", "+id+")''><h4>"+partnerName+"</h4></div>");
-			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
+			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose' onclick='closeConversation("+id+")'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
+			maximizeConversation(conversationsOpen,id);
 		}
 	}
 
+	setInterval(getNewMessages, 5000);
 </script>
 
 <div class="convWrapper">

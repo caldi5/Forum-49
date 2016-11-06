@@ -210,6 +210,5 @@
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
-<?php require_once("includes/chat.php"); ?>
 	</body>
 </html>

@@ -550,7 +550,8 @@ a .profile-post:hover
 .message
 {
 	width: 100%;
-	margin-bottom: 5px;
+	margin-bottom: 3px;
+	margin-top: 3px;
 	min-height: 40px;
 	overflow: auto;
 }
@@ -580,14 +581,45 @@ a .profile-post:hover
 	position: fixed;
 	bottom: 35px;
 	right: 0;
-	background-color: #A9A9A9;
+	background-color: #EFEFEF;
 	height: 300px;
 	width: 200px;
 	cursor: default;
+	overflow-y: scroll;
+}
+
+.conversationPartners ul
+{
+	list-style-type: none;
+	padding-left: 0px;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+.conversationPartners ul li
+{
+	background-color: #A9A9A9;
+	margin-bottom: 5px;
+	padding: 3px;
+}
+
+.conversationPartners ul a
+{
+	color: black;
+}
+
+.conversationPartners ul a:hover
+{
+	text-decoration: none;
 }
 
 .startNewConversationToggle
 {
 	width: 35px;
 	height: 35px;
+}
+
+.conversationPartnerName
+{
+	display: inline-block;
 }
