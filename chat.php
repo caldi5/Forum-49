@@ -1,5 +1,15 @@
 <script type="text/javascript">
 
+	$(document).on('submit','form.chattForm',function(){
+		var form = this.id;
+
+		var to = $("#"+form+" #to").val();
+		var text = $("#"+form+" #newMessage").val();
+
+		alert(to);
+		return false;
+	});
+
 	function getNewMessages()
 	{
 		$($(".conversation").get().reverse()).each(function (index, value){
@@ -94,7 +104,7 @@
 		var messages = new Array();
 
 		$("#conversation"+id).empty();
-		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form action='#' onsubmit='sendNewMessage()' id='userID'><input type='text' name='newMessage' class='conversationWriteMessage'></form></div>");
+		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form class='chattForm' id='form"+id+"'><input type='text' id='newMessage' class='conversationWriteMessage'><input type='hidden' id='to' value='"+partner+"'></form></div>");
 		$("#conversation"+id).append("<div class='conversationText'>");
 		$("#conversation"+id+" .conversationText").append("<div class='conversationHeader'><div class='conversationHeaderName' onclick='minimizeConversation("+id+", "+partner+")''><h4>"+name+"</h4 class='conversationPartnerName'></div><div class='conversationHeaderClose' onclick='closeConversation("+id+")'><span>X</span></div></div>");
 		$("#conversation"+id+" .conversationText").append("<div class='conversationMessages'>");
