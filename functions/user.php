@@ -20,10 +20,8 @@
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
 			$stmt->store_result();
-			
-			if($stmt->num_rows == 0)
-				return false;
-
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');
 			$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -37,7 +35,7 @@
 			$this->banned = $banned;
 		}
 
-		public static	function usernameExists ($username)
+		public static	function usernameExists($username)
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT id from users WHERE username = ?');

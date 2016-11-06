@@ -36,7 +36,9 @@
 			$stmt = $conn->prepare('SELECT id, name, ordering FROM categories WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');		
 			$stmt->bind_result($id, $name, $sortOrder);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -99,7 +101,9 @@
 			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');		
 			$stmt->bind_result($id, $name, $description, $category, $sortOrder);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -159,7 +163,9 @@
 			$stmt = $conn->prepare('SELECT id, creator, title, text, forum, views, created_at FROM posts WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');
 			$stmt->bind_result($id, $creator, $title, $text, $forum, $views, $createdAt);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -240,7 +246,9 @@
 			$stmt = $conn->prepare('SELECT id, userID, postID, text, created_at FROM comments WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');	
 			$stmt->bind_result($id, $creator, $post, $text, $createdAt);
 			$stmt->fetch();
 			$stmt->free_result();
