@@ -524,6 +524,10 @@
 			if(!$this->loggedIn)
 				return false;
 			
+			//Man ska inte kunna skicka medleanden till sig själv
+			if($this->id === $toUser)
+				return false;
+			
 			$time = time();
 			$stmt = $conn->prepare('INSERT INTO messages (from_user, to_user, message, timestamp) VALUES(?,?,?,?)');
 			$stmt->bind_param('iisi', $this->id, $toUser, $message, $time);
