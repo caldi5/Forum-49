@@ -38,6 +38,14 @@
 					echo '</div>';
 					echo '</a>';
 					if (++$i == 3) break;
+				}
+
+				if(empty($forums))
+				{
+					// If there's not one or more forums we print a sorry message.
+					echo '<div class="alert alert-info">' . "\r\n";
+					echo '<h3><strong>Sorry!</strong> There\'s no forum in this category just yet!</h3>' . "\r\n";
+					echo '</div>' . "\r\n";
 				}				
 				echo '</div>';
 			}
