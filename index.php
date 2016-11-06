@@ -56,6 +56,11 @@
 ?>
 		</div>
 		<?php require_once("includes/standard_footer.php"); ?>
-		<?php require_once("chat.php"); ?>
+		<?php 
+			if ($currentUser->loggedIn) 
+			{
+				require_once("chat.php"); 
+			}
+		?>
 	</body>
 </html>
