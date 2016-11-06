@@ -10,22 +10,7 @@
 	}
 
     // SELECT alla user ID som är vänner med varandra. Ta sedan ut alla IDs som != currentUser
-	$friends = $conn->prepare('
-        SELECT * FROM
-        (
-	       SELECT created_at, 
-	           CASE 
-                WHEN userid = ? THEN userid2 
-                WHEN userid2 = ? THEN userid 
-                ELSE null
-	           END as userID
-	       FROM friends as t1
-        ) as friends
-        WHERE userID IS NOT NULL');
-  $friends->bind_param('ii', $currentUser->id, $currentUser->id);
-	$friends->execute();
-	$friends->store_result();
-	$friends->bind_result($friendsTime, $friendID);
+	$friends = $currentUser->getFriends();
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,29 +73,26 @@
 					<div class="col-lg-5 profile-comments">
 						<h3>Friends</h3>
 						<?php
-							if ($friends->num_rows > 0)
-							{
-								while ($friends->fetch())
-								{
-									echo '<a href="profile.php?user='.$currentUser->getUsernameID($friendID).'">';
-									echo '<div class="col-lg-12 profile-comment">';
-									
-                  echo htmlspecialchars($currentUser->getUsernameID($friendID));
-									
-                                    echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $friendsTime).'</span>';
-									echo '</div>';
-									echo '</a>';
-								}
-								
-							}
-							else
+							if (empty($friends))
 							{
 								echo '<div class="col-lg-12 profile-comment">';
 								echo '<p>You have no friends... :(</p>';
 								echo '</div>';
 							}
-							$friends->free_result();
-							$friends->close();
+							else
+							{
+                                foreach ($friends as $friends)
+								{
+									echo '<a href="profile.php?user='.$friends->username.'">';
+									echo '<div class="col-lg-12 profile-comment">';
+									
+                                    echo htmlspecialchars($friends->username);
+									
+                                    echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $currentUser->friendsSince($friends->id)).'</span>';
+									echo '</div>';
+									echo '</a>';
+								}
+							}
 						?>
 					</div>
 
