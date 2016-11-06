@@ -69,7 +69,7 @@
 	$categories = getCategories();
 	foreach ($categories as $category) 
 	{
-		if($forum->categoryID === $category->id)
+		if($forum->category === $category->id)
 		{
 			echo '<option selected value="'. $category->id .'">'. $category->name .'</option>';
 		}
