@@ -11,7 +11,7 @@
 
     // SELECT alla user ID som är vänner med varandra. Ta sedan ut alla IDs som != currentUser
 	$friends = $conn->prepare('
-        SELECT created_at, userID FROM
+        SELECT * FROM
         (
 	       SELECT created_at, 
 	           CASE 
@@ -22,11 +22,10 @@
 	       FROM friends as t1
         ) as friends
         WHERE userID IS NOT NULL');
-	
-    $friends->bind_param('ii', $currentUser->id, $currentUser->id);
+  $friends->bind_param('ii', $currentUser->id, $currentUser->id);
 	$friends->execute();
 	$friends->store_result();
-	$friends->bind_result($userID, $friendsTime);  
+	$friends->bind_result($friendsTime, $friendID);
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,12 +92,12 @@
 							{
 								while ($friends->fetch())
 								{
-									echo '<a href="profile.php?user='.$currentUser->getUsernameID($userID).'">';
+									echo '<a href="profile.php?user='.$currentUser->getUsernameID($friendID).'">';
 									echo '<div class="col-lg-12 profile-comment">';
 									
-                                    echo htmlspecialchars(getUsernameID($userID));
+                  echo htmlspecialchars($currentUser->getUsernameID($friendID));
 									
-                                    echo '<br><span class="post-time">'.date('H:i d/m/y', $friendsTime).'</span>';
+                                    echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $friendsTime).'</span>';
 									echo '</div>';
 									echo '</a>';
 								}
