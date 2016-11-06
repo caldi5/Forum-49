@@ -18,7 +18,7 @@
 				people = JSON.parse(this.responseText);
 
 				$.each(people, function(index, value){
-					$("#startNewConversation .conversationPartners ul").append("<li><a href='#' onclick='openConversation("+value.partnerID+")'>"+value.partnerUsername+"</a></li>");
+					$("#startNewConversation .conversationPartners ul").append("<li><a href='#' onclick='openConversation("+value.partnerID+", \""+value.partnerUsername+"\")'>"+value.partnerUsername+"</a></li>");
 				});
 			}
 		};
@@ -92,23 +92,37 @@
 		$("#conversation"+id+"").remove();
 	}
 	
-	//function openConversation(userID)
-	//{
-//
-	//}
+	function openConversation(id, partnerName)
+	{
+		var partner = id;
+		var conversationsOpen = $(".conversation").length;
+
+		if(conversationsOpen >= 4)
+		{
+			alert("Please close a conversation before opening a new one.");
+		}
+		else
+		{
+			$("#convContainer").prepend("<div class='conversation' id='conversation"+(conversationsOpen)+"'>");
+			$("#conversation"+(conversationsOpen)).prepend("<div class='conversationFooterMini'>");
+			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+(conversationsOpen)+", "+id+")''><h4>"+partnerName+"</h4></div>");
+			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
+		}
+
+	}
+
 </script>
 
 <div class="convWrapper">
 
-	<div class="convContainer">
-
-
-		<div class="conversation" id="conversation1">
+	<div class="convContainer" id="convContainer">
+		<!--<div class="conversation" id="conversation1">
 				<div class="conversationFooterMaxi">
 					<form action="#" onsubmit="sendNewMessage()" id="userID">
 						<input type="text" name="newMessage" class="conversationWriteMessage">
 					</form>
 				</div>
+
 
 			<div class="conversationText">
 				<div class="conversationHeader">
@@ -154,7 +168,7 @@
 					<span onclick="closeConversation(2)">X</span>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 		<div class="startNewConversation" id="startNewConversation">
 			<div class="startNewConversationToggle" onclick="openConversationPartners()">+</div>
