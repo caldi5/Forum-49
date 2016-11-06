@@ -202,7 +202,7 @@
 			return $comments;
 		}
 
-		public function getNumberOfReplies()
+		public function getNumberOfComments()
 		{
 			global $conn;
 
