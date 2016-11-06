@@ -12,6 +12,7 @@ html, h1, h2, h3, h4, h5, h6
 body
 {
 	background-color: white;
+	padding-bottom: 35px;
 }
 
 
@@ -466,3 +467,124 @@ a .profile-post:hover
   }
 }
 /* Admin Menu End */
+
+.convWrapper
+{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+.convContainer
+{
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+}
+
+.startNewConversation
+{
+	height: 35px;
+	width: 35px;
+	background-color: grey;
+	margin-right: 30px;
+	cursor: pointer;
+}
+
+.conversation
+{
+	width: 250px;
+	height: 35px;
+	background-color: grey;
+	margin-right: 10px;
+}
+
+.conversationText
+{
+	height: 300px;
+	width: 250px;
+	background-color: red;
+	position: fixed;
+	bottom: 35px;
+}
+
+.conversationHeader, .conversationFooterMini, .conversationFooterMaxi
+{
+	width: 100%;
+	height: 35px;
+	background-color: grey;
+}
+
+.conversationHeaderName, .conversationFooterName
+{
+	display: inline-block;
+	float: left;
+	width: 90%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.conversationHeaderClose, .conversationFooterClose
+{
+	display: inline-block;
+	float: right;
+	width: 10%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.conversationMessages
+{
+	width: 100%;
+	height: calc(100% - 35px);
+	background-color: black;
+	overflow-y: scroll;
+}
+
+.conversationWriteMessage
+{
+	width: 100%;
+	height: 35px;
+}
+
+.message
+{
+	width: 100%;
+	margin-bottom: 5px;
+	background-color: red;
+	min-height: 40px;
+	overflow: auto;
+}
+
+.messageSent
+{
+	float: right;
+	min-height: 40px;
+	width: 50%;
+	background-color: grey;
+}
+
+.messageReceived
+{
+	float: left;
+	min-height: 40px;
+	width: 50%;
+	background-color: blue;
+}
+
+.conversationPartners
+{
+	position: fixed;
+	bottom: 35px;
+	right: 0;
+	background-color: grey;
+	height: 300px;
+	width: 200px;
+	cursor: default;
+}
+
+.startNewConversationToggle
+{
+	width: 35px;
+	height: 35px;
+}
