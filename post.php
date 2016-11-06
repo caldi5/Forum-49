@@ -2,90 +2,36 @@
 
 	require_once("includes/init.php");
 
+	if(isset($_POST['comment']))
+		if(!$currentUser->newComment($_GET['id'], $_POST['comment']))
+			$alerts[] = new alert("danger", "Error:", "Your comment was not sent");
 
-	if (isset($_POST['comment']) && $currentUser->isLoggedIn() && isset($_POST['id']))
+	try 
 	{
-		$comment = $_POST['comment'];
-
-		if(strlen($comment) < 2 || strlen($comment) > 5000)
-		{
-			echo 'comment to long';
-			die();
-		}
-
-		$stmt = $conn->prepare("INSERT INTO comments(userID, postID, text, created_at) VALUES (?,?,?,?)");
-		$stmt->bind_param('iisi', $_SESSION['id'], $_POST['id'], $comment, time());
-		$stmt->execute();
-
-		if (empty($stmt->error))
-		{
-			$stmt->close();
-			header('Location: post.php?id='.$_POST['id'].'');
-		}
-		else
-		{
-			$stmt->close();
-			echo 'Something something SQL error.';
-		}
+		$post = new post($_GET['id']);
 	}
-	elseif (isset($_GET['id']))
-	{
-		$comments_per_page = 9;
-
-		if (isset($_GET['page']))
-		{
-			$page = $_GET['page'];
-		}
-		else
-		{
-			$page = 1;
-		}
-		$commentsOffset = ($comments_per_page*$page)-$comments_per_page;
-
-		//Anton test code for objects start
-		$postObject = new post($_GET['id']);
-		$postObject->view();
-		//anton test code for objects end
-
-		$stmt = $conn->prepare('SELECT * FROM posts WHERE id = ?');
-		$stmt->bind_param('i', $_GET['id']);
-		$stmt->execute();
-		$result = $stmt->get_result();
-		$stmt->store_result();
-		
-
-		if ($result->num_rows == 0)
-			header('Location: index.php');
-
-
-		$post = $result->fetch_array();
-
-		$repliesSTMT = $conn->prepare('SELECT * FROM comments WHERE postID = ? ORDER BY created_at LIMIT ? OFFSET ?');
-		$repliesSTMT->bind_param('iii', $post['id'], $comments_per_page, $commentsOffset);
-		$repliesSTMT->execute();
-		$comments = $repliesSTMT->get_result();
-		$repliesSTMT->store_result();
-
-		$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM comments WHERE postID = ?');
-		$getCount->bind_param('i', $_GET['id']);
-		$getCount->execute();
-		$getCount->bind_result($count);
-		$getCount->fetch();
-
-		$getCount->free_result();
-		$getCount->close();
-		$repliesSTMT->free_result();
-		$stmt->free_result();
-		$stmt->close();
-		$repliesSTMT->close();
-
-	}
-	else
+	catch (Exception $e) 
 	{
 		header('Location: index.php');
+		die;
 	}
-?>
+	$post->view();
 
+	if (isset($_GET['page']))
+		$page = $_GET['page'];
+	else
+		$page = 1;
+
+	$comments_per_page = 9;
+	$commentsOffset = ($comments_per_page*$page)-$comments_per_page;
+	$count = $post->getNumberOfComments();
+	$comments = $post->getComments($comments_per_page, $commentsOffset);
+
+	$user = new user($post->creator);
+	$forum = new forum($post->forum);
+	$category = new category($forum->category);
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -98,115 +44,111 @@
 		<div class="container">
 <?php displayAlerts(); ?>
 			<h3 class="post-title">
-			<?php 
-				$categoryID = forumBelongsTo($post['forum']);
-				echo '<a href="category.php?id='.$categoryID.'">'.htmlspecialchars(getCategoryName($categoryID)).'</a> / ';
-				echo '<a href="forum.php?id='.$post['forum'].'">'.htmlspecialchars(getForumName($post['forum'])).'</a> / ';
-				echo $post['title']; 
-				?>
+<?php
+	echo '<a href="category.php?id='.$category->id.'">'.htmlspecialchars($category->name).'</a> / ';
+	echo '<a href="forum.php?id='.$forum->id.'">'.htmlspecialchars($forum->name).'</a> / ';
+	echo $post->title; 
+?>
 			</h3>
 			<div class="row post-post">
 				<div class="col-lg-2 post-profile">
-					<h4><?php echo '<a class="profile-name" href="profile.php?user='.getUsernameID($post['creator']).'">'.getUsernameID($post['creator']).'</a>'; ?></h4>
+					<h4><?php echo '<a class="profile-name" href="profile.php?user='.$user->username.'">'.$user->username.'</a>'; ?></h4>
 				</div>
 				<div class="col-lg-8 post-text">
-					<p><?php echo nl2br(htmlspecialchars($post['text'])); ?></p>
+					<p><?php echo nl2br(htmlspecialchars($post->text)); ?></p>
 				</div>
 				<div class="col-lg-2">
-					<span class="post-time"><?php echo date('H:i d/m/y', $post['created_at']); ?></span>
+					<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 					<br>
-					<a href="#">Report</a> | 
-					<a href="#">Delete</a>
+					<?php if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}?>
+					<?php if($currentUser->id === $user->id){ echo '<a href="#">Delete</a>';}?>
 				</div>
 			</div>
-
-			<?php
-			if ($comments->num_rows > 0)
-			{
-				while ($comment = $comments->fetch_assoc())
-				{
-					echo '<div class="row post-reply">';
-					echo '<div class="col-lg-2 post-profile">';
-					echo '<h4><a class="profile-name" href="profile.php?user='.getUsernameID($comment['userID']).'">'.getUsernameID($comment['userID']).'</a></h4>';
-
-					echo '</div>';
-					echo '<div class="col-lg-8 post-text">';
-					echo '<p>'.nl2br(htmlspecialchars($comment['text'])).'</p>';
-					echo '</div>';
-					echo '<div class="col-lg-2">';
-					echo '<span class="post-time">'.date('H:i d/m/y', $comment['created_at']).'</span>';
-					echo '<br><a href="#">Report</a>';
-					echo ' | <a href="#">Delete</a>';
-					echo '</div>';
-					echo '</div>';
-				}
-			}
-
-		if ($count > $comments_per_page)
+<?php
+	if(isset($comments))
+	{
+		foreach ($comments as $comment)
 		{
-			echo '<nav aria-label="Page navigation">';
-			echo '<div class="row">';
-			echo '<ul class="pagination">';
-			if ($page == 1)
-			{
-				echo '<li class="page-item disabled">';
-				echo '<a class="page-link" href="#" aria-label="Previous">';
-			}
-			else 
-			{
-				echo '<li class="page-item">';
-				echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
-			}
-			echo '<span aria-hidden="true">&laquo;</span>';
-			echo '</a></li>';
+			$user = new user($comment->creator);
+			echo '<div class="row post-reply">';
+			echo '<div class="col-lg-2 post-profile">';
+			echo '<h4><a class="profile-name" href="profile.php?user='.$user->username.'">'.$user->username.'</a></h4>';
 
-			// Number of pages we need, rounded up.
-			$pages = ceil($count / $comments_per_page);
-
-			for ($i = 1; $i <= $pages; $i++)
-			{
-				// Makes the current page active.
-				if ($i == $page)
-					echo '<li class="page-item active"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
-				else
-					echo '<li class="page-item"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
-			}
-			if ($page == $pages)
-			{
-				echo '<li class="page-item disabled">';
-				echo '<a class="page-link" href="#" aria-label="Next">';
-			}
-			else 
-			{
-				echo '<li class="page-item">';
-				echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
-			}		
-			echo '<span aria-hidden="true">&raquo;</span>';
-			echo '</a></li>';
-			echo '</ul>';
 			echo '</div>';
-			echo '</nav>';
+			echo '<div class="col-lg-8 post-text">';
+			echo '<p>'.nl2br(htmlspecialchars($comment->text)).'</p>';
+			echo '</div>';
+			echo '<div class="col-lg-2">';
+			echo '<span class="post-time">'.date('H:i d/m/y', $comment->createdAt).'</span><br>';
+			if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}
+			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#">Delete</a>';}
+			echo '</div>';
+			echo '</div>';
 		}
-			?>
+	}
+
+	if ($count > $comments_per_page)
+	{
+		echo '<nav aria-label="Page navigation">';
+		echo '<div class="row">';
+		echo '<ul class="pagination">';
+		if ($page == 1)
+		{
+			echo '<li class="page-item disabled">';
+			echo '<a class="page-link" href="#" aria-label="Previous">';
+		}
+		else 
+		{
+			echo '<li class="page-item">';
+			echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page-1).'" aria-label="Previous">';
+		}
+		echo '<span aria-hidden="true">&laquo;</span>';
+		echo '</a></li>';
+
+		// Number of pages we need, rounded up.
+		$pages = ceil($count / $comments_per_page);
+
+		for ($i = 1; $i <= $pages; $i++)
+		{
+			// Makes the current page active.
+			if ($i == $page)
+				echo '<li class="page-item active"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+			else
+				echo '<li class="page-item"><a class="page-link" href="post.php?id='.$_GET['id'].'&page='.$i.'">'.$i.'</a></li>';
+		}
+		if ($page == $pages)
+		{
+			echo '<li class="page-item disabled">';
+			echo '<a class="page-link" href="#" aria-label="Next">';
+		}
+		else 
+		{
+			echo '<li class="page-item">';
+			echo '<a class="page-link" href="post.php?id='.$_GET['id'].'&page='.($page+1).'" aria-label="Next">';
+		}		
+		echo '<span aria-hidden="true">&raquo;</span>';
+		echo '</a></li>';
+		echo '</ul>';
+		echo '</div>';
+		echo '</nav>';
+	}
+?>
 
 
-			<?php
-			if ($currentUser->isLoggedIn())
-			{
-			?>
-				<div class="row post-reply-form">
-					<h3>Reply</h3>
-					<form action="post.php" method="post">
-						<textarea name="comment" maxlength="5000" required></textarea>
-						<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-						<br>
-						<input type="submit">
-					</form>
-				</div>
-			<?php
-			}
-			?>
-
+<?php
+	if ($currentUser->isLoggedIn())
+	{
+?>
+				<h3>Reply</h3>
+				<form action="post2.php?id=<?php echo $_GET['id'] .'&page='. $page; ?>" method="post">
+						<div class="form-group">
+							<textarea name="comment" rows="5" class="form-control" required></textarea>
+						</div>
+						<button class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
+				</form>
+<?php
+	}
+?>
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>

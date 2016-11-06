@@ -20,10 +20,8 @@
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
 			$stmt->store_result();
-			
-			if($stmt->num_rows == 0)
-				return false;
-
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');
 			$stmt->bind_result($id, $username, $role, $email, $validEmail, $banned);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -37,7 +35,7 @@
 			$this->banned = $banned;
 		}
 
-		public static	function usernameExists ($username)
+		public static	function usernameExists($username)
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT id from users WHERE username = ?');
@@ -309,11 +307,10 @@
 		{
 			return $this->loggedIn;
 		}
-		//-----------------------------------------------------
-		// Security END
-		//-----------------------------------------------------
 
 		//-----------------------------------------------------
+		// Security END
+		//
 		// Friends functions Start
 		//-----------------------------------------------------
 
@@ -494,9 +491,7 @@
 		}
 		//-----------------------------------------------------
 		// Friends functions END
-		//-----------------------------------------------------
-
-		//-----------------------------------------------------
+		//
 		// Message functions START
 		//-----------------------------------------------------
 		
@@ -524,6 +519,10 @@
 			if(!$this->loggedIn)
 				return false;
 			
+			//Man ska inte kunna skicka medleanden till sig själv
+			if($this->id === $toUser)
+				return false;
+			
 			$time = time();
 			$stmt = $conn->prepare('INSERT INTO messages (from_user, to_user, message, timestamp) VALUES(?,?,?,?)');
 			$stmt->bind_param('iisi', $this->id, $toUser, $message, $time);
@@ -537,12 +536,53 @@
 
 		//-----------------------------------------------------
 		// Message functions END
+		//
+		// Post AND Comment functions START
+		//-----------------------------------------------------
+
+		public function newPost()
+		{
+
+		}
+
+		public function newComment($postID, $text)
+		{
+			if(!$this->isLoggedIn())
+				return false;
+
+			if(strlen($text) > 5000)
+				return false;
+
+			global $conn;
+			$time = time();
+			
+			$stmt = $conn->prepare("INSERT INTO comments(userID, postID, text, created_at) VALUES (?,?,?,?)");
+			$stmt->bind_param('iisi', $this->id, $postID, $text, $time);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			$stmt->close();
+
+			return true;
+		}
+
+		//-----------------------------------------------------
+		// Post AND Comment functions END
 		//-----------------------------------------------------
 	} 
 	//======================================================================
 	// currentUser END
 	//======================================================================
 	
+
+
+
+
+
+
+
+
+
 	//To be removed use user::getUsernameID instead 
 	// Returns the username.
 	function getUsernameID ($userID)
@@ -582,13 +622,6 @@
 		$stmt->close();
 
 		return $id;
-	}
-
-	//Jag känner att denna inte borde var här... //Anton
-	// Returns an array of all the forums that the user with the given user ID is moderator for.
-	function isModeratorFor ($userID)
-	{
-		return $array;
 	}
 
 ?>

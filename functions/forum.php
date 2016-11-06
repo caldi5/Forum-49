@@ -36,7 +36,9 @@
 			$stmt = $conn->prepare('SELECT id, name, ordering FROM categories WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');		
 			$stmt->bind_result($id, $name, $sortOrder);
 			$stmt->fetch();
 			$stmt->free_result();
@@ -47,7 +49,8 @@
 			$this->sortOrder = $sortOrder;
 		}
 
-		public function getForums()
+		//TODO: implement limit and offset...
+		public function getForums($limit=0, $offset=0)
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT id FROM forums WHERE category = ?  ORDER BY ordering');
@@ -87,7 +90,7 @@
 		public $id;
 		public $name;
 		public $description;
-		public $categoryID;
+		public $category;
 		public $sortOrder;
 
 		function __construct($id)
@@ -98,8 +101,10 @@
 			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
-			$stmt->bind_result($id, $name, $description, $categoryID, $sortOrder);
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');		
+			$stmt->bind_result($id, $name, $description, $category, $sortOrder);
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
@@ -107,7 +112,7 @@
 			$this->id = $id;
 			$this->name = $name;
 			$this->description = $description;
-			$this->categoryID = $categoryID;
+			$this->category = $category;
 			$this->sortOrder = $sortOrder;
 		}
 		public function getNumberOfviews()
@@ -150,7 +155,6 @@
 		public $forum;
 		public $views;
 		public $createdAt;
-		public $numberOfReplies;
 
 		function __construct($id)
 		{
@@ -159,8 +163,10 @@
 			$stmt = $conn->prepare('SELECT id, creator, title, text, forum, views, created_at FROM posts WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
-			$stmt->store_result();		
-			$stmt->bind_result($id, $creator, $title, $text, $forum, $views, $CreatedAt);
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');
+			$stmt->bind_result($id, $creator, $title, $text, $forum, $views, $createdAt);
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
@@ -171,17 +177,37 @@
 			$this->text = $text;
 			$this->forum = $forum;
 			$this->views = $views;
-			$this->CreatedAt = $CreatedAt;
-
-			$this->numberOfReplies = $this->getNumberOfReplies($id);
+			$this->createdAt = $createdAt;
 		}
 		
-		public static function getNumberOfReplies($postID)
+		public function getComments($limit=PHP_INT_MAX, $offset=0)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT id FROM comments WHERE postID = ? ORDER BY created_at LIMIT ? OFFSET ?');
+			$stmt->bind_param('iii', $this->id, $limit, $offset);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			if(!isset($ids))
+				return;
+
+			foreach($ids as $id) 
+				$comments[] = new comment($id);
+
+			return $comments;
+		}
+
+		public function getNumberOfComments()
 		{
 			global $conn;
 
 			$stmt = $conn->prepare('SELECT COUNT(*) FROM comments WHERE postID = ?');
-			$stmt->bind_param('i', $postID);
+			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
 			$stmt->bind_result($count);
 			$stmt->fetch();
@@ -201,5 +227,38 @@
 			$stmt = $conn->prepare('UPDATE posts SET views = views + 1 WHERE id=?');
 			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
+		}
+
+	}
+
+	class comment
+	{
+		public $id;
+		public $creator;
+		public $post;
+		public $text;
+		public $createdAt;
+
+		function __construct($id)
+		{
+			global $conn;
+				
+			$stmt = $conn->prepare('SELECT id, userID, postID, text, created_at FROM comments WHERE id = ?');
+			$stmt->bind_param('i', $id);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows == 0)
+				throw new Exception('Does not exist');	
+			$stmt->bind_result($id, $creator, $post, $text, $createdAt);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			$this->id = $id;
+			$this->creator = $creator;
+			$this->post = $post;
+			$this->text = $text;
+			$this->createdAt = $createdAt;
+
 		}
 	}
