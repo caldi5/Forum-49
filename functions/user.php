@@ -349,6 +349,41 @@
 			return true;
 		}
 
+		//Returns an array of users
+		public function getFriends()
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT userid FROM friends WHERE userid2 = ? UNION SELECT userid2 AS userid FROM friends WHERE userid = ?');
+			$stmt->bind_param('ii', $this->id, $this->id);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			
+			foreach($ids as $id) 
+			{
+				$friends[] = new user($id);
+			}
+
+			return $friends;
+		}
+
+		public function friendsSince($userID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT created_at from friends WHERE (userid = ? AND userid2 = ?) OR (userid = ? AND userid2 = ?)');
+			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id);
+			$stmt->execute();
+			$stmt->bind_result($time);
+			$stmt->fetch();
+			$stmt->close();
+			return $time;
+		}
+
 		public function areFriendsWith($userID)
 		{
 			global $conn;
