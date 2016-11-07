@@ -61,7 +61,7 @@
 					<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 					<br>
 					<?php if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}?>
-					<?php if($currentUser->id === $user->id){ echo '<a href="#">Delete</a>';}?>
+					<?php if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#">Delete</a>';}?>
 				</div>
 			</div>
 <?php
@@ -140,7 +140,7 @@
 	{
 ?>
 				<h3>Reply</h3>
-				<form action="post2.php?id=<?php echo $_GET['id'] .'&page='. $page; ?>" method="post">
+				<form action="post.php?id=<?php echo $_GET['id'] .'&page='. $page; ?>" method="post">
 						<div class="form-group">
 							<textarea name="comment" rows="5" class="form-control" required></textarea>
 						</div>
