@@ -179,6 +179,26 @@
 			$this->views = $views;
 			$this->createdAt = $createdAt;
 		}
+
+		function deletePost()
+		{
+			global $conn;
+			$comments = $this->getComments();
+
+			if(!empty($comments))
+				foreach ($comments as $comment)
+					$comment->deleteComment();
+
+
+			$stmt = $conn->prepare('DELETE FROM posts WHERE id = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			
+			$stmt->close();
+			return true;
+		}
 		
 		public function getComments($limit=PHP_INT_MAX, $offset=0)
 		{
@@ -275,5 +295,5 @@
 			}
 			$stmt->close();
 			return true;
-	}
+		}
 	}
