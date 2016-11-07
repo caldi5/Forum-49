@@ -227,17 +227,45 @@ span.admin
 /* Messages css */
 .content {
     overflow-y: scroll;
-    border-radius:3px;
-    border:solid 2px;
+    border:solid 1px;
     height: 10cm;
+    margin: 0;
+    padding: 0;
+}
+.conversationlist
+{
+    margin: 0;
+    padding: 0;
+}
+.pad 
+{
+    color: #ff3b3f;
+    padding: 2px;
+}
+.timestamp
+{
+    margin: 0;
+    opacity: 0.8;
+    font-style: italic;
 }
 .messagecont
 {
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
 }
 .friends {
     top:0.1cm;
+    margin:0;
+    padding:0;
+}
+.to {
+    margin:0;
+    padding:0;
+}
+.reciever
+{
+    display:inline;
+    margin:0;
 }
 .messageformtextbox {
     padding-top: 0em;
@@ -247,28 +275,20 @@ span.admin
     padding-left: 0.5em;
     height: 6em; 
 }
-#p7 {
-    display: none;
-}
-.reciever{
-    width: 13.5em;
-    display:none;
-}
 .searchoption {
     text-decoration: none;
     color:inherit;
 }
 #searchboxdiv {
-    position:absolute;
-    background-color: lightgrey;
-    left: 14.3%;
-    width:13.8%;
+    background-color: white;
     z-index:10;
+    margin: 0;
+    padding:0;
     visibility: hidden;
 }
 /* Messages css end */
 
-/* Charbar css start */
+/* Chatbar css start */
 body 
 {
   margin-bottom: 50px;

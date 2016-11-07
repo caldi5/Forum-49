@@ -11,16 +11,22 @@
 		<!-- Content start -->
 		<div class="container">
 <?php displayAlerts(); ?>
+                <div class="col-sm-12">
+                <div class="col-sm-2 to">
                 <form>
-                    <button type="button" class="btn btn-success newconversation">New</button>
-                    <p7 class="reciever">To:</p7> <input type="text" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">
+                    <p7>To:</p7><input type="text" placeholder="Username" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">  
                 </form>
-                <div id="searchboxdiv">
+                <div class="col-sm-2" id="searchboxdiv">
                 </div>
-                <div class="container col-sm-3 conversationlist">
+                </div>
+                </div>
+                <div class="col-sm-3">
+                <h4 class="pad">Conversations</h4>
+                <div class="container col-sm-12 conversationlist">
+                </div>
                 </div>
                 <div class="col-sm-9">
-                <h4>Messages</h4>
+                <h4 class="pad">Messages</h4>
                 <div class="content col-sm-12">
 				    <h3 id="Sender"></h3>
 				    <p id="messagecontent"> </p>
@@ -128,7 +134,7 @@
                 $('.searchtext').val(to); 
                  $.ajax({
                         method: "post",
-                        url: "showConversation.php",
+                        url: "ajax/showConversation.php",
                         async: true,
                         data: {withUser: withUser}
                         

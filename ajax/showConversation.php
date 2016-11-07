@@ -1,6 +1,6 @@
 <?php
 
-require_once("includes/init.php");
+require_once("../includes/init.php");
 if(isset($_POST['withUser']))
 {
 $withUser = $_POST['withUser'];
@@ -12,17 +12,18 @@ $result->execute();
 $result->store_result();
 $result->bind_result($name,$message,$timestamp);
     ?>
-    <div class="list-group col-sm-12 messagecont">
+    <div class="col-sm-12 messagecont">
 <?php
 if($result->num_rows > 0)
 {
     while($result->fetch())
     {
          ?>
-                <a class="list-group-item">
+                
                 <h4 class="list-group-item-heading"><?php echo $name; ?></h4>
-                <p class="list-group-item-text"><?php echo $message; ?></p>
-                </a>
+                <p class="list-group-item-text"><?php echo $message; ?></p><br>
+                </div>
+                
         <?php
     }
 }

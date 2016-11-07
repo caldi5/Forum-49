@@ -7,10 +7,14 @@ if(isset($_POST['search']))
 $searchtext = $_POST['search'];
 $likeString = '%' . $searchtext . '%';
 
-$result = $conn->prepare("SELECT username FROM users
+$result = $conn->prepare("select username from ((SELECT * FROM users
                         JOIN friends ON users.id = friends.userid2
-                        WHERE userid = ? AND username LIKE ?");
-$result->bind_param("is", $currentUser->id, $likeString);
+                        WHERE userid = ? AND username LIKE ?)
+                        UNION
+                        (SELECT * FROM users
+                        JOIN friends ON users.id = friends.userid
+                        WHERE userid2 = ? AND username LIKE ?)) as a");
+$result->bind_param("isis", $currentUser->id, $likeString, $currentUser->id, $likeString);
 $result->execute();
 $result->store_result();
 $result->bind_result($name);
