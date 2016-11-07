@@ -83,10 +83,10 @@
                             data: { senderid: sendid,reciever: reciever, message: msg }
                         })
                         .done(function(data){
-                            $('.reciever').val("");
                             $('#message').val("");
                             $('#confirm').html(data);
                         })
+                        
                     }
             }
             $(function() 
