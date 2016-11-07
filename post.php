@@ -70,7 +70,7 @@
 		foreach ($comments as $comment)
 		{
 			$user = new user($comment->creator);
-			echo '<div class="row post-reply">';
+			echo '<div id="commentid'. $comment->id.'" class="row post-reply">';
 			echo '<div class="col-lg-2 post-profile">';
 			echo '<h4><a class="profile-name" href="profile.php?user='.$user->username.'">'.$user->username.'</a></h4>';
 
@@ -81,7 +81,7 @@
 			echo '<div class="col-lg-2">';
 			echo '<span class="post-time">'.date('H:i d/m/y', $comment->createdAt).'</span><br>';
 			if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}
-			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#">Delete</a>';}
+			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" onclick="javascript:deleteComment('. $comment->id .');">Delete</a>';}
 			echo '</div>';
 			echo '</div>';
 		}
@@ -152,5 +152,21 @@
 		</div>
 		<!-- Content end -->
 <?php include("includes/standard_footer.php"); ?>
+	<script>
+		function deleteComment(commentID)
+		{
+			$.ajax(
+				{
+					url: "/ajax/deleteComment.php?id=" + commentID,
+					success : function(response)
+					{
+						if(response)
+						{
+							$("#commentid" + commentID).remove();
+						}
+					}
+				})
+		}
+	</script>
 	</body>
 </html>

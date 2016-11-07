@@ -261,4 +261,19 @@
 			$this->createdAt = $createdAt;
 
 		}
+
+		//Fix somehow to make objet selfdestruct...
+		function deleteComment()
+		{
+			global $conn;
+			$stmt = $conn->prepare('DELETE FROM comments WHERE id = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+			{
+				return false;
+			}
+			$stmt->close();
+			return true;
+	}
 	}
