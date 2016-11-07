@@ -115,7 +115,7 @@
 		var messages = new Array();
 
 		$("#conversation"+id).empty();
-		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form class='chattForm' id='form"+id+"'><input type='text' id='newMessage' class='conversationWriteMessage'><input type='hidden' id='to' value='"+partner+"'></form></div>");
+		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form class='chattForm' id='form"+id+"'><input autocomplete='off' type='text' id='newMessage' class='conversationWriteMessage'><input type='hidden' id='to' value='"+partner+"'></form></div>");
 		$("#conversation"+id).append("<div class='conversationText'>");
 		$("#conversation"+id+" .conversationText").append("<div class='conversationHeader'><div class='conversationHeaderName' onclick='minimizeConversation("+id+", "+partner+")''><h4>"+name+"</h4 class='conversationPartnerName'></div><div class='conversationHeaderClose' onclick='closeConversation("+id+")'><span>X</span></div></div>");
 		$("#conversation"+id+" .conversationText").append("<div class='conversationMessages'>");
