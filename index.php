@@ -15,14 +15,16 @@
 			$categories = getCategories();
 			foreach ($categories as $category) 
 			{
-				$forums = $category->getForums();
+				$forums = $category->getForums(3);
 
 				echo '<div class="row category">';
 				echo '<h3 class="category-title"><a href="category.php?id='.$category->id.'">'.$category->name.'</a></h3>';
 				
-				$i = 0; //To limit number of forums displayed to 3
 				foreach($forums as $forum)
 				{
+					if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
+						continue;
+					
 					echo '<a href="forum.php?id='.$forum->id.'">';
 					echo '<div class="col-lg-12 forum">';
 					echo '<div class="col-lg-10">';
@@ -37,7 +39,6 @@
 					echo '</div>';
 					echo '</div>';
 					echo '</a>';
-					if (++$i == 3) break;
 				}
 
 				if(empty($forums))

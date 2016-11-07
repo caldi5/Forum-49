@@ -38,6 +38,9 @@
 
 	foreach($forums as $forum)
 	{
+		if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
+			continue;
+
 		echo '<a href="forum.php?id=' . $forum->id . '">' . "\r\n";
 		echo '<div class="col-lg-12 forum">' . "\r\n";
 		echo '<div class="col-lg-10">' . "\r\n";
