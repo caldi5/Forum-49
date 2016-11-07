@@ -52,7 +52,7 @@
 		public function deleteCategory()
 		{
 			//only allow deletion of categories with no forums in them.
-			if($this->getNumberOfForums()) !== 0)
+			if($this->getNumberOfForums() !== 0)
 			{
 				return false;
 			}
