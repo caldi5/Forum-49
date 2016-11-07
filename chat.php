@@ -86,6 +86,12 @@
 		xmlhttp.send();
 	}
 
+	function updateConversationPartners(term)
+	{
+		$(".conversationPartners ul").empty();
+		
+	}
+
 	function closeConversationPartners()
 	{
 		$(".conversation").last().css("margin-right", "10px");
