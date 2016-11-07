@@ -38,14 +38,14 @@
 			return false;
 
 		try {
-			new post($postID);
+			new comment($commentID);
 		} catch (Exception $e) {
 			echo 0;
 			return false;
 		}
 
 		$time = time();
-		$stmt = $conn->prepare('INSERT INTO reportedComments(reportedBy, cp,,emtID, message, reportedAt) VALUES (?,?,?,?)');
+		$stmt = $conn->prepare('INSERT INTO reportedComments(reportedBy, commentID, message, reportedAt) VALUES (?,?,?,?)');
 		$stmt->bind_param('iisi', $currentUser->id, $commentID, $message, $time);
 		$stmt->execute();
 		if(!empty($stmt->error))

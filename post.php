@@ -60,7 +60,7 @@
 				<div class="col-lg-2">
 					<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 					<br>
-					<?php if($currentUser->isLoggedIn()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-report" data-postid="'. $post->id .'">Report</a> | ';}?>
+					<?php if($currentUser->isLoggedIn()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-report" data-postid="'. $post->id .'" data-onClick="javascript:reportPost()">Report</a> | ';}?>
 					<?php if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-delete" data-onclick="javascript:deletePost('. $post->id .','. $forum->id .');">Delete</a>';}?>
 				</div>
 			</div>
@@ -80,7 +80,7 @@
 			echo '</div>';
 			echo '<div class="col-lg-2">';
 			echo '<span class="post-time">'.date('H:i d/m/y', $comment->createdAt).'</span><br>';
-			if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}
+			if($currentUser->isLoggedIn()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-report" data-postid="'. $post->id .'" data-onClick="javascript:reportComment()">Report</a> | ';}
 			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-delete" data-onclick="javascript:deleteComment('. $comment->id .');">Delete</a>';}
 			echo '</div>';
 			echo '</div>';
@@ -184,7 +184,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary btn-ok" onClick="javascript:reportPost()" data-dismiss="modal">Report</a>
+						<a class="btn btn-primary btn-ok" data-dismiss="modal">Report</a>
 					</div>
 				</div>
 			</div>
@@ -199,12 +199,14 @@
 
 			$('#confirm-report').on('show.bs.modal', function(e) 
 			{
+				$(this).find('.btn-ok').attr('onclick', $(e.relatedTarget).data('onclick'));
 				$(this).find('.btn-ok').attr('postid', $(e.relatedTarget).data('postid'));
 			});
 
 			function reportPost()
 			{
 				var reason = $('textarea#reason').val();
+				$('textarea#reason').val('');
 				var postid = $('#confirm-report').find('.btn-ok').attr('postid');
 
 				$.ajax(
@@ -213,11 +215,15 @@
 					})
 			}
 			
-			function reportComment(commentID, message)
+			function reportComment()
 			{
+				var reason = $('textarea#reason').val();
+				$('textarea#reason').val('');
+				var postid = $('#confirm-report').find('.btn-ok').attr('postid');
+
 				$.ajax(
 					{
-						url: "/ajax/report-comment.php?id=" + postID + "&message=" + message
+						url: "/ajax/report-comment.php?id=" + postid + "&message=" + reason
 					})
 			}
 		</script>
