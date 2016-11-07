@@ -425,7 +425,16 @@ a .profile-post:hover
 	border-bottom-left-radius: 0;
 }
 
-.btn-group-xs>.btn, .btn-xs
+/* alla knappar är nu fyrkantiga */
+.btn
+{
+	border-radius: 0;
+}
+.form-control
+{
+	border-radius: 0;
+}
+.input-group-addon
 {
 	border-radius: 0;
 }
