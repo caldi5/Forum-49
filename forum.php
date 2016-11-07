@@ -12,6 +12,12 @@
 		die;
 	}
 
+	if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
+	{
+		header('Location: index.php');
+		die;
+	}
+
 	if (isset($_GET['page']))
 		$page = $_GET['page'];
 	else
@@ -82,10 +88,10 @@
 			{
 				echo '<p class="post-poster"><span class="admin">'.$user->username. ' [A]</span></p>';
 			}
-			elseif ($user->isModerator())
+			/*elseif ($user->isModerator())
 			{
 				echo '<p class="post-poster"><span class="mod">'.$user->username.' [M]</span></p>';
-			}
+			}*/
 			else
 			{
 				echo '<p class="post-poster">'.$user->username.'</p>';
