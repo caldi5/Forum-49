@@ -292,7 +292,7 @@
 					{
 						foreach($friendRequests as $friendRequest) 
 						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". user::getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
 						}
 					}
 				}
@@ -434,7 +434,7 @@
 		{
 			global $conn;
 			global $alerts;
-			$username = getUsernameID($userID);
+			$username = user::getUsernameID($userID);
 
 			if(!$username)
 			{
@@ -592,30 +592,6 @@
 
 
 
-
-
-
-
-
-	//To be removed use user::getUsernameID instead 
-	// Returns the username.
-	function getUsernameID ($userID)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
-		$stmt->bind_param('i', $userID);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($username);
-
-		if($stmt->num_rows == 0)
-			return false;
-
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-		return $username;
-	}
 
 	//To be removed use user::getUserID instead 
 	// Returns the user ID.
