@@ -34,7 +34,7 @@
 	<div class="container">
 <?php displayAlerts(); ?>
 		<div class="col-md-8 col-md-offset-2">
-			<h2>You are posting in <span class="red-text"><?php echo $forum->name; ?></span></h2>
+			<h2>You are posting in <a href="/forum?id=<?php echo $forum->id;?>"><span class="red-text"><?php echo $forum->name; ?></span></a></h2>
 			<br>
 			<form action="new-post.php<?php echo '?forum='. $forum->id;?>" method="post">
 				<div class="form-group">
