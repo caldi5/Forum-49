@@ -180,7 +180,7 @@
 	setInterval(getNewMessages, 5000);
 </script>
 
-<div class="convWrapper .hidden-xs .hidden-sm">
+<div class="convWrapper hidden-xs hidden-sm">
 	<div class="convContainer" id="convContainer">
 
 		<div class="startNewConversation" id="startNewConversation">
