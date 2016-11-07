@@ -543,9 +543,20 @@
 		// Post AND Comment functions START
 		//-----------------------------------------------------
 
-		public function newPost()
+		public function newPost($forumID, $title, $text)
 		{
+			if(strlen($title) < 2 || strlen($text) < 2 || strlen($text) > 5000 || strlen($title) > 40)
+				return false;
 
+			$time = time();
+
+			global $conn;
+			$stmt = $conn->prepare("INSERT INTO posts(creator, title, text, forum, created_at) VALUES (?,?,?,?,?)");
+			$stmt->bind_param('issii', $this->id, $title, $text, $forumID, $time);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			return true;
 		}
 
 		public function newComment($postID, $text)
