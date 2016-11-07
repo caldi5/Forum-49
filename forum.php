@@ -1,84 +1,36 @@
 <?php
-	/*
-	TODO:
-		- Use the function getForumName.
-	*/
 
 	require_once("includes/init.php");
 
-	if (!isset($_GET['id']))
+	try 
 	{
-		header("Location: index.php");
-		die();
+		$forum = new forum($_GET['id']);
 	}
+	catch (Exception $e) 
+	{
+		header('Location: index.php');
+		die;
+	}
+
+	if (isset($_GET['page']))
+		$page = $_GET['page'];
+	else
+		$page = 1;
 
 	// Number of posts we want to display per page.
 	$posts_per_page = 10;
+	$postsOffset = ($posts_per_page*$page)-$posts_per_page;
+	$count = $forum->getNumberOfPosts();
+	$posts = $forum->getPosts($posts_per_page, $postsOffset);
 
-	// If the GET variable page isn't set, we just send them to the first page.
-	if (isset($_GET['page']))
-	{
-		$page = $_GET['page'];
-	}
-	else
-	{
-		$page = 1;
-	}
-
-	/*
-	 * The variable posts are basically the offset. 
-	 * If we are on page 2 and are showing 10 results per page, we don't want to get the first 10.
-	 * Then we want to start from 11.
-	 */
-	$posts = ($posts_per_page*$page)-$posts_per_page;
-
-	//-----------------------------------------------------
-	// Get the id and name for the current forum.
-	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, name FROM forums WHERE id = ?');
-	$stmt->bind_param('i', $_GET['id']);
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($id, $name);
-
-	// If it doesn't exist we send the back to index.
-	if ($stmt->num_rows === 0)
-	{	
-		header("Location: index.php");
-		die();
-	}
-
-	$stmt->fetch();
-	$stmt->free_result();
-	$stmt->close();
-
-	//-----------------------------------------------------
-	// stmt_2 is responsible for getting all of the posts in this forum.
-	//-----------------------------------------------------
-	$stmt_2 = $conn->prepare('SELECT * FROM posts WHERE forum = ? ORDER BY created_at DESC LIMIT ? OFFSET ?');
-	$stmt_2->bind_param('iii', $_GET['id'], $posts_per_page, $posts);
-	$stmt_2->execute();
-	$result = $stmt_2->get_result();
-	$stmt_2->store_result();
-	$stmt_2->close();
-
-	//-----------------------------------------------------
-	// getCount gets the total amount of posts in this forum and puts it in the count varible.
-	//-----------------------------------------------------
-	$getCount = $conn->prepare('SELECT COUNT(id) AS count FROM posts WHERE forum = ?');
-	$getCount->bind_param('i', $_GET['id']);
-	$getCount->execute();
-	$getCount->bind_result($count);
-	$getCount->fetch();
-	$getCount->free_result();
-	$getCount->close();
+	$category = new category($forum->category);
 
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<?php include("includes/standard_head.php"); ?>
-		<title><?php echo $name; ?></title>
+		<title><?php echo $forum->name; ?></title>
 	</head>
 	<body>
 <?php include("includes/navbar.php"); ?>		
@@ -86,75 +38,65 @@
 		<div class="container">
 <?php displayAlerts(); ?>
 			<h3>
-			<?php
-			// This should use the function getForumName when that function is done!
-			$categoryID = forumBelongsTo($id);
-
-			 echo '<a href="category.php?id='.$categoryID.'" class="category-title">'.getCategoryName($categoryID).'</a> / '.$name; 
-			 ?>
-			 </h3>
-
+<?php echo '<a href="category.php?id='.$category->id.'" class="category-title">'.$category->name.'</a> / '.$forum->name; ?>
+			</h3>
 			<div class="posts">
 <?php
 	// Buttons for for posting, administrating and moderating.
 	if ($currentUser->isAdmin())
 	{
 		echo '<div class="actions">';
-		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
-		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
-		echo '<a href="admin/editforum.php?id='. $id . '" class="btn btn-default" role="button">Administrate</a>';
+		echo '<a href="newPost.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="#" class="btn btn-default" role="button">Moderate</a>';
+		echo '<a href="admin/editforum.php?id='.$forum->id. '" class="btn btn-default" role="button">Administrate</a>';
 		echo '</div>';
 	}
 	elseif ($currentUser->isModerator($_GET['id']))
 	{
 		echo '<div class="actions">';
-		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="newPost.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
 		echo '</div>';
 	}
 	elseif ($currentUser->isLoggedIn())
 	{
 		echo '<div class="actions">';
-		echo '<a href="newPost.php?forum='.$id.'" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="newPost.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '</div>';
 	}
 		
 	// Checks to see if there's actually any posts.
-	if ($result->num_rows > 0)
+	if (!empty($posts))
 	{
-		// Outputs every post.
-		while ($row = $result->fetch_assoc())
+		foreach ($posts as $post)
 		{
-			//Anton test code for objects start
-			$postObject = new post($row['id']);
-			//anton test code for objects end
-
+			$user = new user($post->creator);
 			echo '<div class="row">';
-			echo '<a href="post.php?id=' . $row['id'] . '">';
+			echo '<a href="post.php?id=' . $post->id . '">';
 			echo '<div class="col-lg-12 post">';
 			echo '<div class="col-lg-10">';
-			echo '<h4 class="post-title">' . $row['title'] . '</h4>';
+			echo '<h4 class="post-title">' . $post->title . '</h4>';
 
 			// Nice admin and moderator colors for the "creator" text. Blue is for moderator and red is for admin.
-			if (user::isAdminID($row['creator']))
+			if ($user->isAdmin())
 			{
-				echo '<p class="post-poster"><span class="admin">'.getUsernameID($row['creator']) . ' [A]</span></p>';
+				echo '<p class="post-poster"><span class="admin">'.$user->username. ' [A]</span></p>';
 			}
-			elseif (user::isModeratorID($row['creator'], $id))
+			elseif ($user->isModerator())
 			{
-				echo '<p class="post-poster"><span class="mod">'.getUsernameID($row['creator']).' [M]</span></p>';
+				echo '<p class="post-poster"><span class="mod">'.$user->username.' [M]</span></p>';
 			}
 			else
 			{
-				echo '<p class="post-poster">'.getUsernameID($row['creator']).'</p>';
+				echo '<p class="post-poster">'.$user->username.'</p>';
 			}
-			echo '<span class="post-time"> - '.date('H:i d/m/y', $row['created_at']).'</span>';
+			echo '<span class="post-time"> - '.date('H:i d/m/y', $post->createdAt).'</span>';
 			echo '</div>';
 			echo '<div class="col-lg-1">';
-			echo '<p>Replies:<br>'.numberOfReplies($row['id']).'</p>';
+			echo '<p>Replies:<br>'.$post->getNumberOfComments().'</p>';
 			echo '</div>';
 			echo '<div class="col-lg-1">';
-			echo '<p>Views:<br>'. $postObject->getNumberOfviews() .'</p>';
+			echo '<p>Views:<br>'.$post->getNumberOfviews().'</p>';
 			echo '</div>';
 			echo '</div>';
 			echo '</a>';
@@ -180,7 +122,6 @@
 			echo '</div>';
 		}
 	}
-	$result->free_result();
 ?>
 			</div>
 <?php

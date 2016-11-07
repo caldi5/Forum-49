@@ -15,8 +15,13 @@
 	//-----------------------------------------------------
 	if (isset($_GET['action']) && isset($_GET['id']))
 	{
-		if($_GET['action'] === "delete")
-			deleteForum($_GET['id']);
+		try 
+		{
+			(new forum($_GET['id']))->delete();
+		} catch (Exception $e) 
+		{
+			$alerts[] = new alert("danger", "Error:", "Forum was not deleted");
+		}
 	}
 
 	//-----------------------------------------------------
@@ -30,10 +35,16 @@
 	//-----------------------------------------------------
 	//Get existing Forums
 	//-----------------------------------------------------
-	$stmt = $conn->prepare('SELECT id, name, category, ordering, guestAccess FROM forums');
+	$stmt = $conn->prepare('SELECT id FROM forums');
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($id, $name, $category, $ordering, $guestAccess);
+	$stmt->bind_result($id);
+	while($stmt->fetch())
+	{
+		$forums[] = new forum($id);
+	}
+	$stmt->free_result();
+	$stmt->close();
 
 ?>
 <!DOCTYPE html>
@@ -128,22 +139,21 @@
 								</thead>
 								<tbody>
 <?php
-	while($stmt->fetch())
+	foreach ($forums as $forum) 
 	{
+	$category = new category($forum->category);
 ?>
 									<tr>
-										<td><?php echo $id; ?></td>
-										<td><?php echo $name; ?></td>
-										<td><?php echo getCategoryName($category); ?></td>
-										<td><?php echo $ordering; ?></td>
-										<td><?php echo $guestAccess; ?></td>
-										<td><?php echo numberOfPosts($id); ?></td>
-										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+										<td><?php echo $forum->id; ?></td>
+										<td><?php echo $forum->name; ?></td>
+										<td><?php $category->name; ?></td>
+										<td><?php echo $forum->sortOrder; ?></td>
+										<td><?php echo $forum->guestAccess; ?></td>
+										<td><?php echo $forum->getNumberOfPosts(); ?></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $forum->id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $forum->id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
 									</tr>
 <?php
 	}
-	$stmt->free_result();
-	$stmt->close();
 ?>
 								</tbody>
 							</table>
