@@ -64,7 +64,9 @@
 	function openConversationPartners()
 	{
 		var people = new Array();
-		minimizeAllConversations();
+		//minimizeAllConversations();
+		$(".conversation").last().css("margin-right", "150px");
+
 		$("#startNewConversation").empty();
 		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='closeConversationPartners()'>-</div>");
 		$("#startNewConversation").append("<div class='conversationPartners'>");
@@ -86,6 +88,8 @@
 
 	function closeConversationPartners()
 	{
+		$(".conversation").last().css("margin-right", "10px");
+
 		$("#startNewConversation").empty();
 		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='openConversationPartners()''>+</div>");
 
@@ -109,7 +113,7 @@
 
 	function maximizeConversation(id, partner)
 	{
-		closeConversationPartners();
+		//closeConversationPartners();
 
 		var name = $("#conversation"+id+" .conversationFooterName h4").text();
 		var messages = new Array();
@@ -149,13 +153,17 @@
 
 	function closeConversation(id)
 	{
+		var margin = $("#conversation"+id).css("margin-right");
 		$("#conversation"+id).remove();
 		$($(".conversation").get().reverse()).each(function(index, value){
 			var userid = $(this).data("userid");
 			$(this).attr("id", "conversation"+index);
 			$("#conversation"+index+" .conversationFooterName").attr("onclick", "maximizeConversation("+index+", "+userid+")");
 			$("#conversation"+index+" .conversationHeaderName").attr("onclick", "minimizeConversation("+index+", "+userid+")");
+			$("#conversation"+index+" .conversationHeaderClose").attr("onclick", "closeConversation("+index+")");
+			$("#conversation"+index+" .conversationFooterClose").attr("onclick", "closeConversation("+index+")");
 		});
+		$("#conversation"+id).last().css("margin-right", margin);
 	}
 	
 	function openConversation(id, partnerName)
@@ -174,6 +182,7 @@
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+(conversationsOpen)+", "+id+")''><h4>"+partnerName+"</h4></div>");
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose' onclick='closeConversation("+id+")'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
 			maximizeConversation(conversationsOpen,id);
+			$(".conversation").last().css("margin-right", "150px");
 		}
 	}
 
