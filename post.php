@@ -61,7 +61,7 @@
 					<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 					<br>
 					<?php if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}?>
-					<?php if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#">Delete</a>';}?>
+					<?php if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-delete" data-onclick="javascript:deletePost('. $post->id .','. $forum->id .');">Delete</a>';}?>
 				</div>
 			</div>
 <?php
@@ -81,7 +81,7 @@
 			echo '<div class="col-lg-2">';
 			echo '<span class="post-time">'.date('H:i d/m/y', $comment->createdAt).'</span><br>';
 			if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}
-			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" onclick="javascript:deleteComment('. $comment->id .');">Delete</a>';}
+			if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-delete" data-onclick="javascript:deleteComment('. $comment->id .');">Delete</a>';}
 			echo '</div>';
 			echo '</div>';
 		}
@@ -151,22 +151,30 @@
 ?>
 		</div>
 		<!-- Content end -->
+		<!-- Modal confirmation Start -->
+		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3>Warning!<h3>
+					</div>
+					<div class="modal-body">
+						You're about to delete a comment OR post this can not be undone.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-danger btn-ok" data-dismiss="modal">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal confirmation End -->
 <?php include("includes/standard_footer.php"); ?>
-	<script>
-		function deleteComment(commentID)
-		{
-			$.ajax(
-				{
-					url: "/ajax/deleteComment.php?id=" + commentID,
-					success : function(response)
-					{
-						if(response)
-						{
-							$("#commentid" + commentID).remove();
-						}
-					}
-				})
-		}
-	</script>
+		<script>
+			$('#confirm-delete').on('show.bs.modal', function(e) {
+				$(this).find('.btn-ok').attr('onclick', $(e.relatedTarget).data('onclick'));
+			});
+		</script>
+		<script src="/js/custom/delete-post-or-comment.js"></script> 
 	</body>
 </html>
