@@ -49,12 +49,11 @@
 			$this->sortOrder = $sortOrder;
 		}
 
-		//TODO: implement limit and offset...
-		public function getForums($limit=0, $offset=0)
+		public function getForums($limit=PHP_INT_MAX, $offset=0)
 		{
 			global $conn;
-			$stmt = $conn->prepare('SELECT id FROM forums WHERE category = ?  ORDER BY ordering');
-			$stmt->bind_param('i', $this->id);
+			$stmt = $conn->prepare('SELECT id FROM forums WHERE category = ? ORDER BY ordering LIMIT ? OFFSET ?');
+			$stmt->bind_param('iii', $this->id, $limit, $offset);
 			$stmt->execute();
 			$stmt->bind_result($id);
 			while ($stmt->fetch()) 
@@ -115,6 +114,61 @@
 			$this->category = $category;
 			$this->sortOrder = $sortOrder;
 		}
+
+		public function deleteForum()
+		{
+			global $conn;
+			$posts = $this->getPosts();
+
+			if(!empty($posts))
+				foreach ($posts as $post)
+					$post->deletePost();
+
+			$stmt = $conn->prepare('DELETE FROM forums WHERE id = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			
+			$stmt->close();
+			return true;
+		}
+
+		public function getPosts($limit=PHP_INT_MAX, $offset=0)
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT id FROM posts WHERE forum = ? ORDER BY created_at LIMIT ? OFFSET ?');
+			$stmt->bind_param('iii', $this->id, $limit, $offset);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			if(!isset($ids))
+				return;
+
+			foreach($ids as $id) 
+				$posts[] = new post($id);
+
+			return $posts;
+		}
+
+		public function getNumberOfPosts()
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT COUNT(*) FROM posts WHERE forum = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->close();
+
+			return $count;
+		}
+
 		public function getNumberOfviews()
 		{
 			global $conn;
@@ -130,19 +184,6 @@
 			if(!empty($views))				
 				return $views;
 			return 0;
-		}
-
-		public function getNumberOfPosts()
-		{
-			global $conn;
-			$stmt = $conn->prepare('SELECT COUNT(*) FROM posts WHERE forum = ?');
-			$stmt->bind_param('i', $this->id);
-			$stmt->execute();
-			$stmt->bind_result($count);
-			$stmt->fetch();
-			$stmt->close();
-
-			return $count;
 		}
 	}
 
@@ -180,7 +221,7 @@
 			$this->createdAt = $createdAt;
 		}
 
-		function deletePost()
+		public function deletePost()
 		{
 			global $conn;
 			$comments = $this->getComments();
@@ -195,7 +236,7 @@
 			$stmt->execute();
 			if(!empty($stmt->error))
 				return false;
-			
+
 			$stmt->close();
 			return true;
 		}
@@ -248,7 +289,6 @@
 			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
 		}
-
 	}
 
 	class comment
@@ -279,10 +319,9 @@
 			$this->post = $post;
 			$this->text = $text;
 			$this->createdAt = $createdAt;
-
 		}
 
-		//Fix somehow to make objet selfdestruct...
+		//TODO: Fix somehow to make objet selfdestruct...
 		function deleteComment()
 		{
 			global $conn;
