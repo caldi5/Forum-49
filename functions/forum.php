@@ -159,7 +159,7 @@
 		public function getPosts($limit=PHP_INT_MAX, $offset=0)
 		{
 			global $conn;
-			$stmt = $conn->prepare('SELECT id FROM posts WHERE forum = ? ORDER BY created_at LIMIT ? OFFSET ?');
+			$stmt = $conn->prepare('SELECT id FROM posts WHERE forum = ? ORDER BY created_at DESC LIMIT ? OFFSET ?');
 			$stmt->bind_param('iii', $this->id, $limit, $offset);
 			$stmt->execute();
 			$stmt->bind_result($id);
