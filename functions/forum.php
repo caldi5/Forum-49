@@ -49,6 +49,26 @@
 			$this->sortOrder = $sortOrder;
 		}
 
+		public function deleteCategory()
+		{
+			//only allow deletion of categories with no forums in them.
+			if($this->getNumberOfForums()) !== 0)
+			{
+				return false;
+			}
+
+			global $conn;
+			$stmt = $conn->prepare('DELETE FROM categories WHERE id = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+			{
+				return false;
+			}
+			$stmt->close();
+			return true;
+		}
+		
 		public function getForums($limit=PHP_INT_MAX, $offset=0)
 		{
 			global $conn;
