@@ -2,16 +2,16 @@
 
 	require_once("../includes/init.php");
 
-	//Kill if users is not admin
-	if(!$currentUser->isAdmin())
+	//Rediret to forums if no ID is set or if no forum by that ID exists
+	if(!isset($_GET['id']) OR !$currentUser->isAdmin())
 	{
-		header("Location: /index.php");
+		header("Location: forums.php");
 		die();
 	}
 
-	//Rediret to forums if no ID is set or if no forum by that ID exists
-	if(!isset($_GET['id']) OR !getForumName($_GET['id']))
-	{
+	try {
+		$forum = new forum($_GET['id']);
+	} catch (Exception $e) {
 		header("Location: forums.php");
 		die();
 	}
@@ -31,9 +31,7 @@
 		}
 		$stmt->close();
 	}
-
-	$forum = new forum($_GET['id']);
-
+	
 ?>
 <!DOCTYPE html>
 <html>

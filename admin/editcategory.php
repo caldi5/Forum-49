@@ -2,20 +2,19 @@
 
 	require_once("../includes/init.php");
 
-	//Kill if users is not admin
-	if(!$currentUser->isAdmin())
-	{
-		header("Location: /index.php");
-		die();
-	}
-
 	//Rediret to categories if no ID is set or if no category by that ID exists
-	if(!isset($_GET['id']) OR !getCategoryName($_GET['id']))
+	if(!isset($_GET['id']) OR !$currentUser->isAdmin())
 	{
 		header("Location: categories.php");
 		die();
 	}
 
+	try {
+		$category = new category($_GET['id']);
+	} catch (Exception $e) {
+		header("Location: categories.php");
+		die();
+	}
 
 	if(isset($_POST["editCategoryForm"]))
 	{
@@ -32,8 +31,6 @@
 		}
 		$stmt->close();
 	}
-
-	$category = new category($_GET['id']);
 
 ?>
 <!DOCTYPE html>
