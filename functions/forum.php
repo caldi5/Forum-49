@@ -111,19 +111,20 @@
 		public $description;
 		public $category;
 		public $sortOrder;
+		public $guestAccess;
 
 		function __construct($id)
 		{
 			global $conn;
 			$this->views = 0;
 
-			$stmt = $conn->prepare('SELECT id, name, description, category, ordering FROM forums WHERE id = ?');
+			$stmt = $conn->prepare('SELECT id, name, description, category, ordering, guestAccess FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $id);
 			$stmt->execute();
 			$stmt->store_result();
 			if ($stmt->num_rows == 0)
 				throw new Exception('Does not exist');		
-			$stmt->bind_result($id, $name, $description, $category, $sortOrder);
+			$stmt->bind_result($id, $name, $description, $category, $sortOrder, $guestAccess);
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
@@ -133,6 +134,7 @@
 			$this->description = $description;
 			$this->category = $category;
 			$this->sortOrder = $sortOrder;
+			$this->guestAccess = $guestAccess;
 		}
 
 		public function deleteForum()
