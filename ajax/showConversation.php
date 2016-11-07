@@ -19,9 +19,11 @@ if($result->num_rows > 0)
     while($result->fetch())
     {
          ?>
+                <div class="col-sm-12 list-group-item">
                 
                 <h4 class="list-group-item-heading"><?php echo $name; ?></h4>
                 <p class="list-group-item-text"><?php echo $message; ?></p><br>
+                <div class="col-sm-3 messagecont"><p class="timestamp">Sent: <?php echo date('H:i d/m/y', $timestamp);?></p></div>
                 </div>
                 
         <?php
