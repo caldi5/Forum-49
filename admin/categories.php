@@ -16,7 +16,7 @@
 	if (isset($_GET['action']) && isset($_GET['id']))
 	{
 		if($_GET['action'] === "delete")
-			deleteCategory($_GET['id']);
+			(new category($_GET['id']))->deleteCategory();
 	}
 
 	//-----------------------------------------------------

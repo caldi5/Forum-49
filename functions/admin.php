@@ -54,26 +54,6 @@
 		return true;
 	}
 
-	function deleteCategory($categoryID)
-	{
-		//only allow deletion of categories with no forums in them.
-		if(getNumberOfForums($categoryID) !== 0)
-		{
-			return false;
-		}
-
-		global $conn;
-		$stmt = $conn->prepare('DELETE FROM categories WHERE id = ?');
-		$stmt->bind_param('i', $categoryID);
-		$stmt->execute();
-		if(!empty($stmt->error))
-		{
-			return false;
-		}
-		$stmt->close();
-		return true;
-	}
-
 	function deleteForum($forumID)
 	{
 		global $conn;
