@@ -60,7 +60,7 @@
 				<div class="col-lg-2">
 					<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 					<br>
-					<?php if($currentUser->isLoggedIn()){ echo '<a href="#">Report</a> | ';}?>
+					<?php if($currentUser->isLoggedIn()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-report" data-postid="'. $post->id .'">Report</a> | ';}?>
 					<?php if($currentUser->id === $user->id || $currentUser->isadmin()){ echo '<a href="#" data-toggle="modal" data-target="#confirm-delete" data-onclick="javascript:deletePost('. $post->id .','. $forum->id .');">Delete</a>';}?>
 				</div>
 			</div>
@@ -169,11 +169,57 @@
 			</div>
 		</div>
 		<!-- Modal confirmation End -->
+		<!-- Modal confirmation Start -->
+		<div class="modal fade" id="confirm-report" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3>Report!<h3>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Reason for reporting:</label>
+							<textarea id="reason" class="form-control" maxlength="5000" placeholder="Write the reasoson for this report" required></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary btn-ok" onClick="javascript:reportPost()" data-dismiss="modal">Report</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal confirmation End -->
 <?php include("includes/standard_footer.php"); ?>
 		<script>
-			$('#confirm-delete').on('show.bs.modal', function(e) {
+			$('#confirm-delete').on('show.bs.modal', function(e) 
+			{
 				$(this).find('.btn-ok').attr('onclick', $(e.relatedTarget).data('onclick'));
 			});
+
+			$('#confirm-report').on('show.bs.modal', function(e) 
+			{
+				$(this).find('.btn-ok').attr('postid', $(e.relatedTarget).data('postid'));
+			});
+
+			function reportPost()
+			{
+				var reason = $('textarea#reason').val();
+				var postid = $('#confirm-report').find('.btn-ok').attr('postid');
+
+				$.ajax(
+					{
+						url: "/ajax/report-post.php?id=" + postid + "&message=" + reason
+					})
+			}
+			
+			function reportComment(commentID, message)
+			{
+				$.ajax(
+					{
+						url: "/ajax/report-comment.php?id=" + postID + "&message=" + message
+					})
+			}
 		</script>
 		<script src="/js/custom/delete-post-or-comment.js"></script> 
 	</body>
