@@ -139,13 +139,15 @@
 	if ($currentUser->isLoggedIn())
 	{
 ?>
+			<div class="col-md-8 col-md-offset-2">
 				<h3>Reply</h3>
 				<form action="post.php?id=<?php echo $_GET['id'] .'&page='. $page; ?>" method="post">
 						<div class="form-group">
 							<textarea name="comment" rows="5" class="form-control" required></textarea>
 						</div>
-						<button class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 				</form>
+			</div>
 <?php
 	}
 ?>
