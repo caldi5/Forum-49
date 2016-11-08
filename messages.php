@@ -16,7 +16,7 @@
                 <form>
                     <p7>To:</p7><input type="text" placeholder="Username" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">  
                 </form>
-                <div class="col-sm-2" id="searchboxdiv">
+                <div class="col-sm-1" id="searchboxdiv">
                 </div>
                 </div>
                 </div>
