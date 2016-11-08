@@ -587,6 +587,7 @@ a .profile-post:hover
 	background-color: #A9A9A9;
 	padding: 3px;
 	margin-right: 3px;
+	word-wrap: break-word;
 }
 
 .messageReceived
@@ -597,6 +598,7 @@ a .profile-post:hover
 	background-color: #CAEBF2;
 	padding: 3px;
 	margin-left: 3px;
+	word-wrap: break-word;
 }
 
 .conversationPartners
