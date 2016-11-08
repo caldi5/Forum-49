@@ -15,7 +15,7 @@
 		(new post($_GET['deletePost']))->delete();
 
 	if(isset($_GET['removeCommentReport']))
-		removePostReport($_GET['removeCommentReport']);
+		removeCommentReport($_GET['removeCommentReport']);
 	if(isset($_GET['deleteComment']))
 		(new comment($_GET['deleteComment']))->delete();
 
