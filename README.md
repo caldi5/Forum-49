@@ -23,20 +23,20 @@ We want to make a forum website with different sub forums, user groups and user 
 We are aiming for the grade 5. 
 
 ###Feature List 
-- [ ] Message system. 
-- [ ] restrict access to subforums to guests
-- [ ] Friend system. 
-- [ ] Profile. 
-- [ ] Users can change password 
-- [ ] Signup
+- [x] Message system. 
+- [x] restrict access to subforums to guests
+- [x] Friend system. 
+- [x] Profile. 
+- [x] Users can change password 
+- [x] Signup
  
 ###User Types 
 ####Administrators 
-- [ ] Can change the rolls of users 
-- [ ] Create new / Remove sub forums 
-- [ ] Create new / Remove sub forums for categories 
+- [x] Can change the rolls of users 
+- [x] Create new / Remove sub forums 
+- [x] Create new / Remove sub forums for categories 
 - [ ] Do everything a moderator can 
-- [ ] Permanently ban users
+- [x] Permanently ban users
 
 ####Moderators
 - [ ] Moderators can edit or delete posts 
@@ -44,9 +44,9 @@ We are aiming for the grade 5.
 - [ ] Temporarily ban users 
 
 #####User 
-- [ ] Can create posts 
-- [ ] Comment in posts 
-- [ ] Report a comment or post 
+- [x] Can create posts 
+- [x] Comment in posts 
+- [x] Report a comment or post 
 
 ####Guests (users who are not logged in) 
-- [ ] View 
+- [x] View 
