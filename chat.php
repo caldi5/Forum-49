@@ -135,7 +135,8 @@
 		$("#startNewConversation").append("<div class='conversationPartners'>");
 		$("#startNewConversation .conversationPartners").append("<div class='newConversationHeader'>");
 		$("#startNewConversation .newConversationHeader").append("<div class='startNewConversationToggle' onclick='closeConversationPartners()'>-</div>");
-		$("#startNewConversation .startNewConversationToggle").css("width", "100%");
+		$("#startNewConversation .startNewConversationToggle").css("width", "200px");
+		$("#startNewConversation .startNewConversationToggle").css("text-align", "left");
 		$("#startNewConversation .startNewConversationToggle").css("height", "35px");
 		$("#startNewConversation .conversationPartners").append("<ul>");
 		$("#startNewConversation").css("width", "200px");
