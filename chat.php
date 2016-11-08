@@ -153,6 +153,33 @@
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMini'>");
 		$("#conversation"+id+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+id+", "+partner+")'><h4 class='conversationPartnerName'>"+name+"</h4></div><div class='conversationFooterClose' onclick='closeConversation("+id+")'><span>X</span></div>");
+
+		if ($.cookie('convos'))
+		{
+			var conv = $.cookie('convos');
+			var userid = $("#conversation"+id).data("userid");
+			var newArr = new Array();
+
+			var arr = conv.split(",");
+			$(arr).each(function(index, value){
+				var cookie = value.split('-');
+				var cid = cookie[0];
+				var cname = cookie[1];
+				var ctype = cookie[2];
+
+
+				if (userid != cid)
+				{
+					newArr.push(value);
+				}
+				else
+				{
+					newArr.push(cid+'-'+cname+'-mini');
+				}
+			});
+			conv = newArr.join(',');
+			$.cookie('convos', conv);
+		}
 	}
 
 	function maximizeConversation(id, partner)
@@ -193,6 +220,32 @@
 		xmlhttp.open("GET", "getMessages.php?id="+partner, true);
 		xmlhttp.send();
 
+		if ($.cookie('convos'))
+		{
+			var conv = $.cookie('convos');
+			var userid = $("#conversation"+id).data("userid");
+			var newArr = new Array();
+
+			var arr = conv.split(",");
+			$(arr).each(function(index, value){
+				var cookie = value.split('-');
+				var cid = cookie[0];
+				var cname = cookie[1];
+				var ctype = cookie[2];
+
+
+				if (userid != cid)
+				{
+					newArr.push(value);
+				}
+				else
+				{
+					newArr.push(cid+'-'+cname+'-maxi');
+				}
+			});
+			conv = newArr.join(',');
+			$.cookie('convos', conv);
+		}
 	}
 
 	function closeConversation(id)
@@ -206,10 +259,9 @@
 			var arr = conv.split(",");
 			$(arr).each(function(index, value){
 				var cookie = value.split('-');
-				var name = cookie[1];
-				var id = cookie[0]
+				var cid = cookie[0]
 
-				if (userid != id)
+				if (userid != cid)
 				{
 					newArr.push(value);
 				}
@@ -238,19 +290,17 @@
 
 		if ($.cookie('convos'))
 		{
-			var conv = $.cookie('convos')+','+id+'-'+partnerName;
+			var conv = $.cookie('convos')+','+id+'-'+partnerName+'-maxi';
 			$.cookie('convos', conv);
 			var arr = conv.split(",");
-			$(arr).each(function(index, value){
-				console.log(value);
-			});
 		}
 		else
 		{
-			var conv = id+'-'+partnerName;
+			var conv = id+'-'+partnerName+'-maxi';
 			$.cookie('convos', conv);
 		}
 		
+
 
 		if(conversationsOpen >= 4)
 		{
@@ -262,9 +312,12 @@
 			$("#conversation"+(conversationsOpen)).prepend("<div class='conversationFooterMini'>");
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+(conversationsOpen)+", "+id+")''><h4>"+partnerName+"</h4></div>");
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose' onclick='closeConversation("+id+")'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
+
 			maximizeConversation(conversationsOpen,id);
 			$(".conversation").last().css("margin-right", "10px");
 		}
+
+
 	}
 
 	setInterval(getNewMessages, 5000);
