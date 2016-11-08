@@ -18,6 +18,6 @@
 		<?php 
 			if ($currentUser->loggedIn) 
 			{
-				require_once("chat.php"); 
+				require_once __DIR__.'/../chat.php'; 
 			}
 		?>
