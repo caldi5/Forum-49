@@ -17,6 +17,9 @@
 	if(isset($_GET["sendReq"])){
 		$currentUser->sendFriendRequest($user->id);
 	}
+	if(isset($_GET["removeFriend"])){
+		$currentUser->unFriend($user->id);
+	}
 
 	$comments = $conn->prepare('SELECT postID, text, created_at FROM comments WHERE userID = ? ORDER BY created_at DESC LIMIT 10');
 	$comments->bind_param('i', $user->id);
@@ -84,9 +87,16 @@
 												<?php }
 														elseif($currentUser->areFriendsWith($user->id)) { 
 												?>
-						
-												<a type="button" class="btn btn-success btn-sm" href="#">Friends</a>
+					<div class="btn-group">
+												<a type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Friends
+												<span class="caret"></span>
+    										<span class="sr-only">Toggle Dropdown</span>
+												</a>
 												
+												<ul class="dropdown-menu">
+												<li><a href="profile.php?user=<?php echo $user->username;?>&removeFriend">Remove Friend</a></li>
+												</ul>
+					</div>
 												<?php }
 														else {
 												?>

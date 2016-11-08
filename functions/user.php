@@ -451,9 +451,9 @@
 				$alerts[] = new alert("danger", "Error:", "You are already friends with: " . $username . ".");
 				return false;
 			}
-
+			$time = time();
 			$stmt = $conn->prepare('INSERT INTO friendRequests (userid, userid2, created_at) VALUES (?, ?, ?)');
-			$stmt->bind_param('iii', $this->id, $userID, time());
+			$stmt->bind_param('iii', $this->id, $userID, $time);
 			$stmt->execute();
 			if(!empty($stmt->error))
 			{
