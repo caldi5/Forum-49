@@ -5,17 +5,18 @@
 
 		var to = $("#"+form+" #to").val();
 		var text = $("#"+form+" #newMessage").val();
-
+		
+		
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
-				$("#"+form+" #newMessage").val("");
 				getNewMessages();
 			}
 		};
 		xmlhttp.open("GET", "/ajax/sendMessage.php?to="+to+"&message="+text, true);
 		xmlhttp.send();
-		
+
+		$("#"+form+" #newMessage").val("");
 		return false;
 	});
 
@@ -174,7 +175,6 @@
 	{
 		$(".conversationPartners ul").empty();
 		
-
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
@@ -257,9 +257,6 @@
 		};
 		xmlhttp.open("GET", "/ajax/getMessages.php?id="+partner, true);
 		xmlhttp.send();
-
-
-		
 	}
 
 	function closeConversation(id)
@@ -316,7 +313,7 @@
 		return conversationsOpen;
 	}
 
-	setInterval(getNewMessages, 3000);
+	setInterval(getNewMessages, 1500);
 </script>
 
 <div class="convWrapper hidden-xs hidden-sm">
