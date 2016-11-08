@@ -455,6 +455,16 @@ a .profile-post:hover
 }
 /* Admin Menu End */
 
+/* Admin panel Start */
+.panel-heading
+{
+	color: #ff3B3F !important;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+/* Admin panel End */
+
+
 .convWrapper
 {
 	position: fixed;
