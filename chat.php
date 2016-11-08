@@ -122,6 +122,7 @@
 							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
 							$("#conversation"+index+" .conversationFooterName span").remove();
 							$("#conversation"+index+" .conversationFooterMini").css("background-color", "#ff3B3F");
+							$("#conversation"+index+" .conversationFooterMini").css("color", "white");
 						}
 					})
 
