@@ -22,18 +22,7 @@
 	});
 
 	$(document).ready(function(){
-		if ($.cookie('convos'))
-		{
-			var conv = $.cookie('convos');
-			var arr = conv.split(",");
-			$.cookie('convos', "")
-			$(arr).each(function(index, value){
-				var cookie = value.split('-');
-				var name = cookie[1];
-				var id = cookie[0]
-				openConversation(id, name);
-			});
-		}
+		
 	});
 
 	function getNewMessages()
@@ -153,33 +142,6 @@
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMini'>");
 		$("#conversation"+id+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+id+", "+partner+")'><h4 class='conversationPartnerName'>"+name+"</h4></div><div class='conversationFooterClose' onclick='closeConversation("+id+")'><span>X</span></div>");
-
-		if ($.cookie('convos'))
-		{
-			var conv = $.cookie('convos');
-			var userid = $("#conversation"+id).data("userid");
-			var newArr = new Array();
-
-			var arr = conv.split(",");
-			$(arr).each(function(index, value){
-				var cookie = value.split('-');
-				var cid = cookie[0];
-				var cname = cookie[1];
-				var ctype = cookie[2];
-
-
-				if (userid != cid)
-				{
-					newArr.push(value);
-				}
-				else
-				{
-					newArr.push(cid+'-'+cname+'-mini');
-				}
-			});
-			conv = newArr.join(',');
-			$.cookie('convos', conv);
-		}
 	}
 
 	function maximizeConversation(id, partner)
@@ -219,57 +181,10 @@
 		};
 		xmlhttp.open("GET", "getMessages.php?id="+partner, true);
 		xmlhttp.send();
-
-		if ($.cookie('convos'))
-		{
-			var conv = $.cookie('convos');
-			var userid = $("#conversation"+id).data("userid");
-			var newArr = new Array();
-
-			var arr = conv.split(",");
-			$(arr).each(function(index, value){
-				var cookie = value.split('-');
-				var cid = cookie[0];
-				var cname = cookie[1];
-				var ctype = cookie[2];
-
-
-				if (userid != cid)
-				{
-					newArr.push(value);
-				}
-				else
-				{
-					newArr.push(cid+'-'+cname+'-maxi');
-				}
-			});
-			conv = newArr.join(',');
-			$.cookie('convos', conv);
-		}
 	}
 
 	function closeConversation(id)
 	{
-		if ($.cookie('convos'))
-		{
-			var conv = $.cookie('convos');
-			var userid = $("#conversation"+id).data("userid");
-			var newArr = new Array();
-
-			var arr = conv.split(",");
-			$(arr).each(function(index, value){
-				var cookie = value.split('-');
-				var cid = cookie[0]
-
-				if (userid != cid)
-				{
-					newArr.push(value);
-				}
-			});
-			conv = newArr.join(',');
-			$.cookie('convos', conv);
-		}
-
 		var margin = $("#conversation"+id).css("margin-right");
 		$("#conversation"+id).remove();
 		$($(".conversation").get().reverse()).each(function(index, value){
@@ -287,20 +202,6 @@
 	{
 		var partner = id;
 		var conversationsOpen = $(".conversation").length;
-
-		if ($.cookie('convos'))
-		{
-			var conv = $.cookie('convos')+','+id+'-'+partnerName;
-			$.cookie('convos', conv);
-			var arr = conv.split(",");
-		}
-		else
-		{
-			var conv = id+'-'+partnerName+'-maxi';
-			$.cookie('convos', conv);
-		}
-		
-
 
 		if(conversationsOpen >= 4)
 		{
