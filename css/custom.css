@@ -571,20 +571,23 @@ a .profile-post:hover
 {
 	list-style-type: none;
 	padding-left: 0px;
-	margin-left: 15px;
-	margin-top: 10px;
 }
 
 .conversationPartners ul li
 {
-	background-color: #A9A9A9;
+	background-color: #EFEFEF;
 	margin-bottom: 5px;
-	padding: 3px;
+	padding: 5px;
 }
 
 .conversationPartners ul a
 {
 	color: black;
+}
+
+.conversationPartners ul li:hover
+{
+	background-color: #A9A9A9;
 }
 
 .conversationPartners ul a:hover
@@ -596,9 +599,23 @@ a .profile-post:hover
 {
 	width: 35px;
 	height: 35px;
+	cursor: pointer;
 }
 
 .conversationPartnerName
 {
 	display: inline-block;
+}
+
+.newConversationHeader
+{
+	width: 100%;
+	height: 35px;
+	background-color: grey;
+}
+
+.covnoPartnerForm
+{
+	width: 200px;
+	height: 35px;
 }

@@ -46,6 +46,7 @@
 						else
 						{
 							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
+							$("#conversation"+index+" .conversationFooterName span").remove();
 							$("#conversation"+index+" .conversationFooterName").append("<span class='red-text'> - NEW</span>");
 						}
 					})
@@ -68,9 +69,16 @@
 		$(".conversation").last().css("margin-right", "150px");
 
 		$("#startNewConversation").empty();
-		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='closeConversationPartners()'>-</div>");
+		
 		$("#startNewConversation").append("<div class='conversationPartners'>");
+		$("#startNewConversation .conversationPartners").append("<div class='newConversationHeader'>");
+		$("#startNewConversation .newConversationHeader").append("<div class='startNewConversationToggle' onclick='closeConversationPartners()'>-</div>");
+		$("#startNewConversation .startNewConversationToggle").css("width", "100%");
+		$("#startNewConversation .startNewConversationToggle").css("height", "35px");
 		$("#startNewConversation .conversationPartners").append("<ul>");
+		$("#startNewConversation").css("width", "200px");
+		$("#startNewConversation").css("margin-right", "0px");
+		$("#startNewConversation").append("<input onkeyup='updateConversationPartners(this.value)' class='covnoPartnerForm' type='text'>");
 
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
@@ -90,6 +98,19 @@
 	{
 		$(".conversationPartners ul").empty();
 		
+
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
+				people = JSON.parse(this.responseText);
+
+				$.each(people, function(index, value){
+					$("#startNewConversation .conversationPartners ul").append("<a href='#' onclick='openConversation("+value.partnerID+", \""+value.partnerUsername+"\")'><li>"+value.partnerUsername+"</li></a>");
+				});
+			}
+		};
+		xmlhttp.open("GET", "getConversations.php?n="+term, true);
+		xmlhttp.send();
 	}
 
 	function closeConversationPartners()
@@ -97,6 +118,8 @@
 		$(".conversation").last().css("margin-right", "10px");
 
 		$("#startNewConversation").empty();
+		$("#startNewConversation").css("width", "35px");
+		$("#startNewConversation").css("margin-right", "10px");
 		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='openConversationPartners()''>+</div>");
 
 	}
@@ -188,7 +211,7 @@
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+(conversationsOpen)+", "+id+")''><h4>"+partnerName+"</h4></div>");
 			$("#conversation"+(conversationsOpen)+" .conversationFooterMini").append("<div class='conversationFooterClose' onclick='closeConversation("+id+")'><span onclick='closeConversation("+(conversationsOpen)+")'>X</span></div>");
 			maximizeConversation(conversationsOpen,id);
-			$(".conversation").last().css("margin-right", "150px");
+			$(".conversation").last().css("margin-right", "10px");
 		}
 	}
 
