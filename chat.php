@@ -290,7 +290,7 @@
 
 		if ($.cookie('convos'))
 		{
-			var conv = $.cookie('convos')+','+id+'-'+partnerName+'-maxi';
+			var conv = $.cookie('convos')+','+id+'-'+partnerName;
 			$.cookie('convos', conv);
 			var arr = conv.split(",");
 		}
