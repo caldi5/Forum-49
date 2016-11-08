@@ -43,29 +43,15 @@
 <?php include("../includes/navbar.php"); ?>
 		<!-- Content start -->
 		<div class="container">
-<?php displayAlerts(); ?>
-			<div class="row"><!-- Moderator Menu Start-->
-				<nav class="navbar navbar-default adminMenuHeader" role="navigation">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<label class="navbar-brand col-sm-0">Moderator <span class="red-text">Menu</span></label>
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#adminMenu">
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-					</div>
-				</nav>
-				<div id="adminMenu" class="collapse navbar-collapse" style="overflow: hidden;">
-					<ul class="nav nav-tabs nav-justified">
-						<li><a onclick="showTempBans(<?php echo $_GET['id']; ?>)" class="list-group-item">Temporary bans</a></li>
-						<li><a onclick="showForumReports(<?php echo $_GET['id']; ?>)" class="list-group-item">Reports</a></li>
-					</ul>
-				</div>
-				<!-- Admin Menu End-->
-				<div class="tempbans">
-				</div>
+			<div class="col-sm-6" style="padding:0;">
+				<a href="#" onclick="showTempBans(<?php echo $_GET['id']; ?>)" class="list-group-item">Temporary bans</a>
+			</div>
+			<div class="col-sm-6" style="padding:0;">
+			<a href="#" onclick="showForumReports(<?php echo $_GET['id']; ?>)" class="list-group-item">Reports</a>
+			</div>
+			<div class="tempbans">
+			</div>
+		</div>
 		<!-- Content end -->
 		<script src="/js/custom/admin-menu.js"></script> 
 <?php include("../includes/standard_footer.php"); ?>
@@ -73,15 +59,28 @@
 		<script>
 		function showTempBans(forumid)
 		{
+
 			$.ajax({
-				method:"post",
-				url: "ajax/tempbannedusers.php",
+				method: "post",
+				url: "../ajax/tempbannedusers.php",
 				async: true,
 				data: {frmid: forumid}
 			})
 			.done(function(data){
 				$(".tempbans").html(data);
 			})
+		}
+		function removeBan(id)
+		{
+			$.ajax({
+				method: "post",
+				url: "../ajax/removeban.php",
+				async: true,
+				data: {userid: id}
+			})
+			.success : function(data){
+				$("#")
+			}
 		} 
 		</script>
 </html>
