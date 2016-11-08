@@ -154,6 +154,8 @@
 		};
 		xmlhttp.open("GET", "getConversations.php", true);
 		xmlhttp.send();
+
+		$.cookie('cn', 'open');
 	}
 
 	function updateConversationPartners(term)
