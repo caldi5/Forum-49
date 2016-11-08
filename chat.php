@@ -205,7 +205,11 @@
 
 			var arr = conv.split(",");
 			$(arr).each(function(index, value){
-				if (userid != value)
+				var cookie = value.split('-');
+				var name = cookie[1];
+				var id = cookie[0]
+
+				if (userid != id)
 				{
 					newArr.push(value);
 				}
