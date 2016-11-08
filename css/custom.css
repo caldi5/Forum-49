@@ -583,7 +583,7 @@ a .profile-post:hover
 {
 	float: right;
 	min-height: 40px;
-	width: 50%;
+	width: 60%;
 	background-color: #A9A9A9;
 	padding: 3px;
 	margin-right: 3px;
@@ -593,7 +593,7 @@ a .profile-post:hover
 {
 	float: left;
 	min-height: 40px;
-	width: 50%;
+	width: 60%;
 	background-color: #CAEBF2;
 	padding: 3px;
 	margin-left: 3px;

@@ -105,13 +105,12 @@
 			{
 				var messages = new Array();
 				var xmlhttp = new XMLHttpRequest();
-				var number = index;
 
 				xmlhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
 					messages = JSON.parse(this.responseText);
 
-					$("#conversation"+number).attr("data-last", messages[0].created_at);
+					$("#conversation"+index).attr("data-last", messages[0].created_at);
 					$.each(messages, function(index2, value2){
 						if (value2.type == "sent")
 						{
@@ -120,10 +119,9 @@
 						else
 						{
 							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
-							$("#conversation"+index+" .conversationFooterName span").remove();
-							$("#conversation"+index+" .conversationFooterMini").css("background-color", "#ff3B3F");
-							$("#conversation"+index+" .conversationFooterMini").css("color", "white");
 						}
+						$("#conversation"+index+" .conversationFooterMini").css("background-color", "#ff3B3F");
+						$("#conversation"+index+" .conversationFooterMini").css("color", "white");
 					})
 
 					var convo = $("#conversation"+index+" .conversationText .conversationMessages");
