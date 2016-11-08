@@ -24,10 +24,9 @@ if($result->num_rows > 0)
     {
         ?>
         <a href="#" class="searchoption" onClick="selectFriend('<?php echo $name; ?>')">
+        <h4 class="mates"><?php echo $name; ?></h4>
+        </a><br>
         <?php
-        echo $name;
-        echo '</a>';
-        echo '<br>';
     }
 }
     $result->close();
