@@ -52,12 +52,6 @@
 
 		public function deleteCategory()
 		{
-			//only allow deletion of categories with no forums in them.
-			if($this->getNumberOfForums() !== 0)
-			{
-				return false;
-			}
-
 			global $conn;
 			$stmt = $conn->prepare('DELETE FROM categories WHERE id = ?');
 			$stmt->bind_param('i', $this->id);
@@ -146,11 +140,6 @@
 		public function delete()
 		{
 			global $conn;
-			$posts = $this->getPosts();
-
-			if(!empty($posts))
-				foreach ($posts as $post)
-					$post->delete();
 
 			$stmt = $conn->prepare('DELETE FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $this->id);
@@ -308,12 +297,6 @@
 		public function delete()
 		{
 			global $conn;
-			$comments = $this->getComments();
-
-			if(!empty($comments))
-				foreach ($comments as $comment)
-					$comment->delete();
-
 
 			$stmt = $conn->prepare('DELETE FROM posts WHERE id = ?');
 			$stmt->bind_param('i', $this->id);
