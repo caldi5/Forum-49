@@ -83,6 +83,18 @@
 		}
 	});
 
+	function setRead(id)
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
+				return true;
+			}
+		};
+		xmlhttp.open("GET", "setRead.php?id="+id, true);
+		xmlhttp.send();
+	}
+
 	function getNewMessages()
 	{
 		$($(".conversation").get().reverse()).each(function (index, value){
@@ -301,7 +313,7 @@
 			maximizeConversation(conversationsOpen,id);
 			$(".conversation").last().css("margin-right", "10px");
 		}
-
+		setRead(partner);
 		return conversationsOpen;
 	}
 
