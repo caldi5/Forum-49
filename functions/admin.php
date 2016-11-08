@@ -1,7 +1,6 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
 	require_once __DIR__.'/alerts.php';
-	require_once __DIR__.'/get.php';
 
 	function newForum($forumName, $description, $categoryID, $guestAccess, $ordering)
 	{
