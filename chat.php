@@ -318,7 +318,7 @@
 		return conversationsOpen;
 	}
 
-	setInterval(getNewMessages, 5000);
+	setInterval(getNewMessages, 3000);
 </script>
 
 <div class="convWrapper hidden-xs hidden-sm">
