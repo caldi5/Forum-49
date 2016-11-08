@@ -121,7 +121,7 @@
 						{
 							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
 							$("#conversation"+index+" .conversationFooterName span").remove();
-							$("#conversation"+index+" .conversationFooterName").append("<span class='white-text'> - NEW</span>");
+							$("#conversation"+index+" .conversationFooterMini").css("background-color", "#ff3B3F");
 						}
 					})
 
