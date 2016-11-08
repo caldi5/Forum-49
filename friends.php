@@ -83,12 +83,13 @@
 							{
                                 foreach ($friends as $friends)
 								{
-									echo '<a href="profile.php?user='.$friends->username.'">';
+									echo '<a href="profile.php?user='.htmlspecialchars($friends->username).'">';
 									echo '<div class="col-lg-12 profile-comment">';
 									
                                     echo htmlspecialchars($friends->username);
 									
                                     echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $currentUser->friendsSince($friends->id)).'</span>';
+																		
 									echo '</div>';
 									echo '</a>';
 								}
