@@ -6,10 +6,20 @@
 * Martin Törnkvist             mtt15001@student.mdh.se  
 * William Achrenius          was15001@student.mdh.se  
  
-We want to make a forum website with different sub forums, user groups and user to user messaging.  
-We are aiming for the grade 5.  
+ 
+##Screenshot
+![alt tag](http://i.imgur.com/KNOGEns.png) 
 
-##Feature List 
+##Database Structure
+![alt tag](http://i.imgur.com/QRohKue.png)
+
+
+
+##Contract with teacher
+We want to make a forum website with different sub forums, user groups and user to user messaging.  
+We are aiming for the grade 5. 
+
+###Feature List 
 * Message system. 
 * (restrict access to subforums to guests) 
 * Friend system. 
@@ -18,7 +28,7 @@ We are aiming for the grade 5.
 * Signup 
 * Page Break
  
-##User Types 
+###User Types 
 * Administrators 
 * Moderators 
 * Users 
