@@ -1,8 +1,8 @@
-<?php
+<?php	
 
-	require_once("includes/init.php");
-
-	try 
+	require_once("../includes/init.php");
+ 	
+ 	try 
 	{
 		$forum = new forum($_GET['id']);
 	}
@@ -16,12 +16,6 @@
 	{
 		header('Location: index.php');
 		die;
-	}
-
-	if($currentUser->isModerator($forum->id))
-	{
-		$redirectID = $forum->id;
-		header('Location: /moderator/moderator.php?id='.$redirectID);
 	}
 
 	if (isset($_GET['page']))
@@ -41,11 +35,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php include("includes/standard_head.php"); ?>
+		<?php include("../includes/standard_head.php"); ?>
 		<title><?php echo $forum->name; ?></title>
 	</head>
 	<body>
-<?php include("includes/navbar.php"); ?>		
+<?php include("../includes/navbar.php"); ?>		
 		<!-- Content start -->
 		<div class="container">
 <?php displayAlerts(); ?>
@@ -66,14 +60,14 @@
 	elseif ($currentUser->isModerator($_GET['id']))
 	{
 		echo '<div class="actions">';
-		echo '<a href="new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
-		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
+		echo '<a href="../new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="moderate.php?id='.$_GET['id'].'" class="btn btn-default" role="button">Moderate</a>';
 		echo '</div>';
 	}
 	elseif ($currentUser->isLoggedIn())
 	{
 		echo '<div class="actions">';
-		echo '<a href="new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
+		echo '<a href="../new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
 		echo '</div>';
 	}
 		
@@ -84,7 +78,7 @@
 		{
 			$user = new user($post->creator);
 			echo '<div class="row">';
-			echo '<a href="post.php?id=' . $post->id . '">';
+			echo '<a href="../post.php?id=' . $post->id . '">';
 			echo '<div class="col-lg-12 post">';
 			echo '<div class="col-lg-10">';
 			echo '<h4 class="post-title">' . $post->title . '</h4>';
@@ -187,6 +181,6 @@
 ?>
 		</div>
 		<!-- Content end -->
-		<?php include("includes/standard_footer.php"); ?>
+		<?php include("../includes/standard_footer.php"); ?>
 	</body>
 </html>
