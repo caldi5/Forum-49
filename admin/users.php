@@ -103,7 +103,6 @@
 											<h3>Warning!<h3>
 									</div>
 									<div class="modal-body">
-											You're about to delete a user this can not be undone.
 									</div>
 									<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
