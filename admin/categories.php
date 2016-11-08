@@ -64,7 +64,7 @@
 										</div>
 									</div>
 									<div class="col-sm-3">
-											<button type="submit" name="newCategory" class="btn btn-sm btn-success">Create Category</button>
+											<button type="submit" name="newCategory" class="btn btn-sm btn-primary">Create Category</button>
 											<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newCategoryWell">Cancel</button>
 										</span>
 									</div>
@@ -98,7 +98,7 @@
 			{ 
 				echo ' disabled';
 			}
-		echo '">Delete</a><a href="editcategory.php?id='. $category->id .'" class="btn btn-xs btn-success pull-right">Edit</a></td>';
+		echo '">Delete</a><a href="editcategory.php?id='. $category->id .'" class="btn btn-xs btn-primary pull-right">Edit</a></td>';
 		echo '</tr>';
 	}
 ?>

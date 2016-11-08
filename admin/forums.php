@@ -64,7 +64,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Forums
-						<button  type="button" class="btn btn-xs btn-success pull-right" data-toggle="collapse" data-target="#newForumWell">New Forum</button>
+						<button  type="button" class="btn btn-xs btn-primary pull-right" data-toggle="collapse" data-target="#newForumWell">New Forum</button>
 					</div>
 					<div class="panel-body">
 						<div id="newForumWell" class="well well-sm collapse">
@@ -116,7 +116,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group">
-											<button type="submit" name="newForum" class="btn btn-sm btn-success">Create Forum</button>
+											<button type="submit" name="newForum" class="btn btn-sm btn-primary">Create Forum</button>
 											<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#newForumWell">Cancel</button>
 										</div>
 									</div>
@@ -150,7 +150,7 @@
 										<td><?php echo $forum->sortOrder; ?></td>
 										<td><?php echo $forum->guestAccess; ?></td>
 										<td><?php echo $forum->getNumberOfPosts(); ?></td>
-										<td><a href="#", data-href="?action=delete&id=<?php echo $forum->id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $forum->id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $forum->id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right">Delete</a><a href="editforum.php?id=<?php echo $forum->id; ?>" class="btn btn-xs btn-primary pull-right">Edit</a></td>
 									</tr>
 <?php
 	}
