@@ -13,7 +13,7 @@
 				getNewMessages();
 			}
 		};
-		xmlhttp.open("GET", "ajax/sendMessage.php?to="+to+"&message="+text, true);
+		xmlhttp.open("GET", "/ajax/sendMessage.php?to="+to+"&message="+text, true);
 		xmlhttp.send();
 		
 		return false;
@@ -91,7 +91,7 @@
 				return true;
 			}
 		};
-		xmlhttp.open("GET", "setRead.php?id="+id, true);
+		xmlhttp.open("GET", "/ajax/setRead.php?id="+id, true);
 		xmlhttp.send();
 	}
 
@@ -121,7 +121,7 @@
 						{
 							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
 							$("#conversation"+index+" .conversationFooterName span").remove();
-							$("#conversation"+index+" .conversationFooterName").append("<span class='red-text'> - NEW</span>");
+							$("#conversation"+index+" .conversationFooterName").append("<span class='white-text'> - NEW</span>");
 						}
 					})
 
@@ -129,7 +129,7 @@
 					convo.scrollTop(convo.prop("scrollHeight"))
 				}
 				};
-				xmlhttp.open("GET", "getMessages.php?id="+userid+"&t="+lastMessage, true);
+				xmlhttp.open("GET", "/ajax/getMessages.php?id="+userid+"&t="+lastMessage, true);
 				xmlhttp.send();
 				
 			}
@@ -165,7 +165,7 @@
 				});
 			}
 		};
-		xmlhttp.open("GET", "getConversations.php", true);
+		xmlhttp.open("GET", "/ajax/getConversationsLive.php", true);
 		xmlhttp.send();
 
 		$.cookie('cn', 'open');
@@ -186,7 +186,7 @@
 				});
 			}
 		};
-		xmlhttp.open("GET", "getConversations.php?n="+term, true);
+		xmlhttp.open("GET", "/ajax/getConversationsLive.php?n="+term, true);
 		xmlhttp.send();
 	}
 
@@ -256,7 +256,7 @@
 				})
 			};
 		};
-		xmlhttp.open("GET", "getMessages.php?id="+partner, true);
+		xmlhttp.open("GET", "/ajax/getMessages.php?id="+partner, true);
 		xmlhttp.send();
 
 

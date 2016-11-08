@@ -1,6 +1,6 @@
 <?php
 
-	require_once("includes/init.php");
+	require_once("../includes/init.php");
 
 	$userID = $currentUser->id;
 	$partnerID = $_GET['id'];

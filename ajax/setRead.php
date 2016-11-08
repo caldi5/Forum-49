@@ -1,5 +1,5 @@
 <?php
-	require_once("includes/init.php");
+	require_once("../includes/init.php");
 
 	if (!isset($_GET['id']))
 		return false;
