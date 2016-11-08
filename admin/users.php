@@ -103,6 +103,8 @@
 											<h3>Warning!<h3>
 									</div>
 									<div class="modal-body">
+											You're about to delete a user this can not be undone. All forums, posts and comments made by this user will be deleted. 
+											</br>If this is not your intention, PERMABAN is recommended!
 									</div>
 									<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
