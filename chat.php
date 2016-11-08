@@ -6,8 +6,6 @@
 		var to = $("#"+form+" #to").val();
 		var text = $("#"+form+" #newMessage").val();
 
-
-
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200 && this.responseText != false) {
@@ -22,7 +20,67 @@
 	});
 
 	$(document).ready(function(){
-		
+		if ($.cookie('cn') != undefined)
+		{
+			var value = $.cookie('cn');
+			if (value == 'open')
+			{
+				openConversationPartners();
+			}
+		}
+
+		if (($.cookie('c0') != undefined))
+		{
+			var cookie = $.cookie('c0').split('-');
+			var cid = cookie[0];
+			var cname = cookie[1];
+			var ctype = cookie[2];
+
+			var id = openConversation(cid, cname);
+			if (ctype != 'maxi')
+			{
+				minimizeConversation(id, cid);
+			}
+		}
+
+		if (($.cookie('c1') != undefined))
+		{
+			var cookie = $.cookie('c1').split('-');
+			var cid = cookie[0];
+			var cname = cookie[1];
+			var ctype = cookie[2];
+			var id = openConversation(cid, cname);
+			if (ctype != 'maxi')
+			{
+				minimizeConversation(id, cid);
+			}
+		}
+
+		if (($.cookie('c2') != undefined))
+		{
+			var cookie = $.cookie('c2').split('-');
+			var cid = cookie[0];
+			var cname = cookie[1];
+			var ctype = cookie[2];
+			var id = openConversation(cid, cname);
+			if (ctype != 'maxi')
+			{
+				minimizeConversation(id, cid);
+			}
+		}
+
+		if (($.cookie('c3') != undefined))
+		{
+			var cookie = $.cookie('c3').split('-');
+			var cid = cookie[0];
+			var cname = cookie[1];
+			var ctype = cookie[2];
+			var id = openConversation(cid, cname);
+			if (ctype != 'maxi')
+			{
+				minimizeConversation(id, cid);
+			}
+		}
 	});
 
 	function getNewMessages()
@@ -125,7 +183,7 @@
 		$("#startNewConversation").css("width", "35px");
 		$("#startNewConversation").css("margin-right", "10px");
 		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='openConversationPartners()''>+</div>");
-
+		$.cookie('cn', 'closed')
 	}
 
 	function minimizeAllConversations()
@@ -138,7 +196,8 @@
 	function minimizeConversation(id, partner)
 	{
 		var name = $("#conversation"+id+" .conversationHeaderName h4").text();
-		
+		$.cookie("c"+id, partner+'-'+name+'-mini');
+
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMini'>");
 		$("#conversation"+id+" .conversationFooterMini").append("<div class='conversationFooterName' onclick='maximizeConversation("+id+", "+partner+")'><h4 class='conversationPartnerName'>"+name+"</h4></div><div class='conversationFooterClose' onclick='closeConversation("+id+")'><span>X</span></div>");
@@ -148,8 +207,11 @@
 	{
 		//closeConversationPartners();
 
+
 		var name = $("#conversation"+id+" .conversationFooterName h4").text();
 		var messages = new Array();
+
+		$.cookie("c"+id, partner+'-'+name+'-maxi');
 
 		$("#conversation"+id).empty();
 		$("#conversation"+id).append("<div class='conversationFooterMaxi'><form class='chattForm' id='form"+id+"'><input autocomplete='off' type='text' id='newMessage' class='conversationWriteMessage'><input type='hidden' id='to' value='"+partner+"'></form></div>");
@@ -181,11 +243,15 @@
 		};
 		xmlhttp.open("GET", "getMessages.php?id="+partner, true);
 		xmlhttp.send();
+
+
+		
 	}
 
 	function closeConversation(id)
 	{
 		var margin = $("#conversation"+id).css("margin-right");
+		$.removeCookie('c'+id);
 		$("#conversation"+id).remove();
 		$($(".conversation").get().reverse()).each(function(index, value){
 			var userid = $(this).data("userid");
@@ -218,7 +284,7 @@
 			$(".conversation").last().css("margin-right", "10px");
 		}
 
-
+		return conversationsOpen;
 	}
 
 	setInterval(getNewMessages, 5000);
