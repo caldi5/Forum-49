@@ -11,39 +11,42 @@
 		<!-- Content start -->
 		<div class="container">
 <?php displayAlerts(); ?>
-                <div class="col-sm-12">
-                <div class="col-sm-2 to">
-                <form>
-                    <p7>To:</p7><input type="text" placeholder="Username" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">  
-                </form>
-                <div class="col-sm-1" id="searchboxdiv">
-                </div>
-                </div>
-                </div>
-                <div class="col-sm-3">
-                <h4 class="pad">Conversations</h4>
-                <div class="container col-sm-12 conversationlist">
-                </div>
-                </div>
-                <div class="col-sm-9">
-                <h4 class="pad">Messages</h4>
-                <div class="content col-sm-12">
-				    <h3 id="Sender"></h3>
-				    <p id="messagecontent"> </p>
-                </div>
-            <div class="messageform">
-                <form action="javascript:sendmsg();" name="pmForm" id="pmForm" method="post">
-                    <div class="form-group messageformtextbox col-sm-12">
-                    Message: <input type="text" class="form-control" id="message" autocomplete="off">
-                    </div>
-                    <input name="senderid" id="senderid" type="hidden" value="<?php echo $_SESSION['id'] ?>" />
-                    <div class="col-sm-12">
-                    <button name="pmSubmit" type="submit" value="Submit" class="btn btn-default" id="sendbtn">Send</button>
-                    </div>
-                    <p id="confirm"></p>
-                </form>
+    	<div class="col-sm-12">
+      	<div class="col-sm-2 to">
+        	<form>
+          	<p7>To:</p7><input type="text" placeholder="Username" class="form-control reciever searchtext" id="searchtext" onfocus="showSearchBox()">  
+          </form>
+          <div class="col-sm-1" id="searchboxdiv"> </div>
+        </div>
+      </div>
+      
+			<div class="col-sm-3">
+      	<h4 class="pad">Conversations</h4>
+        	<div class="container col-sm-12 conversationlist"> </div>
+      </div>
+      
+			<div class="col-sm-9">
+      	<h4 class="pad">Messages</h4>
+        <div class="content col-sm-12">
+					<h3 id="Sender"></h3>
+				  <p id="messagecontent"> </p>
+        </div>
+        
+				<div class="messageform">
+        	<form action="javascript:sendmsg();" name="pmForm" id="pmForm" method="post">
+   					<div class="form-group messageformtextbox col-sm-12">
+            	Message: <input type="text" class="form-control" id="message" autocomplete="off">
             </div>
-            </div>
+                    
+						<input name="senderid" id="senderid" type="hidden" value="<?php echo $_SESSION['id'] ?>" />
+            	<div class="col-sm-12">
+              	<button name="pmSubmit" type="submit" value="Submit" class="btn btn-default" id="sendbtn">Send</button>
+              </div>
+           	
+						<p id="confirm"></p>
+           </form>
+        </div>
+       </div>
 		</div>
          <!--<php require_once "includes/chatbar.php"; ?>-->
 		<!-- Content end -->
