@@ -82,6 +82,11 @@
 			}
 			$stmt->close();
 
+			if(empty($ids))
+			{
+				return false;
+			}
+
 			foreach($ids as $id) 
 			{
 				$forums[] = new forum($id);
@@ -137,7 +142,7 @@
 			$this->guestAccess = $guestAccess;
 		}
 
-		public function deleteForum()
+		public function delete()
 		{
 			global $conn;
 			$posts = $this->getPosts();

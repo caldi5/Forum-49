@@ -20,28 +20,30 @@
 				echo '<div class="row category">';
 				echo '<h3 class="category-title"><a href="category.php?id='.$category->id.'">'.$category->name.'</a></h3>';
 				
-				foreach($forums as $forum)
+				if(!empty($forums))
 				{
-					if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
-						continue;
-					
-					echo '<a href="forum.php?id='.$forum->id.'">';
-					echo '<div class="col-lg-12 forum">';
-					echo '<div class="col-lg-10">';
-					echo '<h4 class="forum-title">'.htmlspecialchars($forum->name).'</h4>';
-					echo '<p class="forum-desc">'.htmlspecialchars($forum->description).'</p>';
-					echo '</div>';
-					echo '<div class="col-lg-1">';
-					echo '<p>Posts:<br> '.$forum->getNumberOfPosts().'</p>';
-					echo '</div>';
-					echo '<div class="col-lg-1">';
-					echo '<p>Views:<br>'. $forum->getNumberOfviews() .'</p>';
-					echo '</div>';
-					echo '</div>';
-					echo '</a>';
+					foreach($forums as $forum)
+					{
+						if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
+							continue;
+						
+						echo '<a href="forum.php?id='.$forum->id.'">';
+						echo '<div class="col-lg-12 forum">';
+						echo '<div class="col-lg-10">';
+						echo '<h4 class="forum-title">'.htmlspecialchars($forum->name).'</h4>';
+						echo '<p class="forum-desc">'.htmlspecialchars($forum->description).'</p>';
+						echo '</div>';
+						echo '<div class="col-lg-1">';
+						echo '<p>Posts:<br> '.$forum->getNumberOfPosts().'</p>';
+						echo '</div>';
+						echo '<div class="col-lg-1">';
+						echo '<p>Views:<br>'. $forum->getNumberOfviews() .'</p>';
+						echo '</div>';
+						echo '</div>';
+						echo '</a>';
+					}
 				}
-
-				if(empty($forums))
+				else
 				{
 					// If there's not one or more forums we print a sorry message.
 					echo '<div class="alert alert-info">' . "\r\n";
