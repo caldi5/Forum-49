@@ -44,7 +44,7 @@
 						});
 					}
 				};
-				xmlhttp.open("GET", "updateFlow.php?t=" + window.last, true);
+				xmlhttp.open("GET", "/ajax/updateFlow.php?t=" + window.last, true);
 				xmlhttp.send();
 			};
 
