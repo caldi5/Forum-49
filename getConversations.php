@@ -38,7 +38,7 @@ $stmt->bind_param('iii', $userID, $userID, $userID);
 	else
 	{
 		$name =$_GET['n'];
-		$name = '%'.$name.'%';
+		$name = $name.'%';
 
 		$stmt = $conn->prepare("SELECT * FROM (SELECT (IF (userid = ?, userid2, userid)) partnerID, (select username from users where id = partnerID) as partnerUsername FROM friends WHERE (userid = ? or userid2 = ?)) as first WHERE partnerUsername like ?");
 		$stmt->bind_param('iiis', $userID, $userID, $userID, $name);
