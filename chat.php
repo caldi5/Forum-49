@@ -251,7 +251,10 @@
 	function closeConversation(id)
 	{
 		var margin = $("#conversation"+id).css("margin-right");
-		$.removeCookie('c'+id);
+		$.removeCookie('c0');
+		$.removeCookie('c1');
+		$.removeCookie('c2');
+		$.removeCookie('c3');
 		$("#conversation"+id).remove();
 		$($(".conversation").get().reverse()).each(function(index, value){
 			var userid = $(this).data("userid");
@@ -260,6 +263,20 @@
 			$("#conversation"+index+" .conversationHeaderName").attr("onclick", "minimizeConversation("+index+", "+userid+")");
 			$("#conversation"+index+" .conversationHeaderClose").attr("onclick", "closeConversation("+index+")");
 			$("#conversation"+index+" .conversationFooterClose").attr("onclick", "closeConversation("+index+")");
+			
+			if ($("#conversation"+index+" .conversationFooterName h4").text() != "")
+			{
+				var name = $("#conversation"+index+" .conversationFooterName .conversationPartnerName").text();
+				alert(name);
+				$.cookie('c'+index, userid+'-'+name+'-mini');
+			}
+			
+			if ($("#conversation"+index+" .conversationHeaderName h4").text() != "")
+			{
+				var name = $("#conversation"+index+" .conversationHeaderName h4").text();
+				alert(name);
+				$.cookie('c'+index, userid+'-'+name+'-maxi');
+			}
 		});
 		$("#conversation"+id).last().css("margin-right", margin);
 	}
