@@ -16,7 +16,7 @@
 
 	if($currentUser->id === $post->creator || $currentUser->isAdmin())
 	{
-		echo $post->deletePost();
+		echo $post->delete();
 	}
 	else
 	{

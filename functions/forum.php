@@ -1,5 +1,6 @@
 <?php
 	require_once __DIR__.'/../includes/dbconn.php';
+	require_once __DIR__.'/../functions/report.php';
 
 	//returns an array with all categories names
 	function getCategories()
@@ -149,7 +150,7 @@
 
 			if(!empty($posts))
 				foreach ($posts as $post)
-					$post->deletePost();
+					$post->delete();
 
 			$stmt = $conn->prepare('DELETE FROM forums WHERE id = ?');
 			$stmt->bind_param('i', $this->id);
@@ -181,6 +182,62 @@
 				$posts[] = new post($id);
 
 			return $posts;
+		}
+
+		function getReportedPosts()
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT id FROM reportedPosts WHERE forum=?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			if(empty($ids))
+				return false;
+
+			foreach($ids as $id) 
+			{
+				$postReports[] = new postReport($id);
+			}
+
+			return $postReports;
+		}
+
+		function getReportedComments()
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT id FROM reportedComments WHERE forum=?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			if(empty($ids))
+				return false;
+
+			foreach($ids as $id) 
+			{
+				$commentReport[] = new commentReport($id);
+			}
+
+			return $commentReport;
 		}
 
 		public function getNumberOfPosts()
@@ -248,7 +305,7 @@
 			$this->createdAt = $createdAt;
 		}
 
-		public function deletePost()
+		public function delete()
 		{
 			global $conn;
 			$comments = $this->getComments();
