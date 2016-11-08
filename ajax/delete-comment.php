@@ -16,7 +16,7 @@
 
 	if($currentUser->id === $comment->creator || $currentUser->isAdmin())
 	{
-		echo $comment->deleteComment();
+		echo $comment->delete();
 	}
 	else
 	{

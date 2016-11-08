@@ -312,7 +312,7 @@
 
 			if(!empty($comments))
 				foreach ($comments as $comment)
-					$comment->deleteComment();
+					$comment->delete();
 
 
 			$stmt = $conn->prepare('DELETE FROM posts WHERE id = ?');
@@ -406,7 +406,7 @@
 		}
 
 		//TODO: Fix somehow to make objet selfdestruct...
-		function deleteComment()
+		function delete()
 		{
 			global $conn;
 			$stmt = $conn->prepare('DELETE FROM comments WHERE id = ?');
