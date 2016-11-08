@@ -12,9 +12,13 @@
 	if(isset($_GET['removePostReport']))
 		removePostReport($_GET['removePostReport']);
 	if(isset($_GET['deletePost']))
-	{
 		(new post($_GET['deletePost']))->delete();
-	}
+
+	if(isset($_GET['removeCommentReport']))
+		removePostReport($_GET['removeCommentReport']);
+	if(isset($_GET['deleteComment']))
+		(new comment($_GET['deleteComment']))->delete();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -134,12 +138,12 @@
 									<div class="panel-heading row">
 										<div class="col-md-9">
 											<h4 class="post-title">
-												<a><?php echo $post->title;?></a>
+												<a href="/post.php?id=<?php echo $post->id; ?>"><?php echo $post->title;?></a>
 											</h4>
 										</div>
 										<div class="col-md-3">
-											<button class="btn btn-sm btn-primary">Remove report</button>
-											<button class="btn btn-sm btn-danger">delete</button>
+											<a href="?removeCommentReport=<?php echo $commentsReport->id;?>" class="btn btn-sm btn-primary">Remove report</a>
+											<a href="?deleteComment=<?php echo $comment->id;?>" class="btn btn-sm btn-danger">delete</a>
 										</div>
 									</div>
 									<div class="panel-body">
