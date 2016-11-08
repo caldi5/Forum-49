@@ -8,9 +8,11 @@
 	</head>
 	<body>
 <?php require_once "includes/navbar.php"; ?>
+		
 		<!-- Content start -->
 		<div class="container">
 <?php displayAlerts(); ?>
+			<!-- I am the searchbox -->
     	<div class="col-sm-12">
       	<div class="col-sm-2 to">
         	<form>
@@ -19,26 +21,32 @@
           <div class="col-sm-1" id="searchboxdiv"> </div>
         </div>
       </div>
-      
+      <!-- Searchbox end -->
+			
+			<!-- Conversations are loaded here with AJAX -->
 			<div class="col-sm-3">
       	<h4 class="pad">Conversations</h4>
+					
         	<div class="container col-sm-12 conversationlist"> </div>
       </div>
-      
+      <!-- Conversations load end -->
+			
+			<!-- Messages are loaded here with AJAX-->
 			<div class="col-sm-9">
       	<h4 class="pad">Messages</h4>
         <div class="content col-sm-12">
-					<h3 id="Sender"></h3>
+					
 				  <p id="messagecontent"> </p>
         </div>
         
+				<!-- The messageform -->
 				<div class="messageform">
         	<form action="javascript:sendmsg();" name="pmForm" id="pmForm" method="post">
    					<div class="form-group messageformtextbox col-sm-12">
             	Message: <input type="text" class="form-control" id="message" autocomplete="off">
             </div>
                     
-						<input name="senderid" id="senderid" type="hidden" value="<?php echo $_SESSION['id'] ?>" />
+						<input name="senderid" id="senderid" type="hidden" value="<?php echo $currentUser->id; ?>" />
             	<div class="col-sm-12">
               	<button name="pmSubmit" type="submit" value="Submit" class="btn btn-default" id="sendbtn">Send</button>
               </div>
@@ -47,10 +55,14 @@
            </form>
         </div>
        </div>
+			<!-- Messages load end -->
+			
 		</div>
-         <!--<php require_once "includes/chatbar.php"; ?>-->
 		<!-- Content end -->
+		
         <script>
+					
+					// getConversations.php are called to load all conversations
             $(function() 
             {
                     $.ajax({
@@ -63,6 +75,8 @@
                      $(".conversationlist").html(data);
                     })
             })
+						
+						// send message
             function sendmsg()
             {
                 var sendid = $('#senderid').val();
@@ -92,6 +106,7 @@
                         
                     }
             }
+					
             $(function() 
             {
                 $(".searchtext").on("keydown", function(e) {

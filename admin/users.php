@@ -81,7 +81,7 @@
 										else
 											echo "No";
 										?></td>
-										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if($id === $currentUser->id){ echo "disabled";} ?>">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-success pull-right">Edit</a></td>
+										<td><a href="#", data-href="?action=delete&id=<?php echo $id; ?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger pull-right <?php if($id === $currentUser->id){ echo "disabled";} ?>">Delete</a><a href="edituser.php?id=<?php echo $id; ?>" class="btn btn-xs btn-primary pull-right">Edit</a></td>
 									</tr>
 <?php
 	}

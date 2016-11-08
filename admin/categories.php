@@ -45,7 +45,7 @@
 				<div id="pannelAdminCategories" class="panel panel-default">
 					<div class="panel-heading">
 						Categories
-						<button  type="button" class="btn btn-xs btn-success pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
+						<button  type="button" class="btn btn-xs btn-primary pull-right" data-toggle="collapse" data-target="#newCategoryWell">New Category</button>
 					</div>
 					<div class="panel-body">
 						<div id="newCategoryWell" class="well well-sm collapse">
