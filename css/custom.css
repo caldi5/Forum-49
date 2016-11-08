@@ -227,7 +227,7 @@ span.admin
 /* Messages css */
 .content {
     overflow-y: scroll;
-    border:solid 1px;
+    border:solid grey 1px;
     height: 10cm;
     margin: 0;
     padding: 0;
