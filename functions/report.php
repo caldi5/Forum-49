@@ -135,7 +135,7 @@
 	function removeCommentReport($id)
 	{
 		global $conn;
-		$stmt = $conn->prepare('DELETE FROM reportedcomments WHERE id=?');
+		$stmt = $conn->prepare('DELETE FROM reportedComments WHERE id=?');
 		$stmt->bind_param('i', $id);
 		$stmt->execute();
 		if(!empty($stmt->error))
