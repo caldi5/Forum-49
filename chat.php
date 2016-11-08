@@ -269,14 +269,12 @@
 			if ($("#conversation"+index+" .conversationFooterName h4").text() != "")
 			{
 				var name = $("#conversation"+index+" .conversationFooterName .conversationPartnerName").text();
-				alert(name);
 				$.cookie('c'+index, userid+'-'+name+'-mini');
 			}
 			
 			if ($("#conversation"+index+" .conversationHeaderName h4").text() != "")
 			{
 				var name = $("#conversation"+index+" .conversationHeaderName h4").text();
-				alert(name);
 				$.cookie('c'+index, userid+'-'+name+'-maxi');
 			}
 		});
