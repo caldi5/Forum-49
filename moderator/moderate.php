@@ -52,6 +52,7 @@
                 <table class="table">
                     <tr>
                         <td><form class="form-inline">User: <input type="text" class="form-control" id="user"></form></td>
+                        <td><form class="form-inline">Untill: <input type="text" class="form-control" id="untill" placeholder="yy-mm-dd"></form></td>
                         <td><button onclick="addBan(<?php echo $_GET['id']; ?>)" type="button" class="btn btn-primary pull-right">Add Ban</button></td>
                     </tr>
                 </table>

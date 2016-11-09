@@ -5,8 +5,10 @@
 	if(isset($_POST['username']))
 	{
 		$name = $_POST['username'];
+        $userID = user::getUserID($name);
         $t = $_POST['time'];
         $t = strtotime($t);
+        $forumid = $_POST['forumid'];
 
 		$result = $conn->prepare("INSERT INTO tempban
                                 VALUES (?,?,?)");
