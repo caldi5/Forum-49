@@ -33,7 +33,7 @@ if($result->num_rows > 0)
                     <a href="#" class="list-group-item" onclick="showConversation('<?php echo $conversWithID; ?>','<?php echo $i; ?>')">
                     <h4 class="list-group-item-heading" id="<?php echo $i; ?>"><?php echo $name; $i++; ?></h4>
         <?php
-        $result2 = $conn->prepare("SELECT message, timestamp, id FROM messages
+        $result2 = $conn->prepare("SELECT SUBSTRING(message,1,26), timestamp, id FROM messages
                         WHERE to_user = ? AND from_user = ?
 						order by timestamp desc
 						limit 1");
