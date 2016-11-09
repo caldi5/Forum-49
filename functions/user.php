@@ -142,7 +142,7 @@
 
 		public function isAdmin()
 		{
-			if($this->role === "admin")
+			if($this->role === "Admin")
 				return true;
 			return false;
 		}
@@ -158,7 +158,7 @@
 			$stmt->fetch();
 			$stmt->free_result();
 			$stmt->close();
-			if($role === "admin")
+			if($role === "Admin")
 				return true;
 			else
 				return false;

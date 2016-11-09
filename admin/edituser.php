@@ -69,9 +69,9 @@
 								<div class="form-group">	
 									<label>User Role</label>
 									<select class="form-control" name="role">
-										<option<?php if($user->role === "admin"){echo " selected";}	?> value="admin">Administrator</option>
-										<option<?php if($user->role === "moderator"){echo " selected";}	?> value="moderator">Moderator</option>
-										<option<?php if($user->role === "user"){echo " selected";}	?>  value="moderator">User</option>
+										<option<?php if($user->role === "Admin"){echo " selected";}	?> value="admin">Administrator</option>
+										<option<?php if($user->role === "Moderator"){echo " selected";}	?> value="moderator">Moderator</option>
+										<option<?php if($user->role === "User"){echo " selected";}	?>  value="moderator">User</option>
 									</select>
 								</div>
 								<div class="form-group">	
