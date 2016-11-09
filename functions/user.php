@@ -201,6 +201,24 @@
 			else
 				return true;
 		}
+        public function isTempBannedOnForum($forumID)
+        {
+            global $conn;
+
+			$stmt = $conn->prepare('SELECT COUNT(*) from tempban WHERE id = ? AND onforum = ?');
+			$stmt->bind_param('ii', $this->id, $forumID);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+
+			if ($count == 0)
+				return false;
+			else
+				return true;
+        }
 		//-----------------------------------------------------
 		// Security END
 		//-----------------------------------------------------

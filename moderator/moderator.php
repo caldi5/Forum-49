@@ -8,13 +8,13 @@
 	}
 	catch (Exception $e) 
 	{
-		header('Location: index.php');
+		header('Location: ../index.php');
 		die;
 	}
 
 	if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
 	{
-		header('Location: index.php');
+		header('Location: ../index.php');
 		die;
 	}
 
@@ -44,7 +44,7 @@
 		<div class="container">
 <?php displayAlerts(); ?>
 			<h3>
-<?php echo '<a href="category.php?id='.$category->id.'" class="category-title">'.$category->name.'</a> / '.$forum->name; ?>
+<?php echo '<a href="../category.php?id='.$category->id.'" class="category-title">'.$category->name.'</a> / '.$forum->name; ?>
 			</h3>
 			<div class="posts">
 <?php
