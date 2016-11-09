@@ -39,6 +39,7 @@
 			$stmt->close();
 
 			$this->postID = $postID;
+			//Låter report ta hand om resten
 			parent::__construct($id, $reportedBy, $forum, $message, $reportedAt);
 		}
 	}

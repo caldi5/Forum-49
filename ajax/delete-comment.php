@@ -21,6 +21,5 @@
 	else
 	{
 		echo "false";
-		die();
 	}
 	?>
