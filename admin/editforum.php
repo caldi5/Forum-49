@@ -52,7 +52,8 @@
 
 
 	//Get Current Forum Moderators
-	$stmt = $conn->prepare('SELECT id, username, forumID FROM users LEFT OUTER JOIN moderators ON users.id = moderators.userid WHERE role = "moderator"');
+	$stmt = $conn->prepare('SELECT id, username, forumID FROM users LEFT OUTER JOIN (SELECT * FROM moderators WHERE forumid=?) AS moderatorsForForum ON users.id = moderatorsForForum.userid WHERE role = "moderator"');
+	$stmt->bind_param('i', $forum->id);
 	$stmt->execute();
 	$stmt->bind_result($id, $username, $forumID);
 	while ($stmt->fetch()) 
