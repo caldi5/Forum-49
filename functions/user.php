@@ -182,7 +182,7 @@
 			else
 				return true;
 		}
-		
+
 		// Checks if the user with the given user ID is moderator for the forum with the given forum ID.
 		public static function isModeratorID ($userID, $forumID)
 		{
@@ -614,6 +614,29 @@
 		//-----------------------------------------------------
 		// Post AND Comment functions END
 		//-----------------------------------------------------
+
+		//returns an array of formobjets where current user is moderator
+		public function moderateForums()
+		{
+			global $conn;
+
+			$stmt = $conn->prepare('SELECT forumID from moderators WHERE userID = ?');
+			$stmt->bind_param('i', $this->id);
+			$stmt->execute();
+			$stmt->bind_result($forumID);
+			while ($stmt->fetch()) 
+				$forumIDs[] = $forumID;
+			$stmt->close();
+
+			if(empty($forumIDs))
+				return false;
+
+			foreach($forumIDs as $forumID) 
+				$forums[] = new forum($forumID);
+
+			return $forums;
+		}
+
 	} 
 	//======================================================================
 	// currentUser END

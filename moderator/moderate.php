@@ -32,7 +32,7 @@
 				<a href="#" onclick="showTempBans(<?php echo $_GET['id']; ?>)" class="list-group-item">Temporary bans</a>
 			</div>
 			<div class="col-sm-6" style="padding:0;">
-			<a href="#" onclick="showForumReports(<?php echo $_GET['id']; ?>)" class="list-group-item">Reports</a>
+			<a href="reports.php?id=<?php echo $_GET['id']; ?>" class="list-group-item">Reports</a>
 			</div>
                 <table class="table">
                     <tr>
