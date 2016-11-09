@@ -25,7 +25,6 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 	{
 
 		global $conn;
-		global $error;
 
 		//Get id if exists
 		$stmt = $conn->prepare('SELECT id, username, email FROM users WHERE username = ? OR email = ?');
@@ -33,10 +32,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$stmt->execute();
 		
 		if(!empty($stmt->error))
-		{
-			$error[] = "SQL error: " . $stmt->error;
 			return false;
-		}
 		
 		$stmt->bind_result($id, $username, $email);
 		$stmt->fetch();
@@ -54,10 +50,7 @@ http://srv247.se/verify.php?email='.$email.'&hash='.$hash.'
 		$stmt->execute();
 		
 		if(!empty($stmt->error))
-		{
-			$error[] = "SQL error: " . $stmt->error;
 			return false;
-		}
 
 		$stmt->close();
 
