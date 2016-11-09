@@ -1,3 +1,4 @@
+<!-- Get the name of all of the users friends -->
 <?php
 
     require_once("../includes/init.php");

@@ -12,7 +12,7 @@
 		<!-- Content start -->
 		<div class="container">
 <?php displayAlerts(); ?>
-			<!-- I am the searchbox -->
+			<!-- I am the searchbox and To Form -->
     	<div class="col-sm-12">
       	<div class="col-sm-2 to">
         	<form>
@@ -62,7 +62,7 @@
 		
         <script>
 					
-					// getConversations.php are called to load all conversations
+					// getConversations.php is called to load all conversations
             $(function() 
             {
                     $.ajax({
@@ -76,7 +76,7 @@
                     })
             })
 						
-						// send message
+						// send message to the user whose name is in the To: box
             function sendmsg()
             {
                 var sendid = $('#senderid').val();
@@ -106,7 +106,7 @@
                         
                     }
             }
-					
+            // Searchbox functionality, when you press a key in the searchbox this is run
             $(function() 
             {
                 $(".searchtext").on("keydown", function(e) {
@@ -127,11 +127,13 @@
                 })
                 
             })
+            // hides the searchbox if you are not clicking in the searchbox
             $(".reciever").on("blur", function(e){
 				if($("#searchboxdiv").data("mouseDown") != true){
 					hideSearchBox();
 				}
 			});
+            //hides the box if you have completed a click mousedown + mouseup to make sure the anchor tag onclick is triggered
 			$("#searchboxdiv").on("mousedown", function(e){
 				$("#searchboxdiv").data("mouseDown", true);
 			});
@@ -143,7 +145,7 @@
             $('.newconversation').on('click', function() {
                 $('.reciever').show();
             });
-            
+            //showconversations between the user and selected user, pos for filling the searchbox with the appropriate recipient name. WithUser is id of recipient
             function showConversation(withUser,pos)
             {
                 $(".content").empty();
@@ -165,11 +167,13 @@
                     })
 
             }
+            //Triggered by clicking on the name of a friend when you search for friends
             function selectFriend(val)
             {
                 $('.searchtext').val(val);
                 hideSearchBox();
             }
+            //show/hide searchbox 
             function showSearchBox()
             {
                 document.getElementById("searchboxdiv").style.visibility = 'visible';

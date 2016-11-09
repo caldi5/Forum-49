@@ -1,3 +1,4 @@
+<!-- Get the messages from the conversation --> 
 <?php
 
 require_once("../includes/init.php");

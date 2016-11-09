@@ -1,3 +1,4 @@
+<!-- remove a temp ban -->
 <?php
 	require_once("../includes/init.php");
 
