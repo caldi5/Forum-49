@@ -37,16 +37,14 @@
 			$stmt->execute();
 			$stmt->bind_result($id);
 			while ($stmt->fetch()) 
-			{
 				$ids[] = $id;
-			}
 			$stmt->close();
 
-			
+			if(empty($ids))
+				return false;
+
 			foreach($ids as $id) 
-			{
 				$categories[] = new category($id);
-			}
 
 			return $categories;
 		}
