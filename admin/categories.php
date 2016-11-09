@@ -16,7 +16,7 @@
 	if (isset($_GET['action']) && isset($_GET['id']))
 	{
 		if($_GET['action'] === "delete")
-			(new category($_GET['id']))->deleteCategory();
+			(new category($_GET['id']))->delete();
 	}
 
 	//-----------------------------------------------------
@@ -24,7 +24,7 @@
 	//-----------------------------------------------------
 	if(isset($_POST["newCategory"])) 
 	{
-		newCategory($_POST["categoryName"], $_POST["ordering"]);
+		category::newCategory($_POST["categoryName"], $_POST["ordering"]);
 	}
 
 ?>

@@ -50,7 +50,21 @@
 			$this->sortOrder = $sortOrder;
 		}
 
-		public function deleteCategory()
+		public static function newCategory($categoryName, $ordering)
+		{
+			global $conn;
+			global $error;
+			
+			$stmt = $conn->prepare('INSERT INTO categories(name, ordering) VALUES (?,?)');
+			$stmt->bind_param('si', $categoryName, $ordering);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			$stmt->close();
+			return true;
+		}
+
+		public function delete()
 		{
 			global $conn;
 			$stmt = $conn->prepare('DELETE FROM categories WHERE id = ?');
@@ -137,6 +151,22 @@
 			$this->guestAccess = $guestAccess;
 		}
 
+		public static function newForum($forumName, $description, $categoryID, $guestAccess, $ordering)
+		{
+			global $conn;
+
+			if($categoryID === false)
+				return false;
+
+			$stmt = $conn->prepare('INSERT INTO forums(name, description, category, guestAccess, ordering) VALUES (?,?,?,?,?)');
+			$stmt->bind_param('ssiii', $forumName, $description, $categoryID, $guestAccess, $ordering);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			$stmt->close();
+			return true;
+		}
+
 		public function delete()
 		{
 			global $conn;
@@ -173,7 +203,7 @@
 			return $posts;
 		}
 
-		function getReportedPosts()
+		public function getReportedPosts()
 		{
 			global $conn;
 
@@ -201,7 +231,7 @@
 			return $postReports;
 		}
 
-		function getReportedComments()
+		public function getReportedComments()
 		{
 			global $conn;
 

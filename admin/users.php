@@ -16,7 +16,7 @@
 	if (isset($_GET['action']) && isset($_GET['id']))
 	{
 		if($_GET['action'] === "delete" && $_GET['id'] !== $currentUser->id)
-			deleteUser($_GET['id']);
+			user::deleteUser($_GET['id']);
 	}
 
 	//-----------------------------------------------------
