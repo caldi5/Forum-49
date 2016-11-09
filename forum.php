@@ -88,10 +88,10 @@
 			{
 				echo '<p class="post-poster"><span class="admin">'.$user->username. ' [A]</span></p>';
 			}
-			/*elseif ($user->isModerator())
+			elseif ($user->isModerator($forum->id))
 			{
 				echo '<p class="post-poster"><span class="mod">'.$user->username.' [M]</span></p>';
-			}*/
+			}
 			else
 			{
 				echo '<p class="post-poster">'.$user->username.'</p>';
