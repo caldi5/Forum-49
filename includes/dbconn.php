@@ -1,4 +1,7 @@
 <?php
+
+// This file contains the default connection to the database.
+
 $servername = "sql.srv247.se";
 $username = "root";
 $password = "Lunar.1471!";

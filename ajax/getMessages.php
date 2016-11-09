@@ -1,5 +1,11 @@
 <?php
 
+	/*
+
+		This file either gets all of the messages between the current user and another user, or only gets some of the messages based on a timestamp.
+
+	*/
+
 	require_once("../includes/init.php");
 
 	$userID = $currentUser->id;
@@ -8,8 +14,10 @@
 	if($userID == false)
 		return false;
 
+	// If no timestamp was specefied.
 	if (!isset($_GET['t']))
 	{
+		// SQL gets all of the messages and if the message was sent or received.
 		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) order by timestamp desc limit 20");
 
 		$stmt->bind_param('iiiii', $userID, $userID, $userID, $partnerID, $partnerID);
@@ -23,7 +31,6 @@
 
 		while ($row = $result->fetch_array())
 		{
-			//$row['message'] = htmlentities($row['message']);
 			$dataArray[] = $row;
 		}
 
@@ -33,6 +40,7 @@
 	{
 		$time = $_GET['t'];
 
+		// Same as before but now also checks the timestamp.
 		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) and (timestamp > ?) order by timestamp desc limit 20");
 
 		$stmt->bind_param('iiiiii', $userID, $userID, $userID, $partnerID, $partnerID, $time);

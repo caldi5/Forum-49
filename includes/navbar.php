@@ -1,3 +1,9 @@
+<!--
+
+	This file contains the navbar
+
+-->
+
 <?php require_once(__DIR__ . "/../functions/user.php"); ?>
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">

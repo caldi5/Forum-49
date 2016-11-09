@@ -1,22 +1,21 @@
 <?php
+
+	/*
+	This file either gets all of the current users friends,
+	or this users friends that match a serach string.
+
+	*/
+
 	require_once("../includes/init.php");
 
 	$userID = $currentUser->id;
 	if($userID == false)
 		return false;
 
-	// SQL för redan startade konversationer.
-/*
-	$stmt = $conn->prepare("select partner as partnerID, (select username from users where id = partner) as partnerUsername from
-(SELECT (IF (to_user = ?, from_user, to_user)) as partner FROM
-(select to_user, from_user from messages where to_user = ? OR from_user = ? order by timestamp desc) as mess
-GROUP BY  least(to_user,  from_user), greatest(to_user ,  from_user)) as partners");
-
-$stmt->bind_param('iii', $userID, $userID, $userID);
-*/
+	// If no search string is set.
 	if (!isset($_GET['n']))
 	{
-		// SQL för alla vänner.
+		// SQL gets all of the current users friends.
 		$stmt = $conn->prepare("SELECT (IF (userid = ?, userid2, userid)) partnerID, (select username from users where id = partnerID) as partnerUsername FROM friends WHERE userid = ? or userid2 = ?");
 		$stmt->bind_param('iii', $userID, $userID, $userID);
 		
@@ -28,6 +27,7 @@ $stmt->bind_param('iii', $userID, $userID, $userID);
 		if ($result->num_rows == 0)
 			return false;
 
+		// Put the data into an array.
 		while ($row = $result->fetch_array())
 		{
 			$dataArray[] = $row;		
@@ -37,9 +37,11 @@ $stmt->bind_param('iii', $userID, $userID, $userID);
 	}
 	else
 	{
+		// If there is a search string.
 		$name =$_GET['n'];
 		$name = $name.'%';
 
+		// SQL same as before, but the friends has to match the search string.
 		$stmt = $conn->prepare("SELECT * FROM (SELECT (IF (userid = ?, userid2, userid)) partnerID, (select username from users where id = partnerID) as partnerUsername FROM friends WHERE (userid = ? or userid2 = ?)) as first WHERE partnerUsername like ?");
 		$stmt->bind_param('iiis', $userID, $userID, $userID, $name);
 		

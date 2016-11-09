@@ -1,4 +1,7 @@
 <?php
+
+	// This file sets all of the messages to read in a conversation
+
 	require_once("../includes/init.php");
 
 	if (!isset($_GET['id']))
@@ -7,8 +10,9 @@
 	$id = $currentUser->id;
 	$partner = $_GET['id'];
 
-	$stmt = $conn->prepare("UPDATE messages SET isread = 1 WHERE (to_user = ? and from_user = ?) or (to_user = ? and from_user = ?)");
-	$stmt->bind_param('iiii', $id, $partner, $partner, $id);
+	// The SQL to update the isread column
+	$stmt = $conn->prepare("UPDATE messages SET isread = 1 WHERE to_user = ? and from_user = ?");
+	$stmt->bind_param('iiii', $id, $partner);
 	$stmt->execute();
 	$stmt->close();
 

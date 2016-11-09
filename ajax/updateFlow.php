@@ -1,8 +1,23 @@
 <?php
+
+	/*
+
+		This file updates the flow page.
+
+	*/
+
 	require_once("../includes/init.php");
 
 	$time = $_GET['t'];
 
+
+	/*
+
+	The first section select all of the new comments.
+	The second section select all of the new posts.
+	Then we union theese two sections.
+
+	*/
 	$stmt = $conn->prepare('
 (SELECT "comment" as type, (SELECT username from users where id = userID) as username, (SELECT title from posts where id = postID) as post, postID, (SELECT name FROM forums WHERE id = (SELECT forum FROM posts WHERE id = postID)) as forum, text, created_at, created_at as date FROM comments WHERE created_at > ?)
 UNION

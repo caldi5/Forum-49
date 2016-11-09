@@ -1,6 +1,12 @@
 <?php
 
 	require_once("includes/init.php");
+
+	/*
+
+		Flow displays all of the current events on the site.
+
+	*/
 	
 ?>
 
@@ -11,9 +17,11 @@
 		<title>Flow</title>
 
 		<script type="text/javascript">
+			// last keeps track of the last time something happened.
 			var last = parseInt(<?php echo time(); ?>, 10);
 			var data = new Array();
 
+			// Function that checks, and gets, new updates by using AJAX.
 			function update() 
 			{
 				var xmlhttp = new XMLHttpRequest();
@@ -23,6 +31,7 @@
 						window.last = data[data.length-1].created_at;
 						//$("#liveContainer").prepend(this.responseText);
 						$.each(data, function(index, value){
+							// If a new thing has happpend we set last to the timestamp of that thing.
 							if (index == window.data.length-1)
 							{
 								window.last = value.created_at;
@@ -48,6 +57,7 @@
 				xmlhttp.send();
 			};
 
+			// Runs the function every 5 seconds.
 			setInterval(update, 5000);
 		</script>
 	</head>
