@@ -17,7 +17,11 @@
 		header('Location: index.php');
 		die;
 	}
-
+    if($currentUser->isTempBannedOnForum($_GET['id']))
+    {
+        header('Location: index.php');
+		die;
+    }
 	if($currentUser->isModerator($forum->id))
 	{
 		$redirectID = $forum->id;

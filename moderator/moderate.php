@@ -3,16 +3,16 @@
 	require_once("../includes/init.php");
 
 	//Rediret to forums if no ID is set or if no forum by that ID exists
-	if(!isset($_GET['id']) OR !$currentUser->isModeratorID($currentUser->id,$_GET['id']))
+	if(!isset($_GET['id']) OR (!$currentUser->isModeratorID($currentUser->id,$_GET['id']) AND !$currentUser->isAdmin()))
 	{
-		header("Location: ../forums.php");
+		header("Location: ../forum.php");
 		die();
 	}
 
 	try {
 		$forum = new forum($_GET['id']);
 	} catch (Exception $e) {
-		header("Location: forums.php");
+		header("Location: forum.php");
 		die();
 	}
 
@@ -49,17 +49,21 @@
 			<div class="col-sm-6" style="padding:0;">
 			<a href="#" onclick="showForumReports(<?php echo $_GET['id']; ?>)" class="list-group-item">Reports</a>
 			</div>
+                <table class="table">
+                    <tr>
+                        <td><form class="form-inline">User: <input type="text" class="form-control" id="user"></form></td>
+                        <td><button onclick="addBan(<?php echo $_GET['id']; ?>)" type="button" class="btn btn-primary pull-right">Add Ban</button></td>
+                    </tr>
+                </table>
 			<div class="tempbans">
 			</div>
 		</div>
 		<!-- Content end -->
-		<script src="/js/custom/admin-menu.js"></script> 
 <?php include("../includes/standard_footer.php"); ?>
 	</body>
 		<script>
 		function showTempBans(forumid)
 		{
-
 			$.ajax({
 				method: "post",
 				url: "../ajax/tempbannedusers.php",
@@ -78,9 +82,18 @@
 				async: true,
 				data: {userid: id}
 			})
-			.success : function(data){
-				$("#")
-			}
 		} 
+        function addBan(frmid)
+            {
+                alert(frmid);
+                var user = $("#user").val();
+                var time = $("#untill").val();
+                $.ajax({
+                    method: "post",
+                    url: "../ajax/addBan.php",
+                    async: true,
+                    data: {username: user, time: time, forumid: frmid}
+                })
+            }
 		</script>
 </html>
