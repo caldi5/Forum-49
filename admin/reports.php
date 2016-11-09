@@ -40,7 +40,7 @@
 					</div>
 					<div class="panel-body">
 <?php
-	$categories = getCategories();
+	$categories = category::getAllCategories();
 
 	foreach ($categories as $category) 
 	{

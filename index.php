@@ -12,7 +12,7 @@
 <?php	displayAlerts(); ?>
 <?php
 
-			$categories = getCategories();
+			$categories = category::getAllCategories();
 			foreach ($categories as $category) 
 			{
 				$forums = $category->getForums(3);

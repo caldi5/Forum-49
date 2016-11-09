@@ -85,7 +85,7 @@
 								</thead>
 								<tbody>
 <?php
-	$categories = getCategories();
+	$categories = category::getAllCategories();
 	foreach ($categories as $category) 
 	{
 		echo '<tr>';

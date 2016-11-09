@@ -81,7 +81,7 @@
 											<span class="input-group-addon">Category:</span>
 											<select class="form-control" name="category">
 <?php
-	$categories = getCategories();
+	$categories = category::getAllCategories();
 	foreach ($categories as $category) 
 	{
 		echo '<option value="'. $category->id .'">'. $category->name .'</option>';

@@ -64,7 +64,7 @@
 								<label>Category:</label>
 									<select class="form-control" name="category">
 <?php
-	$categories = getCategories();
+	$categories = category::getAllCategories();
 	foreach ($categories as $category) 
 	{
 		if($forum->category === $category->id)

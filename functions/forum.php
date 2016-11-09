@@ -2,27 +2,6 @@
 	require_once __DIR__.'/../includes/dbconn.php';
 	require_once __DIR__.'/../functions/report.php';
 
-	//returns an array with all categories names
-	function getCategories()
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT id FROM categories');
-		$stmt->execute();
-		$stmt->bind_result($id);
-		while ($stmt->fetch()) 
-		{
-			$ids[] = $id;
-		}
-		$stmt->close();
-
-		
-		foreach($ids as $id) 
-		{
-			$categories[] = new category($id);
-		}
-
-		return $categories;
-	}
 
 	class category
 	{
@@ -49,6 +28,29 @@
 			$this->name = $name;
 			$this->sortOrder = $sortOrder;
 		}
+
+		//returns an array with all categories objects
+		public static function getAllCategories()
+		{
+			global $conn;
+			$stmt = $conn->prepare('SELECT id FROM categories');
+			$stmt->execute();
+			$stmt->bind_result($id);
+			while ($stmt->fetch()) 
+			{
+				$ids[] = $id;
+			}
+			$stmt->close();
+
+			
+			foreach($ids as $id) 
+			{
+				$categories[] = new category($id);
+			}
+
+			return $categories;
+		}
+
 
 		public static function newCategory($categoryName, $ordering)
 		{
