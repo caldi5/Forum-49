@@ -145,7 +145,7 @@
 									<tr>
 										<td><?php echo $forum->id; ?></td>
 										<td><?php echo $forum->name; ?></td>
-										<td><?php $category->name; ?></td>
+										<td><?php echo $category->name; ?></td>
 										<td><?php echo $forum->sortOrder; ?></td>
 										<td><?php echo $forum->guestAccess; ?></td>
 										<td><?php echo $forum->getNumberOfPosts(); ?></td>
