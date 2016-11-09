@@ -3,7 +3,7 @@
 	require_once("../includes/init.php");
 
 	//Rediret to forums if no ID is set or if no forum by that ID exists
-	if(!isset($_GET['id']) OR !$currentUser->isModeratorID($currentUser->id,$_GET['id']))
+	if(!isset($_GET['id']) || (!$currentUser->isModeratorID($currentUser->id,$_GET['id']) && !$currentUser->isAdmin()))
 	{
 		header("Location: ../forums.php");
 		die();

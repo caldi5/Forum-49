@@ -18,12 +18,6 @@
 		die;
 	}
 
-	if($currentUser->isModerator($forum->id))
-	{
-		$redirectID = $forum->id;
-		header('Location: /moderator/moderator.php?id='.$redirectID);
-	}
-
 	if (isset($_GET['page']))
 		$page = $_GET['page'];
 	else
@@ -59,7 +53,7 @@
 	{
 		echo '<div class="actions">';
 		echo '<a href="new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
-		echo '<a href="#" class="btn btn-default" role="button">Moderate</a>';
+		echo '<a href="/moderator/moderate.php?id='.$forum->id.'" class="btn btn-default" role="button">Moderate</a>';
 		echo '<a href="admin/editforum.php?id='.$forum->id. '" class="btn btn-default" role="button">Administrate</a>';
 		echo '</div>';
 	}
@@ -67,7 +61,7 @@
 	{
 		echo '<div class="actions">';
 		echo '<a href="new-post.php?forum='.$forum->id.'" class="btn btn-default" role="button">New Post</a>';
-		echo '<a href="moderate.php" class="btn btn-default" role="button">Moderate</a>';
+		echo '<a href="/moderator/moderate.php?id='.$forum->id.'" class="btn btn-default" role="button">Moderate</a>';
 		echo '</div>';
 	}
 	elseif ($currentUser->isLoggedIn())
