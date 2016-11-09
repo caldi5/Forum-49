@@ -7,7 +7,7 @@ if(isset($_POST['withUser']))
 $withUser = $_POST['withUser'];
 $result = $conn->prepare("SELECT username, message, messages.timestamp FROM users 
                    JOIN messages ON users.id = messages.from_user
-				   WHERE (to_user = ? AND from_user = ?) OR (to_user = ? AND from_user = ?)");
+				   WHERE (to_user = ? AND from_user = ?) OR (to_user = ? AND from_user = ?) ORDER BY messages.timestamp");
 $result->bind_param("iiii", $withUser, $currentUser->id, $currentUser->id, $withUser);
 $result->execute();
 $result->store_result();
