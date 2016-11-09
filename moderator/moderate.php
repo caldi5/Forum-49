@@ -52,7 +52,7 @@
                 <table class="table">
                     <tr>
                         <td><form class="form-inline">User: <input type="text" class="form-control" id="user"></form></td>
-                        <td><form class="form-inline">Untill: <input type="text" class="form-control" id="untill" placeholder="yy-mm-dd"></form></td>
+                        <td><form class="form-inline">Untill: <input type="text" class="form-control" id="untill" placeholder="hh:mm yy-mm-dd"></form></td>
                         <td><button onclick="addBan(<?php echo $_GET['id']; ?>)" type="button" class="btn btn-primary pull-right">Add Ban</button></td>
                     </tr>
                 </table>
@@ -63,6 +63,7 @@
 <?php include("../includes/standard_footer.php"); ?>
 	</body>
 		<script>
+        //Show people that are temporarily banned in forum with forumid, returns table with answers to the tempban div
 		function showTempBans(forumid)
 		{
 			$.ajax({
@@ -75,6 +76,7 @@
 				$(".tempbans").html(data);
 			})
 		}
+        //remove a temp ban with the given user id
 		function removeBan(id)
 		{
 			$.ajax({
@@ -83,10 +85,10 @@
 				async: true,
 				data: {userid: id}
 			})
-		} 
+		}
+        // add a temp ban to the forum with frmid, takes the username from the user form and Untill as a datetime from untill form
         function addBan(frmid)
             {
-                alert(frmid);
                 var user = $("#user").val();
                 var time = $("#untill").val();
                 $.ajax({
