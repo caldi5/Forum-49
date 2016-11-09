@@ -49,7 +49,7 @@
 		}
 
 		// Returns the username.
-		public static function getUsernameID ($userID)
+		public static function getUsername($userID)
 		{
 			global $conn;
 			$stmt = $conn->prepare('SELECT username FROM users WHERE id = ?');
@@ -288,7 +288,7 @@
 						//Skriver ut alla friendrequests som alerts som man kan accepera eller deny'a
 						foreach($friendRequests as $friendRequest) 
 						{
-							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". user::getUsernameID($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
+							$alerts[] = new alert("info", "New Friend Reques:", "You have a new request from: ". user::getUsername($friendRequest) .'. <a href="#" onclick="javascript:acceptFriendRequest('. $friendRequest .');" data-dismiss="alert">Accept</a> / <a href="#" onclick="javascript:denyFriendRequest('. $friendRequest .');" data-dismiss="alert">Deny</a>'. '');
 						}
 					}
 				}
@@ -464,7 +464,7 @@
 		{
 			global $conn;
 			global $alerts;
-			$username = user::getUsernameID($userID);
+			$username = user::getUsername($userID);
 
 			if(!$username)
 			{

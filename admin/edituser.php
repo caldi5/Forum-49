@@ -10,7 +10,7 @@
 	}
 
 	//Rediret to users if no ID is set or if no user by that ID exists
-	if(!isset($_GET['id']) OR !user::getUsernameID($_GET['id']))
+	if(!isset($_GET['id']) OR !user::getUsername($_GET['id']))
 	{
 		header("Location: users.php");
 		die();
