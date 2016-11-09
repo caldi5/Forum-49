@@ -48,7 +48,6 @@
 <?php displayAlerts(); ?>
 			<div class="row">
 <?php include("../includes/admin_menu.php"); ?>
-				<div class="col-sm-10">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Edit User
@@ -86,7 +85,6 @@
 							</form>
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 		<!-- Content end -->
