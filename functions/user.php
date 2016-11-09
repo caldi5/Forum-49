@@ -201,10 +201,10 @@
 			else
 				return true;
 		}
-        public function isTempBannedOnForum($forumID)
-        {
-            global $conn;
 
+		public function isTempBannedOnForum($forumID)
+		{
+			global $conn;
 			$stmt = $conn->prepare('SELECT COUNT(*) from tempban WHERE id = ? AND onforum = ?');
 			$stmt->bind_param('ii', $this->id, $forumID);
 			$stmt->execute();
@@ -218,7 +218,7 @@
 				return false;
 			else
 				return true;
-        }
+		}
 		//-----------------------------------------------------
 		// Security END
 		//-----------------------------------------------------
