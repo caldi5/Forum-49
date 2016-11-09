@@ -67,7 +67,7 @@
             {
                     $.ajax({
                         method: "post",
-                        url: "ajax/getConversations.php",
+                        url: "/ajax/getConversations.php",
                         async: true
                         
                     })
@@ -95,7 +95,7 @@
                     {
                         $.ajax({
                             method: "post",
-                            url: "ajax/messageparse.php",
+                            url: "/ajax/messageparse.php",
                             async: true,
                             data: { senderid: sendid,reciever: reciever, message: msg }
                         })
@@ -115,7 +115,7 @@
                     
                     $.ajax({
                         method: "post",
-                        url: "friendsearch.php",
+                        url: "/ajax/friendsearch.php",
                         async: true,
                         data: {search: searchtext}
                         
