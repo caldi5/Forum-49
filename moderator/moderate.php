@@ -16,21 +16,6 @@
 		die();
 	}
 
-	if(isset($_POST["editForumForm"]))
-	{
-		$stmt = $conn->prepare('UPDATE forums SET name=?, description=?, category=?, ordering=? WHERE id=?');
-		$stmt->bind_param('ssiii', $_POST["name"], $_POST["description"], $_POST["category"], $_POST["sortOrder"], $_GET['id']);
-		$stmt->execute();
-		if(!empty($stmt->error))
-		{
-			$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
-		}
-		else
-		{
-			$alerts[] = new alert("success", "Success:", "Successfully Updated Forum");
-		}
-		$stmt->close();
-	}
 	
 ?>
 <!DOCTYPE html>
