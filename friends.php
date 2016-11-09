@@ -2,6 +2,7 @@
 
 	require_once("includes/init.php");	
 
+	// If currentUser is NOT logged in. Return to index.php
 	if(!$currentUser->isLoggedIn())
 	{
 		// GO TO index.php
@@ -9,7 +10,7 @@
 		die();
 	}
 
-    // SELECT alla user ID som är vänner med varandra. Ta sedan ut alla IDs som != currentUser
+    // Call currentUser function and save result to $friends variable.
 	$friends = $currentUser->getFriends();
 ?>
 <!DOCTYPE html>
@@ -28,13 +29,14 @@
 		 		<div class="col-lg-2">
 					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
-						<div class="profile-usertitle-name">
 						
+						<!-- Display currentUser->username -->
+						<div class="profile-usertitle-name">
 												<h1><?php echo $currentUser->username; ?></h1>
-					
 						</div>
 						<div class="profile-usertitle-userType">
 												
+							<!-- Check if currenUser is Admin to display right usertype (Normal user or admin)-->
 						<?php  
 												if($currentUser->isAdmin())
 												{
@@ -68,11 +70,12 @@
 					<!-- END MENU -->
 				</div>
 		
-				<!-- OVERVIEW CONTENT -->
+				<!-- FRIENDS LOAD -->
 				<div class="col-lg-10">
 					<div class="col-lg-5 profile-comments">
 						<h3>Friends</h3>
 						<?php
+							// If $friends variable is empty the user has no friends
 							if (empty($friends))
 							{
 								echo '<div class="col-lg-12 profile-comment">';
@@ -80,14 +83,17 @@
 								echo '</div>';
 							}
 							else
-							{
+							{									// echo html to show each friend and create link to friends profile page
                                 foreach ($friends as $friends)
 								{
+									// create link to friends profile page
 									echo '<a href="profile.php?user='.htmlspecialchars($friends->username).'">';
 									echo '<div class="col-lg-12 profile-comment">';
-									
+																		
+																		// echo friends username
                                     echo htmlspecialchars($friends->username);
 									
+																		// Show friends since
                                     echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $currentUser->friendsSince($friends->id)).'</span>';
 																		
 									echo '</div>';
@@ -97,7 +103,7 @@
 						?>
 					</div>
 				</div>
-				<!-- OVERVIEW CONTENT END -->
+				<!-- FRIENDS LOAD END -->
 			</div>
 		</div>
 		<!-- Content end -->
