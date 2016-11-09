@@ -1,8 +1,8 @@
 <?php
-$servername = "";
-$username = "";
-$password = "";
-$dbname = "";
+$servername = "sql.srv247.se";
+$username = "root";
+$password = "Lunar.1471!";
+$dbname = "dva231";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
