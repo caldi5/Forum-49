@@ -14,7 +14,7 @@
 		die();
 	}
 
-	if($currentUser->id === $post->creator || $currentUser->isAdmin())
+	if($currentUser->id === $post->creator || $currentUser->isAdmin() || $currentUser->isModerator($post->forum))
 	{
 		echo $post->delete();
 	}

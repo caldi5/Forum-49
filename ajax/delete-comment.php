@@ -7,6 +7,7 @@
 	try
 	{
 		$comment = new Comment($_GET['id']);
+		$post = new post($comment->post);
 	}
 	catch(Exception $e)
 	{
@@ -14,7 +15,7 @@
 		die();
 	}
 
-	if($currentUser->id === $comment->creator || $currentUser->isAdmin())
+	if($currentUser->id === $comment->creator || $currentUser->isAdmin() || $currentUser->isModerator($post->forum))
 	{
 		echo $comment->delete();
 	}
