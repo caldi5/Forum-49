@@ -10,7 +10,7 @@
 	}
 
 	if(isset($_GET["user"]))
-		$user = new user(getUserID($_GET["user"]));
+		$user = new user(user::getUserID($_GET["user"]));
 	else
 		$user = new user($currentUser->id);
 

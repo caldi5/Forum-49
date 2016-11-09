@@ -3,7 +3,7 @@
 
 	if(isset($_POST['message']) && isset($_POST['reciever']))
 	{
-		$touser = getUserID($_POST['reciever']);
+		$touser = user::getUserID($_POST['reciever']);
 		
 		if($touser !== false)
 		{

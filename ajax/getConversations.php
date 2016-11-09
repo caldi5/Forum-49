@@ -26,7 +26,7 @@ if($result->num_rows > 0)
 {
     while($result->fetch())
     {
-         $conversWithID = getUserID($name)
+         $conversWithID = user::getUserID($name)
          ?>
                     
                     <a href="#" class="list-group-item" onclick="showConversation('<?php echo $conversWithID; ?>','<?php echo $i; ?>')">

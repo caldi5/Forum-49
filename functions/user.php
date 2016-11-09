@@ -87,6 +87,18 @@
 			return $id;
 		}
 
+		public static function deleteUser($userID)
+		{
+			global $conn;
+			$stmt = $conn->prepare('DELETE FROM users WHERE id = ?');
+			$stmt->bind_param('i', $userID);
+			$stmt->execute();
+			if(!empty($stmt->error))
+				return false;
+			$stmt->close();
+			return true;
+		}
+
 		//-----------------------------------------------------
 		// Security Start
 		//-----------------------------------------------------
@@ -108,7 +120,7 @@
 			global $conn;
 			global $alerts;
 
-			//Validate old password
+			//Get current password hash
 			$stmt = $conn->prepare('SELECT password FROM users WHERE id=?');
 			$stmt->bind_param('i', $this->id);
 			$stmt->execute();			
@@ -116,6 +128,7 @@
 			$stmt->fetch();
 			$stmt->close();
 			
+			//Validate old password
 			if(password_verify($oldPassword , $passwordHash))
 			{
 				$this->setPassword($this->id, $newPassword);
@@ -124,42 +137,6 @@
 			else
 			{
 				$alerts[] = new alert("danger", "Error:", "Wrong current password");
-			}
-		}
-
-		public function login($usernameOrEmail, $password)
-		{
-			global $conn;
-			global $alerts;
-
-			$stmt = $conn->prepare('SELECT id, username, password, role, email, validEmail, banned FROM users WHERE username = ? OR email = ?');
-			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
-			$stmt->execute();
-			
-			if(!empty($stmt->error))
-				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
-			
-			$stmt->bind_result($id, $username, $passwordHash, $role, $email, $validEmail, $banned);
-			$stmt->fetch();
-			$stmt->free_result();
-			$stmt->close();
-			
-			if(password_verify($password , $passwordHash))
-			{
-				$_SESSION["id"] = $id;
-				$this->id = $id;
-				$this->username = $username;
-				$this->role = $role;
-				$this->email = $email;
-				$this->validEmail = $validEmail;
-				$this->banned = $banned;
-				$this->loggedIn = ture;
-				return true;
-			}
-			else
-			{
-				$alerts[] = new alert("danger", "Error:", "Login Failed");
-				return false;
 			}
 		}
 
@@ -303,6 +280,42 @@
 		// Security Start
 		//-----------------------------------------------------
 
+		public function login($usernameOrEmail, $password)
+		{
+			global $conn;
+			global $alerts;
+
+			$stmt = $conn->prepare('SELECT id, username, password, role, email, validEmail, banned FROM users WHERE username = ? OR email = ?');
+			$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
+			$stmt->execute();
+			
+			if(!empty($stmt->error))
+				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
+			
+			$stmt->bind_result($id, $username, $passwordHash, $role, $email, $validEmail, $banned);
+			$stmt->fetch();
+			$stmt->free_result();
+			$stmt->close();
+			
+			if(password_verify($password , $passwordHash))
+			{
+				$_SESSION["id"] = $id;
+				$this->id = $id;
+				$this->username = $username;
+				$this->role = $role;
+				$this->email = $email;
+				$this->validEmail = $validEmail;
+				$this->banned = $banned;
+				$this->loggedIn = ture;
+				return true;
+			}
+			else
+			{
+				$alerts[] = new alert("danger", "Error:", "Login Failed");
+				return false;
+			}
+		}
+
 		public function isLoggedIn()
 		{
 			return $this->loggedIn;
@@ -324,10 +337,8 @@
 			$stmt->execute();
 			$stmt->store_result();
 			if(!empty($stmt->error))
-			{
-				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 				return false;
-			}
+
 			return true;
 		}
 
@@ -340,13 +351,12 @@
 			$stmt->bind_param('iiii', $this->id, $userID, $userID, $this->id);
 			$stmt->execute();
 			if(!empty($stmt->error))
-			{
 				return false;
-			}
+
 			return true;
 		}
 
-		//Returns an array of users
+		//Returns an array of users objects
 		public function getFriends()
 		{
 			global $conn;
@@ -408,6 +418,7 @@
 				return true;
 		}
 
+		//Returns an array of userID's (int)
 		public function getFriendRequests()
 		{
 			global $conn;
@@ -463,11 +474,11 @@
 			return true;
 		}
 
-		private function deleteFriendRequest($from, $to)
+		private function deleteFriendRequest($from)
 		{
 			global $conn;
 			$stmt = $conn->prepare('DELETE FROM friendRequests WHERE userid=? AND userid2=?');
-			$stmt->bind_param('ii', $from, $to);
+			$stmt->bind_param('ii', $from, $this->id);
 			$stmt->execute();
 		}
 
@@ -477,7 +488,7 @@
 				return false;
 
 			$this->addFriend($userID);
-			$this->deleteFriendRequest($userID, $this->id);
+			$this->deleteFriendRequest($userID);
 			return true;
 		}
 
@@ -486,7 +497,7 @@
 			if(!$this->friendRequestExists($userID))
 				return false;
 
-			$this->deleteFriendRequest($userID, $this->id);
+			$this->deleteFriendRequest($userID);
 			return true;
 		}
 		//-----------------------------------------------------
@@ -502,10 +513,8 @@
 			$stmt = $conn->prepare('SELECT COUNT(*) FROM messages WHERE to_user = ? AND isread = 0');
 			$stmt->bind_param('i', $this->id);
 			$stmt->execute();
-			$stmt->store_result();
 			$stmt->bind_result($count);
 			$stmt->fetch();
-			$stmt->free_result();
 			$stmt->close();
 
 			return $count;
@@ -545,12 +554,15 @@
 
 		public function newPost($forumID, $title, $text)
 		{
+			if(!$this->isLoggedIn())
+				return false;
+
 			if(strlen($title) < 2 || strlen($text) < 2 || strlen($text) > 5000 || strlen($title) > 40)
 				return false;
 
-			$time = time();
-
 			global $conn;
+
+			$time = time();
 			$stmt = $conn->prepare("INSERT INTO posts(creator, title, text, forum, created_at) VALUES (?,?,?,?,?)");
 			$stmt->bind_param('issii', $this->id, $title, $text, $forumID, $time);
 			$stmt->execute();
@@ -564,7 +576,7 @@
 			if(!$this->isLoggedIn())
 				return false;
 
-			if(strlen($text) > 5000)
+			if(strlen($text) > 5000 || strlen($text) < 2)
 				return false;
 
 			global $conn;
@@ -587,31 +599,5 @@
 	//======================================================================
 	// currentUser END
 	//======================================================================
-	
-
-
-
-
-
-	//To be removed use user::getUserID instead 
-	// Returns the user ID.
-	function getUserID ($usernameOrEmail)
-	{
-		global $conn;
-		$stmt = $conn->prepare('SELECT id from users where username = ? OR email = ?');
-		$stmt->bind_param('ss', $usernameOrEmail, $usernameOrEmail);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($id);
-
-		if($stmt->num_rows == 0)
-			return false;
-
-		$stmt->fetch();
-		$stmt->free_result();
-		$stmt->close();
-
-		return $id;
-	}
 
 ?>

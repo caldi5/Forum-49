@@ -19,7 +19,7 @@
 				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
 			else
 			{
-				$_SESSION['id'] = getUserID($_GET['email']);
+				$_SESSION['id'] = user::getUserID($_GET['email']);
 				$alerts[] = new alert("success", "Success:", "Your verified your email!");
 			}
 			$stmt->close();

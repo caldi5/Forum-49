@@ -53,7 +53,6 @@
 		public static function newCategory($categoryName, $ordering)
 		{
 			global $conn;
-			global $error;
 			
 			$stmt = $conn->prepare('INSERT INTO categories(name, ordering) VALUES (?,?)');
 			$stmt->bind_param('si', $categoryName, $ordering);
@@ -396,7 +395,7 @@
 		public $text;
 		public $createdAt;
 
-		function __construct($id)
+		public function __construct($id)
 		{
 			global $conn;
 				
@@ -419,7 +418,7 @@
 		}
 
 		//TODO: Fix somehow to make objet selfdestruct...
-		function delete()
+		public function delete()
 		{
 			global $conn;
 			$stmt = $conn->prepare('DELETE FROM comments WHERE id = ?');
