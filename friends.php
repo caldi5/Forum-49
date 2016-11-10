@@ -38,15 +38,15 @@
 												
 							<!-- Check if currenUser is Admin to display right usertype (Normal user or admin)-->
 						<?php  
-												if($currentUser->isAdmin())
-												{
-														echo "Administrator";
-												}
-												else
-												{
-														echo "User";
-												}
-										?>
+							if($currentUser->isAdmin())
+								{
+									echo "Administrator";
+								}
+							else
+								{
+									echo "User";
+								}
+						?>
 												
 						</div>
 					</div>
@@ -83,17 +83,17 @@
 								echo '</div>';
 							}
 							else
-							{									// echo html to show each friend and create link to friends profile page
+							{	// echo html to show each friend and create link to friends profile page
                                 foreach ($friends as $friends)
 								{
 									// create link to friends profile page
 									echo '<a href="profile.php?user='.htmlspecialchars($friends->username).'">';
 									echo '<div class="col-lg-12 profile-comment">';
 																		
-																		// echo friends username
+									// echo friends username
                                     echo htmlspecialchars($friends->username);
 									
-																		// Show friends since
+									// Show friends since
                                     echo '<br><span class="post-time"> Friends Since: '.date('H:i d/m/y', $currentUser->friendsSince($friends->id)).'</span>';
 																		
 									echo '</div>';
