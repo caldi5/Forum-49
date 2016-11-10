@@ -300,7 +300,7 @@
 		};
 		xmlhttp.open("GET", "/ajax/getMessages.php?id="+partner, true);
 		xmlhttp.send();
-		setRead(id);
+		setRead(partner);
 	}
 
 	// Close a conversation.
