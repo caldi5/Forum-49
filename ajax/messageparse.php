@@ -7,8 +7,7 @@
 		
 		if($touser !== false)
 		{
-			if($currentUser->sendMessage($touser, $_POST['message']))
-				echo '<p>Message sent successfully</p>';
+			$currentUser->sendMessage($touser, $_POST['message']);
 		}
 		else
 			echo '<p>User does not exist</p>';  
