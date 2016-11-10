@@ -199,6 +199,17 @@
             {
                 document.getElementById("searchboxdiv").style.visibility = 'hidden';
             }
+            </script>
+            <?php if(isset($_GET['user']))
+            {
+                ?>
+                    <script>
+                    $('.searchtext').val('<?php echo $_GET['user'] ?>');
+                    updateConversation('<?php echo $_GET['user'] ?>');
+                    </script>
+                <?php
+            } 
+            ?>
         </script>
 <?php require_once("includes/standard_footer.php"); ?>
 	</body>
