@@ -18,7 +18,7 @@
 	if (!isset($_GET['t']))
 	{
 		// SQL gets all of the messages and if the message was sent or received.
-		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) order by timestamp desc limit 20");
+		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at, timestamp as showTime from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) order by timestamp desc limit 20");
 
 		$stmt->bind_param('iiiii', $userID, $userID, $userID, $partnerID, $partnerID);
 		$stmt->execute();
@@ -31,6 +31,7 @@
 
 		while ($row = $result->fetch_array())
 		{
+			$row['showTime'] = date('H:i d/m/y', $row['showTime']);
 			$dataArray[] = $row;
 		}
 
@@ -41,7 +42,7 @@
 		$time = $_GET['t'];
 
 		// Same as before but now also checks the timestamp.
-		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) and (timestamp > ?) order by timestamp desc limit 20");
+		$stmt = $conn->prepare("select (IF (to_user = ?, 'received', 'sent')) as type, to_user as toID, from_user as fromID, message, isread, timestamp as created_at, timestamp as showTime from messages where (to_user = ? or from_user = ?) and (to_user = ? or from_user = ?) and (timestamp > ?) order by timestamp desc limit 20");
 
 		$stmt->bind_param('iiiiii', $userID, $userID, $userID, $partnerID, $partnerID, $time);
 		$stmt->execute();
@@ -54,6 +55,7 @@
 
 		while ($row = $result->fetch_array())
 		{
+			$row['showTime'] = date('H:i d/m/y', $row['showTime']);
 			$dataArray[] = $row;		
 		}
 

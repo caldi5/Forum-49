@@ -142,11 +142,11 @@
 					$.each(messages, function(index2, value2){
 						if (value2.type == "sent")
 						{
-							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageSent'>"+value2.message+"</div></div>");
+							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div title='"+value2.showTime+"' class='messageSent'>"+value2.message+"</div></div>");
 						}
 						else
 						{
-							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div class='messageReceived'>"+value2.message+"</div></div>");
+							$("#conversation"+index+" .conversationText .conversationMessages").append("<div class='message'><div title='"+value2.showTime+"' class='messageReceived'>"+value2.message+"</div></div>");
 						}
 						$("#conversation"+index+" .conversationFooterMini").css("background-color", "#ff3B3F");
 						$("#conversation"+index+" .conversationFooterMini").css("color", "white");
@@ -287,11 +287,11 @@
 				$.each(messages, function(index, value){
 					if (value.type == "sent")
 					{
-						$("#conversation"+id+" .conversationText .conversationMessages").prepend("<div class='message'><div class='messageSent'>"+value.message+"</div></div>");
+						$("#conversation"+id+" .conversationText .conversationMessages").prepend("<div class='message'><div title='"+value.showTime+"' class='messageSent'>"+value.message+"</div></div>");
 					}
 					else
 					{
-						$("#conversation"+id+" .conversationText .conversationMessages").prepend("<div class='message'><div class='messageReceived'>"+value.message+"</div></div>");
+						$("#conversation"+id+" .conversationText .conversationMessages").prepend("<div class='message'><div title='"+value.showTime+"' class='messageReceived'>"+value.message+"</div></div>");
 					}
 					var convo = $("#conversation"+id+" .conversationText .conversationMessages");
 					convo.scrollTop(convo.prop("scrollHeight"))
