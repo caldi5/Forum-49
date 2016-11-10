@@ -3,7 +3,6 @@
 <html>
 	<head>
 <?php require_once "includes/standard_head.php"; ?>    
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Messages</title>
 	</head>
 	<body>
@@ -59,7 +58,8 @@
 			
 		</div>
 		<!-- Content end -->
-		
+
+<?php require_once("includes/standard_footer.php"); ?>	
         <script>
 					
 					// getConversations.php is called to load all conversations
@@ -211,6 +211,5 @@
             } 
             ?>
         </script>
-<?php require_once("includes/standard_footer.php"); ?>
 	</body>
 </html>

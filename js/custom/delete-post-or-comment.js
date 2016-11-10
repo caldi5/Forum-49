@@ -7,6 +7,7 @@ function deleteComment(commentID)
 			{
 				if(response)
 				{
+					//remove the comment from the list without reloading the page
 					$("#commentid" + commentID).remove();
 				}
 			}
@@ -21,6 +22,7 @@ function deletePost(postID, forumID)
 			{
 				if(response)
 				{
+					//Redirect til forum since post does not exist anymore
 					window.location.href = "/forum.php?id=" + forumID;
 				}
 			}
