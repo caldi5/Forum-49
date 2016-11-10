@@ -70,6 +70,7 @@
 				async: true,
 				data: {userid: id}
 			})
+			showTempBans(<?php echo $_GET['id']; ?>);
 		}
         // add a temp ban to the forum with frmid, takes the username from the user form and Untill as a datetime from untill form
         function addBan(frmid)
@@ -82,6 +83,8 @@
                     async: true,
                     data: {username: user, time: time, forumid: frmid}
                 })
+
+				showTempBans(<?php echo $_GET['id']; ?>);
             }
 		</script>
 </html>
