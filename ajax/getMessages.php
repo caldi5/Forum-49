@@ -11,7 +11,7 @@
 	$userID = $currentUser->id;
 	$partnerID = $_GET['id'];
 
-	if($userID == false)
+	if(empty($userID) || !isset($userID))
 		return false;
 
 	// If no timestamp was specefied.
