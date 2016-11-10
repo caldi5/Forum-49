@@ -18,12 +18,11 @@
 				foreach ($categories as $category) 
 				{
 					$forums = $category->getForums(3);
-
-					echo '<div class="row category">';
-					echo '<h3 class="category-title"><a href="category.php?id='.$category->id.'">'.$category->name.'</a></h3>';
 					
 					if(!empty($forums))
 					{
+						echo '<div class="row category">';
+						echo '<h3 class="category-title"><a href="category.php?id='.$category->id.'">'.$category->name.'</a></h3>';
 						foreach($forums as $forum)
 						{
 							if(!$currentUser->isLoggedIn() && !$forum->guestAccess)
@@ -43,22 +42,15 @@
 							echo '</div>';
 							echo '</div>';
 							echo '</a>';
-						}
 					}
-					else
-					{
-						// If there's not one or more forums we print a sorry message.
-						echo '<div class="alert alert-info">' . "\r\n";
-						echo '<h3><strong>Sorry!</strong> There\'s no forum in this category just yet!</h3>' . "\r\n";
-						echo '</div>' . "\r\n";
-					}				
 					echo '</div>';
-				}
+				}			
 			}
-			else
-			{
-				echo 'No categories? Something is wrong here.';
-			}
+		}
+		else
+		{
+			echo 'No categories? Something is wrong here.';
+		}
 ?>
 		</div>
 		<?php require_once("includes/standard_footer.php"); ?>
