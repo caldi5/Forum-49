@@ -30,6 +30,16 @@
 			$alerts[] = new alert("success", "Success:", "Successfully Updated User");
 		}
 		$stmt->close();
+
+		//Om man tar bort rollen som moderator, ta bort usern från moderators tabellen
+		if($_POST["role"] !== "Moderator")
+		{
+			var_dump($_GET['id']);
+			$stmt = $conn->prepare('DELETE FROM moderators WHERE userid=?');
+			$stmt->bind_param('i', $_GET['id']);
+			$stmt->execute();
+			$stmt->close();
+		}
 	}
 
 	$user = new user($_GET['id']);
