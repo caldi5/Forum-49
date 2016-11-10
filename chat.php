@@ -179,7 +179,7 @@
 		$("#startNewConversation .startNewConversationToggle").css("width", "200px");
 		$("#startNewConversation .startNewConversationToggle").css("text-align", "left");
 		$("#startNewConversation .startNewConversationToggle").css("height", "35px");
-		$("#startNewConversation .conversationPartners").append("<ul>");
+		$("#startNewConversation .conversationPartners").append("<div class='partnerContainer'><ul>");
 		$("#startNewConversation").css("width", "200px");
 		$("#startNewConversation").css("margin-right", "0px");
 		$("#startNewConversation").append("<input onkeyup='updateConversationPartners(this.value)' class='covnoPartnerForm' type='text'>");

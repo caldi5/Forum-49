@@ -612,7 +612,6 @@ a .profile-post:hover
 	height: 300px;
 	width: 200px;
 	cursor: default;
-	overflow-y: scroll;
 }
 
 .conversationPartners ul
@@ -683,4 +682,10 @@ a .profile-post:hover
 {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
+}
+
+.partnerContainer
+{
+	height: calc(100% - 35px);
+	overflow-y: scroll;
 }
