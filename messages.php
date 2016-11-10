@@ -76,6 +76,24 @@
                     })
             })
 						
+             function updateConversation(withUser)
+            {
+                $(".content").empty();
+                 $.ajax({
+                        method: "post",
+                        url: "ajax/updateConversationmessage.php",
+                        async: true,
+                        data: {withUser: withUser}
+                        
+                    })
+                    .done(function(data){  
+                     $(".content").html(data);
+                     var scroll = $('.content');
+                     var height = scroll[0].scrollHeight;
+                     scroll.scrollTop(height);
+                    })
+
+            }
 						// send message to the user whose name is in the To: box
             function sendmsg()
             {
@@ -103,7 +121,7 @@
                             $('#message').val("");
                             $('#confirm').html(data);
                         })
-                        
+                        updateConversation(reciever);
                     }
             }
             // Searchbox functionality, when you press a key in the searchbox this is run
@@ -165,7 +183,6 @@
                      var height = scroll[0].scrollHeight;
                      scroll.scrollTop(height);
                     })
-
             }
             //Triggered by clicking on the name of a friend when you search for friends
             function selectFriend(val)
