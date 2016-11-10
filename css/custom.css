@@ -670,3 +670,15 @@ a .profile-post:hover
 	width: 200px;
 	height: 35px;
 }
+
+.pagination>li:last-child>a
+{
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.pagination>li:first-child>a
+{
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
