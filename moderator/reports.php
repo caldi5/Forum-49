@@ -104,7 +104,7 @@
 												<p><?php echo nl2br(htmlspecialchars($post->text));?></p>
 											</div>
 											<div class="col-md-3">
-												<span class="post-time"><?php echo date('H:i d/m/y', 2345234987); ?></span>
+												<span class="post-time"><?php echo date('H:i d/m/y', $post->createdAt); ?></span>
 											</div>
 										</div>
 									</div>
