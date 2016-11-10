@@ -14,10 +14,7 @@
 			$stmt = $conn->prepare('UPDATE users SET validEmail = 1 WHERE email = ?');
 			$stmt->bind_param('s', $_GET['email']);
 			$stmt->execute();
-
-			if(!empty($stmt->error))
-				$alerts[] = new alert("danger", "Error:", "SQL error: " . $stmt->error);
-			else
+			if(empty($stmt->error))
 			{
 				$_SESSION['id'] = user::getUserID($_GET['email']);
 				$alerts[] = new alert("success", "Success:", "Your verified your email!");
