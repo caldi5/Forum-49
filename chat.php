@@ -228,7 +228,7 @@
 
 		$("#startNewConversation").empty();
 		$("#startNewConversation").css("width", "35px");
-		$("#startNewConversation").css("margin-right", "10px");
+		//$("#startNewConversation").css("margin-right", "10px");
 		$("#startNewConversation").append("<div class='startNewConversationToggle' onclick='openConversationPartners()''>+</div>");
 		$.cookie('cn', 'closed')
 	}
