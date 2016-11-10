@@ -53,13 +53,13 @@
 									<div class="col-sm-7">
 										<div class="input-group">
 											<span class="input-group-addon">Name: </span>
-											<input type="text" name="categoryName" class="form-control" placeholder="Category name">
+											<input type="text" name="categoryName" class="form-control" placeholder="Category name" required>
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="input-group">
 											<span class="input-group-addon">Order:</span>
-											<input type="text" name="ordering" class="form-control" size="1" placeholder="1">
+											<input type="text" name="ordering" class="form-control" size="1" placeholder="1" required>
 										</div>
 									</div>
 									<div class="col-sm-3">

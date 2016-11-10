@@ -72,7 +72,7 @@
 									<div class="col-md-4 col-sm-6">
 										<div class="input-group">
 											<span class="input-group-addon">Name: </span>
-											<input type="text" name="forumName" class="form-control" placeholder="Forum name">
+											<input type="text" name="forumName" class="form-control" placeholder="Forum name" required>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-6">
@@ -91,7 +91,7 @@
 									</div>
 									<div class="col-md-2 col-sm-6">
 										<div class="input-group">
-											<span class="input-group-addon">Order:</span>
+											<span class="input-group-addon" required>Order:</span>
 											<input type="text" name="ordering" class="form-control" size="1" placeholder="1">
 										</div>
 									</div>
@@ -99,7 +99,7 @@
 										<div class="input-group">
 											<span class="input-group-addon">Allow Guest Access:</span>
 											<span class="input-group-addon">
-												<input type="checkbox" name="guestAccess">
+												<input type="checkbox" name="guestAccess" checked>
 											</span>
 										</div>
 									</div>
@@ -108,7 +108,7 @@
 									<div class="col-sm-12">
 										<div class="input-group">
 											<span class="input-group-addon">Description:</span>
-											<textarea name="description" cols="30" rows="2" class="form-control"></textarea>
+											<textarea name="description" cols="30" rows="2" class="form-control" required></textarea>
 										</div>
 									</div>
 								</div>
