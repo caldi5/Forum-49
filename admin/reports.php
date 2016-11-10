@@ -44,9 +44,12 @@
 	foreach ($categories as $category) 
 	{
 		$categorysForums = $category->getForums();
-		foreach ($categorysForums as $forum) 
+		if (!empty($categorysForums))
 		{
-			$forums[] = $forum;
+			foreach ($categorysForums as $forum) 
+			{
+				$forums[] = $forum;
+			}
 		}
 	}
 
