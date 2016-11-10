@@ -194,21 +194,23 @@
 		<!-- Modal confirmation End -->
 <?php include("includes/standard_footer.php"); ?>
 		<script>
+			//Körs när modal'en visas
 			$('#confirm-delete').on('show.bs.modal', function(e) 
 			{
+				//sätt mordalens (btn-ok) report knapps onClick till det som fans i den som kallede på funktions data-onClick
 				$(this).find('.btn-ok').attr('onclick', $(e.relatedTarget).data('onclick'));
 			});
-
+			//Körs när modal'en visas
 			$('#confirm-report').on('show.bs.modal', function(e) 
 			{
+				$('textarea#reason').val(''); //Clear any text that might have been in the textarea
 				$(this).find('.btn-ok').attr('onclick', $(e.relatedTarget).data('onclick'));
-				$(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id'));
+				$(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id')); //Samma här fast med id't, antingen comment ID eller post ID
 			});
 
 			function reportPost()
 			{
 				var reason = $('textarea#reason').val();
-				$('textarea#reason').val('');
 				var id = $('#confirm-report').find('.btn-ok').attr('id');
 
 				$.ajax(
@@ -220,7 +222,6 @@
 			function reportComment()
 			{
 				var reason = $('textarea#reason').val();
-				$('textarea#reason').val('');
 				var id = $('#confirm-report').find('.btn-ok').attr('id');
 
 				$.ajax(
@@ -228,7 +229,39 @@
 						url: "/ajax/report-comment.php?id=" + id + "&message=" + reason
 					})
 			}
+
+			function deleteComment(commentID)
+			{
+				$.ajax(
+					{
+						url: "/ajax/delete-comment.php?id=" + commentID,
+						success : function(response)
+						{
+							if(response)
+							{
+								//remove the comment from the list without reloading the page
+								$("#commentid" + commentID).remove();
+							}
+						}
+					})
+			}
+
+			function deletePost(postID, forumID)
+			{
+				$.ajax(
+					{
+						url: "/ajax/delete-post.php?id=" + postID,
+						success : function(response)
+						{
+							if(response)
+							{
+								//Redirect til forum since post does not exist anymore
+								window.location.href = "/forum.php?id=" + forumID;
+							}
+						}
+					})
+			}
+
 		</script>
-		<script src="/js/custom/delete-post-or-comment.js"></script> 
 	</body>
 </html>
