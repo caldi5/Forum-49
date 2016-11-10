@@ -44,13 +44,9 @@
    					<div class="form-group messageformtextbox col-sm-12">
             	Message: <input type="text" class="form-control" id="message" autocomplete="off">
             </div>
-                    
-						<input name="senderid" id="senderid" type="hidden" value="<?php echo $currentUser->id; ?>" />
             	<div class="col-sm-12">
               	<button name="pmSubmit" type="submit" value="Submit" class="btn btn-default" id="sendbtn">Send</button>
               </div>
-           	
-						<p id="confirm"></p>
            </form>
         </div>
        </div>
@@ -97,7 +93,6 @@
 						// send message to the user whose name is in the To: box
             function sendmsg()
             {
-                var sendid = $('#senderid').val();
                 var reciever = $('.searchtext').val();
                 var msg = $('#message').val();
                 if(msg == '' || reciever == '')
@@ -105,7 +100,6 @@
                         document.getElementById("message").placeholder = "No message Written...";
                         if(reciever == '')
                         {
-                            $('.reciever').show();
                            document.getElementById("searchtext").placeholder = "Choose recipient...";
                         }
                     }
@@ -115,11 +109,10 @@
                             method: "post",
                             url: "/ajax/messageparse.php",
                             async: true,
-                            data: { senderid: sendid,reciever: reciever, message: msg }
+                            data: { reciever: reciever, message: msg }
                         })
                         .done(function(data){
                             $('#message').val("");
-                            $('#confirm').html(data);
                         })
                         updateConversation(reciever);
                     }
@@ -127,7 +120,7 @@
             // Searchbox functionality, when you press a key in the searchbox this is run
             $(function() 
             {
-                $(".searchtext").on("keydown", function(e) {
+                $(".searchtext").on("keyup", function(e) {
                     var searchtext = $(".searchtext").val();
                     
                     
@@ -160,9 +153,6 @@
 				
 			});
             
-            $('.newconversation').on('click', function() {
-                $('.reciever').show();
-            });
             //showconversations between the user and selected user, pos for filling the searchbox with the appropriate recipient name. WithUser is id of recipient
             function showConversation(withUser,pos)
             {

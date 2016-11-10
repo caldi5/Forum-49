@@ -6,7 +6,7 @@
 if(isset($_POST['search']))
 {
 $searchtext = $_POST['search'];
-$likeString = '%' . $searchtext . '%';
+$likeString = $searchtext . '%';
 
 $result = $conn->prepare("select username from ((SELECT * FROM users
                         JOIN friends ON users.id = friends.userid2
