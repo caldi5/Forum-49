@@ -105,7 +105,7 @@
 											<?php }
 											?>
 												
-					 <a type="button" class="btn btn-primary btn-sm" href="messages.php?user=<?php echo $user->username?>">Message</a>
+					 <a type="button" class="btn btn-primary btn-sm" href="messages.php?user=<?php echo $user->username;?>">Message</a>
 					</div>
 					<!-- END SIDEBAR BUTTONS -->    
 						 
