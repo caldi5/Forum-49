@@ -49,7 +49,7 @@
 							}
 
 							$("<div class='row'>").prependTo("#liveContainer")
-							.html("<a href='post.php?id="+value.postID+"'>								<div class='col-lg-12 liveContent'><div class='col-lg-10'><h4 class='liveTitle'>"+title+"<h4><p class='liveText'>"+value.text+"</p></div><div class='col-lg-2'><span class='post-time'>"+value.date+"</span></div></div></a></div>");
+							.html("<a href='post.php?id="+value.postID+"'><div class='col-lg-12 liveContent'><div class='col-lg-10'><h4 class='liveTitle'>"+title+"<h4><p class='liveText'>"+value.text+"</p></div><div class='col-lg-2'><span class='post-time'>"+value.date+"</span></div></div></a></div>");
 						});
 					}
 				};

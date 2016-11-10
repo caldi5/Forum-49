@@ -154,7 +154,7 @@
 
 					// Scrolls the chat window to the bottom.
 					var convo = $("#conversation"+index+" .conversationText .conversationMessages");
-					convo.scrollTop(convo.prop("scrollHeight"))
+					convo.scrollTop(convo.prop("scrollHeight"));
 				}
 				};
 				xmlhttp.open("GET", "/ajax/getMessages.php?id="+userid+"&t="+lastMessage, true);
