@@ -20,7 +20,7 @@ if($result->num_rows > 0)
     while($result->fetch())
     {
          ?>
-                <div class="col-sm-12 list-group-item">
+                <div class="col-sm-12 list-group-item messagepost">
                 
                 <h4 class="list-group-item-heading"><?php echo $name; ?></h4>
                 <p class="list-group-item-text"><?php echo $message; ?></p><br>

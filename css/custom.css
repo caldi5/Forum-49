@@ -263,7 +263,10 @@ span.white-text
     margin:0;
     padding:0;
 }
-
+.messagepost
+{
+	word-wrap: break-word;
+}
 .mates
 {
 	padding-top:8px;
