@@ -35,13 +35,13 @@ We are aiming for the grade 5.
 - [x] Can change the rolls of users 
 - [x] Create new / Remove sub forums 
 - [x] Create new / Remove sub forums for categories 
-- [ ] Do everything a moderator can 
+- [x] Do everything a moderator can 
 - [x] Permanently ban users
 
 ####Moderators
-- [ ] Moderators can edit or delete posts 
-- [ ] Is Moderator for a specific sub forum
-- [ ] Temporarily ban users 
+- [x] Delete posts and comments
+- [x] Is Moderator for a specific sub forum
+- [x] Temporarily ban users 
 
 #####User 
 - [x] Can create posts 
