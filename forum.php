@@ -46,6 +46,7 @@
 			<h3>
 <?php echo '<a href="category.php?id='.$category->id.'" class="category-title">'.$category->name.'</a> / '.$forum->name; ?>
 			</h3>
+			<p class="forum-desc"><?php echo $forum->description; ?></p>
 			<div class="posts">
 <?php
 	// Buttons for for posting, administrating and moderating.
