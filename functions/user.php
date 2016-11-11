@@ -388,14 +388,18 @@
 				$ids[] = $id;
 			}
 			$stmt->close();
-
 			
-			foreach($ids as $id) 
-			{
-				$friends[] = new user($id);
-			}
+			if(!empty($ids)){
+				foreach($ids as $id) 
+				{
+					$friends[] = new user($id);
+				}
 
-			return $friends;
+				return $friends;
+			}
+			
+			return false;
+			
 		}
 
 		public function friendsSince($userID)

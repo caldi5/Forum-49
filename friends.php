@@ -102,11 +102,39 @@
 							}
 						?>
 					</div>
+					<div class="col-lg-5 profile-posts">
+							<h3>Add Friend</h3>
+							<div class="col-lg-12 profile-comment">
+								<div class="input-group">
+      								<input id="username" type="text" class="form-control" placeholder="Search User...">
+      									<span class="input-group-btn">
+											<button class="btn btn-primary" type="button" onclick="addUser()">Search</button>
+										</span>
+    							</div><!-- /input-group -->
+							</div>
+							<div id="alertdiv" class="col-lg-12"></div>
+						</div>
 				</div>
 				<!-- FRIENDS LOAD END -->
 			</div>
 		</div>
 		<!-- Content end -->
 <?php require_once("includes/standard_footer.php"); ?>
+		<script>
+		
+			function addUser(){
+				var username = $("#username").val();
+				$.ajax({
+					url: 'ajax/sendFriendRequest.php',
+					type: 'post',
+					data: {username: username},
+					success: function(output){
+						$("#alertdiv").html(output);
+					}
+				});
+			}
+			
+			
+		</script>
 	</body>
 </html>
