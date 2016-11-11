@@ -13,11 +13,13 @@ html
 {
 	width: 100%;
 	position: absolute;
+	/*
 	zoom: 0.9;
 	-ms-zoom: 0.9;
 	-webkit-zoom: 0.9;
 	-moz-transform:  scale(0.9,0.9);
 	-moz-transform-origin: top center;
+	*/
 }
 
 body
